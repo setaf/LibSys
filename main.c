@@ -53,7 +53,7 @@ typedef struct
     char city[20];
     int borr_no=0;
     char ret_date [3][12];
-    int phone[20];
+    int phone;
 } users;
 
 int main()
