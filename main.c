@@ -19,7 +19,6 @@ int k;
 void del_mem(void);
 void menu (void);
 void add_book (void);
-void exit_prog (void);
 void addmem (void);
 void delete_book (void);
 void borrow_book (void);
