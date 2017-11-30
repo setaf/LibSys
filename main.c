@@ -2,12 +2,14 @@
 #include <stdlib.h>
 #include <time.h>
 #include <conio.h>
+#include <file.h>
 
 //GLOBAL DECLERTAION//
 FILE *fb;
 time_t borr_date,ret_date;
 int k;
 
+void del_mem(void);
 void menu (void);
 void add_book (void);
 void exit (void);
@@ -129,11 +131,13 @@ void admin(void)
     print("2-delete\n");
     print("3-search\n");
     print("4-overdue\n");
-    print("5-menu\n");
+    printf("5-delete mem\n");
+    print("6-menu\n");
     add_book();
     delete_book();
     search();
     overdue();
+    del_mem();
     menu();
 }
 
@@ -141,5 +145,7 @@ void addmem(void)
 {
     printf("1-Current Member");
     printf("2-New Member");
-    users user
+    fp=fopen("members.txt","w");
+
+
 }
