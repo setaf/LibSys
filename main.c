@@ -6,6 +6,7 @@
 //GLOBAL DECLERTAION//
 FILE *fb
 time_t borr_date,ret_date;
+int k;
 
 void menu (void);
 void add_book (void);
@@ -31,7 +32,7 @@ typedef struct
 
 }books;
 
-typedef struct
+typedef struct users
 {
     char f_name[10];
     char l_name[10];
@@ -44,7 +45,7 @@ typedef struct
     int borr_no=0;
     char ret_date [3][12];
 
-}users;
+}mem[k];
 
 int main()
 {
@@ -58,7 +59,7 @@ void menu (void)
     switch(getch())
     {
         case '1':admin();break;
-        case '2': user();break;
+        case '2': addmem();break;
         default:
             printf("Enter A valid Number");
             menu();
@@ -71,6 +72,8 @@ void user()
     {
         case '1': borrow_book();break;
         case '2': ret_book();break;
+        case '3':search_book();break;
+        case '4':menu();break;
         default:
             printf("Enter A valid Number");
             user();
@@ -114,4 +117,26 @@ void ret_book(void)
     case 'y' 'Y':
     case 'n' 'N': user();
     }
+}
+void admin()
+{
+    printf("1-add book");
+    printf("2-delete book");
+    printf("3-search book");
+    printf("4-overdue");
+    printf("00-mainmenu
+           switch
+
+}
+void addmem()
+{
+    printf("1-Current Member\n");
+        printf("2-New Member\n");
+        switch(getch())
+        {
+            case '1':
+            case '2':
+        }
+
+
 }
