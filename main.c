@@ -4,8 +4,9 @@
 #include <conio.h>
 
 //GLOBAL DECLERTAION//
-FILE *fb
+FILE *fb;
 time_t borr_date,ret_date;
+int k;
 
 void menu (void);
 void add_book (void);
@@ -44,7 +45,7 @@ typedef struct
     int borr_no=0;
     char ret_date [3][12];
 
-}users;
+}*users;
 
 int main()
 {
@@ -54,11 +55,12 @@ int main()
 
 void menu (void)
 {
-
+    print("1-admin\n");
+    print("2-user\n");
     switch(getch())
     {
         case '1':admin();break;
-        case '2': user();break;
+        case '2': addmem();break;
         default:
             printf("Enter A valid Number");
             menu();
@@ -66,11 +68,16 @@ void menu (void)
 }
 void user()
 {
-    printf("1-Borrow Book\n2-Return Book");
+    printf("1-Borrow Book\n");
+    printf("2-Return Book\n");
+    printf("3-Search Book\n");
+    printf("4-menu\n");
     switch(getch())
     {
         case '1': borrow_book();break;
         case '2': ret_book();break;
+        case '3': search();break;
+        case '4': menu();break;
         default:
             printf("Enter A valid Number");
             user();
@@ -114,4 +121,25 @@ void ret_book(void)
     case 'y' 'Y':
     case 'n' 'N': user();
     }
+}
+
+void admin(void)
+{
+    print("1-add\n");
+    print("2-delete\n");
+    print("3-search\n");
+    print("4-overdue\n");
+    print("5-menu\n");
+    add_book();
+    delete_book();
+    search();
+    overdue();
+    menu();
+}
+
+void addmem(void)
+{
+    printf("1-Current Member");
+    printf("2-New Member");
+    users user
 }
