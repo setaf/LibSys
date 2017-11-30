@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1512055055 source:c:\users\overlord\desktop\assignment 1\el projecto\libsys\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<conio.h>
+
