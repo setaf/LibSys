@@ -4,13 +4,14 @@
 #include <conio.h>
 
 //GLOBAL DECLERTAION//
-FILE *fb
+FILE *fb;
 time_t borr_date,ret_date;
 int k;
 
+void del_mem(void);
 void menu (void);
 void add_book (void);
-void exit (void);
+void exit_prog (void);
 void addmem (void);
 void delete_book (void);
 void borrow_book (void);
@@ -32,7 +33,7 @@ typedef struct
 
 }books;
 
-typedef struct users
+typedef struct
 {
     char f_name[10];
     char l_name[10];
@@ -42,10 +43,10 @@ typedef struct users
     int street_no;
     char zone[20];
     char city[20];
-    int borr_no=0;
+    int borr_no;
     char ret_date [3][12];
 
-}mem[k];
+}*users;
 
 int main()
 {
@@ -55,7 +56,8 @@ int main()
 
 void menu (void)
 {
-
+    print("1-admin\n");
+    print("2-user\n");
     switch(getch())
     {
         case '1':admin();break;
@@ -67,13 +69,16 @@ void menu (void)
 }
 void user()
 {
-    printf("1-Borrow Book\n2-Return Book");
+    printf("1-Borrow Book\n");
+    printf("2-Return Book\n");
+    printf("3-Search Book\n");
+    printf("4-menu\n");
     switch(getch())
     {
         case '1': borrow_book();break;
         case '2': ret_book();break;
-        case '3':search_book();break;
-        case '4':menu();break;
+        case '3': search();break;
+        case '4': menu();break;
         default:
             printf("Enter A valid Number");
             user();
@@ -118,25 +123,28 @@ void ret_book(void)
     case 'n' 'N': user();
     }
 }
-void admin()
-{
-    printf("1-add book");
-    printf("2-delete book");
-    printf("3-search book");
-    printf("4-overdue");
-    printf("00-mainmenu
-           switch
 
-}
-void addmem()
+void admin(void)
 {
-    printf("1-Current Member\n");
-        printf("2-New Member\n");
-        switch(getch())
-        {
-            case '1':
-            case '2':
-        }
+    print("1-add\n");
+    print("2-delete\n");
+    print("3-search\n");
+    print("4-overdue\n");
+    printf("5-delete mem\n");
+    print("6-menu\n");
+    add_book();
+    delete_book();
+    search();
+    overdue();
+    del_mem();
+    menu();
+}
+
+void addmem(void)
+{
+    printf("1-Current Member");
+    printf("2-New Member");
+    fp=fopen("members.txt","w");
 
 
 }
