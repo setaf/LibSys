@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1511810155 source:c:\users\mohame\desktop\test\struc 01\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+
