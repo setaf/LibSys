@@ -21,6 +21,8 @@ void user (void);
 void overdue(void);
 void popular_book (void);
 void ret_book(void);
+void save();
+
 
 typedef struct
 {
@@ -56,6 +58,7 @@ int main()
 
 void menu (void)
 {
+    system("cls");
     print("1-admin\n");
     print("2-user\n");
     switch(getch())
@@ -69,16 +72,26 @@ void menu (void)
 }
 void user()
 {
+    system("cls");
     printf("1-Borrow Book\n");
     printf("2-Return Book\n");
     printf("3-Search Book\n");
-    printf("4-menu\n");
+    printf("4-Save||Exit");
+    printf("5-Menu\n");
+
     switch(getch())
     {
         case '1': borrow_book();break;
         case '2': ret_book();break;
         case '3': search();break;
-        case '4': menu();break;
+        case '5':
+            printf("You Want to Save Before Back to Main Menu(Y/N)");
+            switch(getch())
+            {
+                case 'y' 'Y': save(); /*without break */
+                case 'n' 'N': menu();break;
+                }
+
         default:
             printf("Enter A valid Number");
             user();
@@ -87,6 +100,7 @@ void user()
 void borrow_book()
 {
     //check//
+    system("cls");
     if(users.borr_no==3)
         {
         printf("You Can't Borrow in This Moment");
@@ -131,13 +145,23 @@ void admin(void)
     print("3-search\n");
     print("4-overdue\n");
     printf("5-delete mem\n");
-    print("6-menu\n");
-    add_book();
-    delete_book();
-    search();
-    overdue();
-    del_mem();
-    menu();
+    printf("6-Save Changes\n");
+    print("7-menu\n");
+    switch(getch())
+    {
+   case '1': add_book();break;
+   case '2':delete_book();break;
+   case '3':search();break;
+   case '4':overdue();break;
+   case '5':del_mem();break;
+   case '6':save();break;
+   case '7':printf("You Want to Save Before Back to Main Menu(Y/N)");
+            switch(getch())
+            {
+                case 'y' 'Y': save(); /*without break */
+                case 'n' 'N': menu();break;
+            }
+    }
 }
 
 void addmem(void)
@@ -145,6 +169,5 @@ void addmem(void)
     printf("1-Current Member");
     printf("2-New Member");
     fp=fopen("members.txt","w");
-
 
 }
