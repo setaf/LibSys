@@ -4,7 +4,7 @@
 #include <conio.h>
 
 //GLOBAL DECLERTAION//
-FILE *fb;
+FILE *fb *fa;
 time_t borr_date,ret_date;
 int k;
 
@@ -88,8 +88,8 @@ void user()
             printf("You Want to Save Before Back to Main Menu(Y/N)");
             switch(getch())
             {
-                case 'y' 'Y': save(); /*without break */
-                case 'n' 'N': menu();break;
+                case 'y''Y': save(); /*without break */
+                case 'n''N': menu();break;
                 }
 
         default:
@@ -99,14 +99,18 @@ void user()
 }
 void borrow_book()
 {
-    //check//
+    fb=fopen("file.txt", "w+"); //check//
     system("cls");
     if(users.borr_no==3)
         {
         printf("You Can't Borrow in This Moment");
         user();
     }
-    else{
+    else
+    {
+    fa=fopen("file.txt", "w+");
+    time(&borr_date);
+    fprintf(fb,"%s",ctime(&borr_date));
     printf("Enter ISBN");
     users.borr_no++;
     time(&borr_date);
@@ -114,11 +118,8 @@ void borrow_book()
     printf("Enter The Return Date YYYY-MM-DD:");
     scanf("%s",users.ret_date[users.borr_no]);
     books.no_cpy--;//error//
-    printf("You Want Save (Y/N):");
-    switch(getchar())
-    {
-    case 'y' 'Y':
-    case 'n' 'N': user();
+    fprintf();
+    user();
     }
     }
 
@@ -169,5 +170,27 @@ void addmem(void)
     printf("1-Current Member");
     printf("2-New Member");
     fp=fopen("members.txt","w");
+    switch(getch())
+    {
+        system("cls");
+        case '1': user(); break;
+        case '2':
+            system("cls");
+            printf("Welcome\n");
+            printf("Enter First Name:\n");
+            scanf("%s",&users.f_name);
+            printf("Enter Last Name:\n");
+            scanf("%s",&users.l_name);
+            printf("Enter Your Age:\n");
+            scanf("%d",&users.age);
+            printf("Enter Your Email:\n");
+            scanf("%s",&users.email);
+            printf("Enter Your Address (St.no/Zone/City):\n");
+            scanf("%d%s%s",&users.street_no,&users.zone,&users.city);
+            users.borr_no=0;
+            fprintf(fb,"");
+            break;
+        default :printf("Enter A valid Number"); addmem();
+    }
 
 }
