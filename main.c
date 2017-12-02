@@ -21,14 +21,15 @@ void menu(void);
 void add_book(void);
 void addmem(void);
 void delete_book(void);
-void borrow_book(void);
+void borrow_book(int id);
 void search_book(void);
 void admin (void);
-void user (void);
+void user (int id);
 void overdue(void);
 void popular_book (void);
 void ret_book(void);
 void new_cpy(void);
+void check_id(void);
 
 typedef struct
 {
@@ -94,7 +95,7 @@ void user()
     switch(getch())
     {
     case '1':
-        borrow_book();
+        borrow_book(id);
         break;
     case '2':
         ret_book();
@@ -154,16 +155,15 @@ void addmem(void)
     printf("1-Current Member\n");
     printf("2-New Member\n");
     printf("3-back to Main menu\n");
+    users use;
     switch (getch())
     {
-    case '1':
-        user();
-        break;
-    case '2':
-        if ((fb = fopen("members.txt","r")) == NULL)
+        case '1':check_id()break;
+        case '2':
+            if ((fb = fopen("members.txt","r")) == NULL)
         {
+            system("cls");
             fb = fopen("members.txt","w");
-            users use;
             printf("Enter Your First Name:\n");
             scanf("%s",&use.f_name);
             printf("Enter Your Last Name:\n");
@@ -182,13 +182,14 @@ void addmem(void)
             scanf("%d",&use.age);
             printf("Enter Your E-mail:\n");
             scanf("%s",&use.email);
-            fprintf(fb,"%s, %s, %d, %d, %s, %s, %d, %d, %s \n",use.f_name,use.l_name,use.id,use.street_no,use.zone,use.city,use.phone,use.age,use.email);
+            use.borr_no=0;
+            fprintf(fb,"%s,%s,%d,%d,%s,%s,%d,%d,%s,%d\n",use.f_name,use.l_name,use.id,use.street_no,use.zone,use.city,use.phone,use.age,use.email, use.borr_no);
             fclose(fb);
         }
         else
         {
-            fb = fopen("members.txt","w");
-            users use;
+            system("cls");
+            fb = fopen("members.txt","a");
             printf("Enter Your First Name:\n");
             scanf("%s",&use.f_name);
             printf("Enter Your Last Name:\n");
@@ -210,11 +211,13 @@ void addmem(void)
             fprintf(fb,"%s, %s, %d, %d, %s, %s, %d, %d, %s \n",use.f_name,use.l_name,use.id,use.street_no,use.zone,use.city,use.phone,use.age,use.email);
             fclose(fb);
         }
+            printf("Welcome %s\n Your ID:%d\n",use.f_name,use.id);
+            printf("Press Any Key To Continue....");
+            switch(getch())
+            default: addmem();
         break;
-    case '3':
-        menu();
-        break;
-    default:
+        case '3':menu();break;
+        default:
         printf("Enter A valid Number");
         addmem();
     }
@@ -274,3 +277,28 @@ void add_book()
           break ;
   }
   }
+void borrow_book()
+{
+
+    fb = fopen("members.txt","r");
+    if()
+}
+void check_id()
+{
+    int x;
+    system("cls");
+    printf("Enter You ID :");
+    scanf("%d",&x);
+    fb = fopen("members.txt","r");
+    fscanf(fb,"%d",&x)
+    while()
+    if()
+    user();
+    else
+    {
+        printf("This ID Doesn't Exist Please Enter Valid One: ");
+        getch();
+        check_id();
+
+    }
+}
