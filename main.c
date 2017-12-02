@@ -277,6 +277,21 @@ void add_book()
           break ;
   }
   }
+  int count_lines(char *a)
+  {
+    int count_lines = 0;
+    char chr;
+    fb= fopen(a, "r");
+    chr = getc(fb);
+    while (chr != EOF)
+    {
+        if (chr == '\n')
+            count_lines++;
+        chr = getc(fb);
+    }
+    fclose(fb);
+    return count_lines ;
+}
 void borrow_book()
 {
 
@@ -285,6 +300,7 @@ void borrow_book()
 }
 void check_id()
 {
+    count_lines(fb);
     int x;
     system("cls");
     printf("Enter You ID :");
@@ -293,6 +309,7 @@ void check_id()
     fscanf(fb,"%d",&x)
     while()
     if()
+
     user();
     else
     {
