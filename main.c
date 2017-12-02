@@ -3,26 +3,32 @@
 #include <time.h>
 #include <conio.h>
 
+/* el functions el 5lsana
+-menu
+-addmem
+-user
+-admin
+-exit
+*/
+
 //GLOBAL DECLERTAION//
-FILE *fb *fa;
+FILE *fb *fc;
 time_t borr_date,ret_date;
 int k;
 
 void del_mem(void);
-void menu (void);
-void add_book (void);
-void exit_prog (void);
-void addmem (void);
-void delete_book (void);
-void borrow_book (void);
-void search_book (void);
+void menu(void);
+void add_book(void);
+void addmem(void);
+void delete_book(void);
+void borrow_book(void);
+void search_book(void);
 void admin (void);
 void user (void);
 void overdue(void);
 void popular_book (void);
 void ret_book(void);
-void save();
-
+void new_cpy(void);
 
 typedef struct
 {
@@ -33,7 +39,7 @@ typedef struct
     int no_cpy;
     char publisher[32];
 
-}books;
+} books;
 
 typedef struct
 {
@@ -47,8 +53,8 @@ typedef struct
     char city[20];
     int borr_no;
     char ret_date [3][12];
-
-}*users;
+    int phone;
+} users;
 
 int main()
 {
@@ -59,138 +65,212 @@ int main()
 void menu (void)
 {
     system("cls");
-    print("1-admin\n");
-    print("2-user\n");
+    printf("1-admin\n");
+    printf("2-user\n");
+    printf("3-exit\n");
     switch(getch())
     {
-        case '1':admin();break;
-        case '2': addmem();break;
-        default:
-            printf("Enter A valid Number");
-            menu();
+    case '1':
+        admin();
+        break;
+    case '2':
+        addmem();
+        break;
+    case '3':
+        exit(0);
+        break;
+    default:
+        printf("Enter A valid Number:");
+        menu();
     }
 }
 void user()
 {
-    system("cls");
+   system("cls");
     printf("1-Borrow Book\n");
     printf("2-Return Book\n");
     printf("3-Search Book\n");
-    printf("4-Save||Exit");
-    printf("5-Menu\n");
-
+    printf("4-menu\n");
     switch(getch())
     {
-        case '1': borrow_book();break;
-        case '2': ret_book();break;
-        case '3': search();break;
-        case '5':
-            printf("You Want to Save Before Back to Main Menu(Y/N)");
-            switch(getch())
-            {
-                case 'y''Y': save(); /*without break */
-                case 'n''N': menu();break;
-                }
-
-        default:
-            printf("Enter A valid Number");
-            user();
-    }
-}
-void borrow_book()
-{
-    fb=fopen("file.txt", "w+"); //check//
-    system("cls");
-    if(users.borr_no==3)
-        {
-        printf("You Can't Borrow in This Moment");
+    case '1':
+        borrow_book();
+        break;
+    case '2':
+        ret_book();
+        break;
+    case '3':
+        search();
+        break;
+    case '4':
+        menu();
+        break;
+    default:
+        printf("Enter A valid Number");
         user();
     }
-    else
-    {
-    fa=fopen("file.txt", "w+");
-    time(&borr_date);
-    fprintf(fb,"%s",ctime(&borr_date));
-    printf("Enter ISBN");
-    users.borr_no++;
-    time(&borr_date);
-    ctime(&borr_date);
-    printf("Enter The Return Date YYYY-MM-DD:");
-    scanf("%s",users.ret_date[users.borr_no]);
-    books.no_cpy--;//error//
-    fprintf();
-    user();
-    }
-    }
+}
 
-}
-void ret_book(void)
-{
-    printf("Enter ISBN");
-    users.borr_no--;
-    books.no_cpy++;//error//
-    time(&ret_date);
-    ctime(&ret_date);
-    printf("You Want Save (Y/N):");
-    switch(getchar())
-    {
-    case 'y' 'Y':
-    case 'n' 'N': user();
-    }
-}
+
 
 void admin(void)
 {
-    print("1-add\n");
-    print("2-delete\n");
-    print("3-search\n");
-    print("4-overdue\n");
+    system("cls");
+    printf("1-add\n");
+    printf("2-delete\n");
+    printf("3-search\n");
+    printf("4-overdue\n");
     printf("5-delete mem\n");
-    printf("6-Save Changes\n");
-    print("7-menu\n");
-    switch(getch())
+    printf("6-menu\n");
+    switch (getch())
     {
-   case '1': add_book();break;
-   case '2':delete_book();break;
-   case '3':search();break;
-   case '4':overdue();break;
-   case '5':del_mem();break;
-   case '6':save();break;
-   case '7':printf("You Want to Save Before Back to Main Menu(Y/N)");
-            switch(getch())
-            {
-                case 'y' 'Y': save(); /*without break */
-                case 'n' 'N': menu();break;
-            }
+    case '1':
+        add_book();
+        break;
+    case '2':
+        delete_book();
+        break;
+    case '3':
+        search();
+        break;
+    case '4':
+        overdue();
+        break;
+    case '5':
+        del_mem();
+        break;
+    case '6':
+        menu();
+        break;
+    default:
+        printf("Enter A valid Number");
+        admin();
     }
 }
 
 void addmem(void)
 {
-    printf("1-Current Member");
-    printf("2-New Member");
-    fp=fopen("members.txt","w");
-    switch(getch())
+    system("cls");
+    printf("1-Current Member\n");
+    printf("2-New Member\n");
+    printf("3-back to Main menu\n");
+    switch (getch())
     {
-        system("cls");
-        case '1': user(); break;
-        case '2':
-            system("cls");
-            printf("Welcome\n");
-            printf("Enter First Name:\n");
-            scanf("%s",&users.f_name);
-            printf("Enter Last Name:\n");
-            scanf("%s",&users.l_name);
+    case '1':
+        user();
+        break;
+    case '2':
+        if ((fb = fopen("members.txt","r")) == NULL)
+        {
+            fb = fopen("members.txt","w");
+            users use;
+            printf("Enter Your First Name:\n");
+            scanf("%s",&use.f_name);
+            printf("Enter Your Last Name:\n");
+            scanf("%s",&use.l_name);
+            printf("Enter Your ID:\n");
+            scanf("%d",&use.id);
+            printf("Enter Your Street Number:\n");
+            scanf("%d",&use.street_no);
+            printf("Enter Your Zone:\n");
+            scanf("%s",&use.zone);
+            printf("Enter Your City:\n");
+            scanf("%s",&use.city);
+            printf("Enter Your Phone:\n");
+            scanf("%d",&use.phone);
             printf("Enter Your Age:\n");
-            scanf("%d",&users.age);
-            printf("Enter Your Email:\n");
-            scanf("%s",&users.email);
-            printf("Enter Your Address (St.no/Zone/City):\n");
-            scanf("%d%s%s",&users.street_no,&users.zone,&users.city);
-            users.borr_no=0;
-            fprintf(fb,"");
-            break;
-        default :printf("Enter A valid Number"); addmem();
+            scanf("%d",&use.age);
+            printf("Enter Your E-mail:\n");
+            scanf("%s",&use.email);
+            fprintf(fb,"%s, %s, %d, %d, %s, %s, %d, %d, %s \n",use.f_name,use.l_name,use.id,use.street_no,use.zone,use.city,use.phone,use.age,use.email);
+            fclose(fb);
+        }
+        else
+        {
+            fb = fopen("members.txt","w");
+            users use;
+            printf("Enter Your First Name:\n");
+            scanf("%s",&use.f_name);
+            printf("Enter Your Last Name:\n");
+            scanf("%s",&use.l_name);
+            printf("Enter Your ID:\n");
+            scanf("%d",&use.id);
+            printf("Enter Your Street Number:\n");
+            scanf("%d",&use.street_no);
+            printf("Enter Your Zone:\n");
+            scanf("%s",&use.zone);
+            printf("Enter Your City:\n");
+            scanf("%s",&use.city);
+            printf("Enter Your Phone:\n");
+            scanf("%d",&use.phone);
+            printf("Enter Your Age:\n");
+            scanf("%d",&use.age);
+            printf("Enter Your E-mail:\n");
+            scanf("%s",&use.email);
+            fprintf(fb,"%s, %s, %d, %d, %s, %s, %d, %d, %s \n",use.f_name,use.l_name,use.id,use.street_no,use.zone,use.city,use.phone,use.age,use.email);
+            fclose(fb);
+        }
+        break;
+    case '3':
+        menu();
+        break;
+    default:
+        printf("Enter A valid Number");
+        addmem();
     }
-
 }
+void add_book()
+{
+    books boo;
+  if ((fc = fopen("books.txt","r")) == NULL)
+  {
+      system("cls");
+      fc = fopen("books.txt","w");
+      printf("Enter The Category:\n");
+      scanf("%s",boo.catg);
+      printf("Enter The Tittle of Book:\n");
+      scanf("%s",boo.title);
+      printf("Enter Author's Name:\n");
+      scanf("%s",boo.author);
+      printf("Enter The ISBN:\n");
+      scanf("%d",&boo.isbn);
+      printf("Enter Number Of Copies:\n");
+      scanf("%d",&boo.no_cpy);
+      printf("Enter Publisher:\n");
+      scanf("%s",boo.publisher);
+      fprintf(fc,"%s,%s,%s,%d,%d,%s",boo.catg,boo.title,boo.author,boo.isbn,boo.no_cpy,boo.publisher);
+      fclose(fc);
+  }
+  else
+  {
+      system("cls");
+     fc = fopen("books.txt","a");
+      printf("Enter The Category:\n");
+      scanf("%s",boo.catg);
+      printf("Enter The Tittle of Book:\n");
+      scanf("%s",boo.title);
+      printf("Enter Author's Name:\n");
+      scanf("%s",boo.author);
+      printf("Enter The ISBN:\n");
+      scanf("%d",&boo.isbn);
+      printf("Enter Number Of Copies:\n");
+      scanf("%d",&boo.no_cpy);
+      printf("Enter Publisher:\n");
+      scanf("%s",boo.publisher);
+      fprintf(fc,"%s,%s,%s,%d,%d,%s",boo.catg,boo.title,boo.author,boo.isbn,boo.no_cpy,boo.publisher);
+      fclose(fc);
+  }
+
+  printf("You Want to Add Another Book (Y/N):");
+  switch(getch())
+  {
+      case 'Y':
+      case 'y':
+          add_book();
+          break;
+      case 'n':
+      case 'N':
+          admin();
+          break ;
+  }
+  }

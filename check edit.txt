@@ -1,0 +1,100 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+FILE *fb;
+void addmem(void);
+
+typedef struct
+{
+    char f_name[10];
+    char l_name[10];
+    int id;
+    int age;
+    char email[64];
+    int street_no;
+    char zone[20];
+    char city[20];
+    int borr_no;
+    char ret_date [3][12];
+    int phone;
+} users;
+
+int main()
+{
+    addmem();
+    return 0;
+}
+void addmem(void)
+{
+    system("cls");
+    printf("1-Current Member\n");
+    printf("2-New Member\n");
+    printf("3-back to Main menu\n");
+    users use;
+    switch (getch())
+    {
+        case '1':user();break;
+        case '2':
+            if ((fb = fopen("members.txt","r")) == NULL)
+        {
+            system("cls");
+            fb = fopen("members.txt","w");
+            printf("Enter Your First Name:\n");
+            scanf("%s",&use.f_name);
+            printf("Enter Your Last Name:\n");
+            scanf("%s",&use.l_name);
+            printf("Enter Your ID:\n");
+            scanf("%d",&use.id);
+            printf("Enter Your Street Number:\n");
+            scanf("%d",&use.street_no);
+            printf("Enter Your Zone:\n");
+            scanf("%s",&use.zone);
+            printf("Enter Your City:\n");
+            scanf("%s",&use.city);
+            printf("Enter Your Phone:\n");
+            scanf("%d",&use.phone);
+            printf("Enter Your Age:\n");
+            scanf("%d",&use.age);
+            printf("Enter Your E-mail:\n");
+            scanf("%s",&use.email);
+            use.borr_no=0;
+            fprintf(fb,"%s,%s,%d,%d,%s,%s,%d,%d,%s,%d\n",use.f_name,use.l_name,use.id,use.street_no,use.zone,use.city,use.phone,use.age,use.email, use.borr_no);
+            fclose(fb);
+        }
+        else
+        {
+            system("cls");
+            fb = fopen("members.txt","a");
+            printf("Enter Your First Name:\n");
+            scanf("%s",&use.f_name);
+            printf("Enter Your Last Name:\n");
+            scanf("%s",&use.l_name);
+            printf("Enter Your ID:\n");
+            scanf("%d",&use.id);
+            printf("Enter Your Street Number:\n");
+            scanf("%d",&use.street_no);
+            printf("Enter Your Zone:\n");
+            scanf("%s",&use.zone);
+            printf("Enter Your City:\n");
+            scanf("%s",&use.city);
+            printf("Enter Your Phone:\n");
+            scanf("%d",&use.phone);
+            printf("Enter Your Age:\n");
+            scanf("%d",&use.age);
+            printf("Enter Your E-mail:\n");
+            scanf("%s",&use.email);
+            fprintf(fb,"%s, %s, %d, %d, %s, %s, %d, %d, %s \n",use.f_name,use.l_name,use.id,use.street_no,use.zone,use.city,use.phone,use.age,use.email);
+            fclose(fb);
+        }
+            printf("Welcome %s\n Your ID:%d\n",use.f_name,use.id);
+            printf("Press Any Key To Continue....");
+            switch(getch())
+            default: addmem();
+        break;
+        case '3':menu();break;
+        default:
+        printf("Enter A valid Number");
+        addmem();
+    }
+}
+
