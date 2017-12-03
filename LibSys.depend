@@ -1,13 +1,25 @@
 # depslib dependency file v1.0
-<<<<<<< HEAD
-1512252558 source:c:\users\overlord\desktop\assignment 1\el projecto\libsys\main.c
-	<stdio.h>
-	<stdlib.h>
-=======
-1512055055 source:c:\users\overlord\desktop\assignment 1\el projecto\libsys\main.c
+42809368 <<<<<<< HEAD
+
+1512267682 source:c:\users\overlord\desktop\assignment 1\el projecto\libsys\main.c
 	<stdio.h>
 	<stdlib.h>
 	<time.h>
 	<conio.h>
->>>>>>> mars
+	"functions.h"
+
+1512252558 
+
+1512055055 s
+
+1512240206 source:c:\users\mohame\desktop\real_project\libsys\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<conio.h>
+
+1512272466 c:\users\overlord\desktop\assignment 1\el projecto\libsys\functions.h
+	"structs.h"
+
+1512266187 c:\users\overlord\desktop\assignment 1\el projecto\libsys\structs.h
 
