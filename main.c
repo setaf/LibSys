@@ -29,7 +29,7 @@ void overdue(void);
 void popular_book (void);
 void ret_book(void);
 void new_cpy(void);
-void check_id(void);
+int count_lines(char *a)
 
 typedef struct
 {
@@ -191,23 +191,23 @@ void addmem(void)
             system("cls");
             fb = fopen("members.txt","a");
             printf("Enter Your First Name:\n");
-            scanf("%s",&use.f_name);
+            scanf("%s",use.f_name);
             printf("Enter Your Last Name:\n");
-            scanf("%s",&use.l_name);
+            scanf("%s",use.l_name);
             printf("Enter Your ID:\n");
             scanf("%d",&use.id);
             printf("Enter Your Street Number:\n");
             scanf("%d",&use.street_no);
             printf("Enter Your Zone:\n");
-            scanf("%s",&use.zone);
+            scanf("%s",use.zone);
             printf("Enter Your City:\n");
-            scanf("%s",&use.city);
+            scanf("%s",use.city);
             printf("Enter Your Phone:\n");
             scanf("%d",&use.phone);
             printf("Enter Your Age:\n");
             scanf("%d",&use.age);
             printf("Enter Your E-mail:\n");
-            scanf("%s",&use.email);
+            scanf("%s",use.email);
             fprintf(fb,"%s, %s, %d, %d, %s, %s, %d, %d, %s \n",use.f_name,use.l_name,use.id,use.street_no,use.zone,use.city,use.phone,use.age,use.email);
             fclose(fb);
         }
