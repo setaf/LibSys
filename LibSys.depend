@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1512252558 source:c:\users\overlord\desktop\assignment 1\el projecto\libsys\main.c
+	<stdio.h>
+	<stdlib.h>
+
