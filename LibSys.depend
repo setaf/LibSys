@@ -1,7 +1,7 @@
 # depslib dependency file v1.0
 42809368 <<<<<<< HEAD
 
-1512267682 source:c:\users\overlord\desktop\assignment 1\el projecto\libsys\main.c
+1512354208 source:c:\users\overlord\desktop\assignment 1\el projecto\libsys\main.c
 	<stdio.h>
 	<stdlib.h>
 	<time.h>
@@ -18,7 +18,7 @@
 	<time.h>
 	<conio.h>
 
-1512272466 c:\users\overlord\desktop\assignment 1\el projecto\libsys\functions.h
+1512354510 c:\users\overlord\desktop\assignment 1\el projecto\libsys\functions.h
 	"structs.h"
 
 1512266187 c:\users\overlord\desktop\assignment 1\el projecto\libsys\structs.h

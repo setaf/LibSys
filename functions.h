@@ -154,6 +154,7 @@ void addmem(void)
         {
             system("cls");
             fb = fopen("members.txt","a");
+            int i;
             printf("Enter Your First Name:\n");
             gets(new_user[newnumber].f_name);
             printf("Enter Your Last Name:\n");
@@ -162,6 +163,13 @@ void addmem(void)
             {
                 printf("Enter Your ID:\n");
                 scanf("%d",&new_user[newnumber].id);
+                for(i=0;i<mem_no;i++)
+                {
+                    if(new_user[newnumber].id==curr_user[i].id)
+                    {
+                        printf("A User with the same ID already exist, Retry!!!\n\n");
+                    }
+                }
                 if(new_user[newnumber].id<0)
                     printf("Enter A positive number, Retry!!!\n\n");
             }
@@ -197,7 +205,7 @@ void addmem(void)
             while(new_user[newnumber].age<7);
             printf("Enter Your E-mail:\n");
             getchar();
-            int i,flag=0;
+            int flag=0;
             do
             {
                 gets(new_user[newnumber].email);
@@ -239,98 +247,11 @@ void addmem(void)
     }
 }
 
-void add_book()
-{
-    books boo;
-    if ((fc = fopen("books.txt","r")) == NULL)
-    {
-        system("cls");
-        fc = fopen("books.txt","w");
-        printf("Enter The Category:\n");
-        scanf("%s",boo.catg);
-        printf("Enter The Tittle of Book:\n");
-        scanf("%s",boo.title);
-        printf("Enter Author's Name:\n");
-        scanf("%s",boo.author);
-        printf("Enter The ISBN:\n");
-        scanf("%d",&boo.isbn);
-        printf("Enter Number Of Copies:\n");
-        scanf("%d",&boo.no_cpy);
-        printf("Enter Publisher:\n");
-        scanf("%s",boo.publisher);
-        fprintf(fc,"%s,%s,%s,%d,%d,%s",boo.catg,boo.title,boo.author,boo.isbn,boo.no_cpy,boo.publisher);
-        fclose(fc);
-    }
-    else
-    {
-        system("cls");
-        fc = fopen("books.txt","a");
-        printf("Enter The Category:\n");
-        scanf("%s",boo.catg);
-        printf("Enter The Tittle of Book:\n");
-        scanf("%s",boo.title);
-        printf("Enter Author's Name:\n");
-        scanf("%s",boo.author);
-        printf("Enter The ISBN:\n");
-        scanf("%d",&boo.isbn);
-        printf("Enter Number Of Copies:\n");
-        scanf("%d",&boo.no_cpy);
-        printf("Enter Publisher:\n");
-        scanf("%s",boo.publisher);
-        fprintf(fc,"%s,%s,%s,%d,%d,%s",boo.catg,boo.title,boo.author,boo.isbn,boo.no_cpy,boo.publisher);
-        fclose(fc);
-    }
-
-    printf("You Want to Add Another Book (Y/N):");
-    switch(getch())
-    {
-    case 'Y':
-    case 'y':
-        add_book();
-        break;
-    case 'n':
-    case 'N':
-        admin();
-        break ;
-    }
-}
-
-
-void borrow_book(int a)
-{
-
-    fb = fopen("members.txt","r");
-    if()
-    }
-
-void check_id()
-{
-    count_lines(fb);
-    int x;
-    system("cls");
-    printf("Enter You ID :");
-    scanf("%d",&x);
-    fb = fopen("members.txt","r");
-    fscanf(fb,"%d",&x)
-    while()
-        if()
-
-            user();
-        else
-        {
-            printf("This ID Doesn't Exist Please Enter Valid One: ");
-            getch();
-            check_id();
-
-        }
-}
-
 void curr_mem()          //btgyb 3dd el current user w t7thom fe array
 {
     temp = fopen("members.txt","r");
 while (!feof(temp))
     {
-        if(curr_user[mem_no].id==id)
         fscanf(temp,"%[^,],%[^,],%d,%d,%[^,],%[^,],%d,%d,%s",curr_user[mem_no].f_name,curr_user[mem_no].l_name,&curr_user[mem_no].id,&curr_user[mem_no].adrs.street_no,
                 curr_user[mem_no].adrs.zone,curr_user[mem_no].adrs.city,&curr_user[mem_no].phone,&curr_user[mem_no].age,curr_user[mem_no].email);
 
@@ -338,12 +259,12 @@ while (!feof(temp))
     }
     fclose(temp);
     }
-}
-void del_mem()
+
+void del_mem()          //bdwr 3leh w b3den bn2l ele b3do fe mkano, ashft kolo 1
 {
-    int i,position;
+    int i,position,id;
     printf("Enter the User's ID you want to remove");
-    scanf("%d",&position);
+    scanf("%d",&id);
     for(i=0;i<mem_no;i++)
     {
         if(curr_user[i].id==id)
@@ -351,17 +272,18 @@ void del_mem()
     }
     for(i=position;i<mem_no-2;i++)
     {
-     curr_user[i].f_name=curr_user[i+1].f_name;
-     curr_user[i].l_name=curr_user[i+1].l_name;
+     strcpy(curr_user[i+1].f_name,curr_user[i].f_name);
+     strcpy(curr_user[i+1].l_name,curr_user[i].l_name);
      curr_user[i].id=curr_user[i+1].id;
      curr_user[i].adrs.street_no=curr_user[i+1].adrs.street_no;
-     curr_user[i].adrs.zone=curr_user[i+1].adrs.zone;
-     curr_user[i].adrs.city=curr_user[i+1].adrs.city;
+     strcpy(curr_user[i+1].adrs.zone,curr_user[i].adrs.zone);
+     strcpy(curr_user[i+1].adrs.city,curr_user[i].adrs.city);
      curr_user[i].phone=curr_user[i+1].phone;
      curr_user[i].age=curr_user[i+1].age;
-     curr_user[i].email=curr_user[i+1].email;
+     strcpy(curr_user[i+1].email,curr_user[i].email);
     }
 }
+
 void new_save()         //save lel new users bs
 {
     int i;
@@ -372,11 +294,48 @@ void new_save()         //save lel new users bs
     fclose(fb);
 
 }
+
 void del_save()   //btms7 el file w t3yd ktbto mn gdydx lel current users bs
 {
+    int i;
     temp = fopen("members.txt","w");
     for(i=0; i<mem_no-1; i++)
     fprintf(temp,"%s,%s,%d,%d,%s,%s,%d,%d,%s",curr_user[i].f_name,curr_user[i].l_name,curr_user[i].id,curr_user[i].adrs.street_no,
             curr_user[i].adrs.zone,curr_user[i].adrs.city,curr_user[i].phone,curr_user[i].age,curr_user[i].email);
     fclose(temp);
+}
+
+void check_id()  //7to el codes hna bel copy
+{
+
+}
+
+void add_book() //7to el codes hna bel copy
+{
+
+}
+
+void delete_book()  //7to el codes hna bel copy
+{
+
+}
+
+void borrow_book(int a) //7to el codes hna bel copy
+{
+
+}
+
+void overdue()  //7to el codes hna bel copy
+{
+
+}
+
+void ret_book() //7to el codes hna bel copy
+{
+
+}
+
+void search_book()  //7to el codes hna bel copy
+{
+
 }

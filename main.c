@@ -9,7 +9,7 @@ void menu(void);
 void add_book(void);
 void addmem(void);
 void delete_book(void);
-void borrow_book(void);
+void borrow_book(int a);
 void search_book(void);
 void admin (void);
 void user (int id);
