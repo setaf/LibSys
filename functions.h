@@ -8,6 +8,7 @@ int mem_no; //# of  members
 int newnumber=0; //# of new users
 users new_user[100]; //lazem 34an tst5dmha fel save
 users curr_user[100];
+
 void menu (void)
 {
     system("cls");
@@ -269,7 +270,27 @@ void curr_mem(void)
 
 void del_mem()
 {
+    int i,position,id;
+    printf("Enter the User's ID you want to remove");
+    scanf("%d",&id);
+    for(i=0;i<mem_no;i++)
+    {
+        if(curr_user[i].id==id)
+            position=i;
+    }
+    for(i=position;i<mem_no-2;i++)
+    {
+     strcpy(curr_user[i+1].f_name,curr_user[i].f_name);
+     strcpy(curr_user[i+1].l_name,curr_user[i].l_name);
+     curr_user[i].id=curr_user[i+1].id;
+     curr_user[i].adrs.street_no=curr_user[i+1].adrs.street_no;
+     strcpy(curr_user[i+1].adrs.zone,curr_user[i].adrs.zone);
+     strcpy(curr_user[i+1].adrs.city,curr_user[i].adrs.city);
+     curr_user[i].phone=curr_user[i+1].phone;
+     curr_user[i].age=curr_user[i+1].age;
+     strcpy(curr_user[i+1].email,curr_user[i].email);
 
+}
 }
 void add_book()
 {
