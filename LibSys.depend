@@ -5,9 +5,15 @@
 	<time.h>
 	<conio.h>
 
-1512240206 source:c:\users\mohame\desktop\real_project\libsys\main.c
+1512429488 source:c:\users\mohame\desktop\real_project\libsys\main.c
 	<stdio.h>
 	<stdlib.h>
 	<time.h>
 	<conio.h>
+	"functions.h"
+
+1512429582 c:\users\mohame\desktop\real_project\libsys\functions.h
+	"struct.h"
+
+1512429327 c:\users\mohame\desktop\real_project\libsys\struct.h
 
