@@ -21,6 +21,7 @@ void check_id(void);
 void new_save(void);
 void del_save(void);
 void curr_mem(void);
+void show_list(void);
 
 int main()
 {
@@ -28,4 +29,3 @@ int main()
     menu();
     return 0;
 }
-

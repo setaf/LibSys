@@ -3,17 +3,6 @@
 
 typedef struct
 {
-    char catg[32];
-    char title[32];
-    char author[32];
-    int isbn;
-    int no_cpy;
-    char publisher[32];
-
-} books;
-
-typedef struct
-{
     int street_no;
     char zone[20];
     char city[20];
@@ -38,6 +27,18 @@ typedef struct
 
 typedef struct
 {
+    char catg[32];
+    char title[32];
+    char author[32];
+    char ISBN [32];
+    int no_cpy;
+    int curr_copy;
+    char publisher[32];
+    date publish;
+
+} books;
+typedef struct
+{
     int book_isbn;
     int user_id;
     int borr_no;
@@ -45,6 +46,5 @@ typedef struct
     date borrow_date;
     date duedate;
 } borrow;
-
 
 #endif // STRUCT_H_INCLUDED
