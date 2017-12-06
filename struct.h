@@ -33,6 +33,7 @@ typedef struct
     char ISBN [32];
     int no_cpy;
     int curr_copy;
+    int no_borr;
     char publisher[32];
     date publish;
 
