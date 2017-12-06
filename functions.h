@@ -46,6 +46,7 @@ void admin ()
     printf("6-show list\n");
     printf("7-Save Changes \n");
     printf("8-menu\n");
+    printf("9-popular");
     switch (getch())
     {
     case '1':
@@ -69,6 +70,9 @@ void admin ()
         break;
     case '8':
         menu();
+        break;
+    case '9':
+        popular_book();
         break;
     default:
         printf("Enter A valid Number");
@@ -278,10 +282,12 @@ void curr_mem()          //btgyb 3dd el current user w t7thom fe array
      while (!feof(temp))
     {
         fscanf(temp,"%[^,],%[^,],%[^,],%[^,],%[^,],%d,%d,%d,%d,%d,%d\n",book_curr[book_no].ISBN,book_curr[book_no].catg,book_curr[book_no].title,book_curr[book_no].author,book_curr[book_no].publisher,
-               &book_curr[book_no].publish.day,&book_curr[book_no].publish.month,&book_curr[book_no].publish.year,&book_curr[book_no].no_cpy,&book_curr[book_no].curr_copy,book_curr[book_no].no_borr);
+               &book_curr[book_no].publish.day,&book_curr[book_no].publish.month,&book_curr[book_no].publish.year,&book_curr[book_no].no_cpy,&book_curr[book_no].curr_copy,&book_curr[book_no].no_borr);
+
             book_no++;
     }
     fclose(temp);
+
 }
 void del_mem()
 {
@@ -437,8 +443,66 @@ void overdue()
 }
 void popular_book()
 {
+    int i,j,k;
+    books *min,*high;
+    high = malloc(sizeof(books)*5);
+    min = malloc(sizeof(books));
+    system("cls");
 
+        for(j=0;j<5;j++)
+            {
+                high[j]=book_curr[j];
+                strcpy(high[j].author,book_curr[j].author);
+                strcpy(high[j].catg,book_curr[j].catg);
+                strcpy(high[j].ISBN,book_curr[j].ISBN);
+                strcpy(high[j].publisher,book_curr[j].publisher);
+                strcpy(high[j].title,book_curr[j].title);
+            }
 
+     for(i=5;i<book_no;i++)
+     {
+         k=0;
+         *min=high[0];
+         strcpy(min->author,high[0].author);
+         strcpy(min->catg,high[0].catg);
+         strcpy(min->ISBN,high[0].ISBN);
+         strcpy(min->publisher,high[0].publisher);
+         strcpy(min->title,high[0].title);
+
+         for(j=0;j<5;j++)
+        {
+            if(high[j].no_borr< min->no_borr)
+               {
+                   k=j;
+                   *min=high[j];
+                   strcpy(min->author,high[j].author);
+                   strcpy(min->catg,high[j].catg);
+                   strcpy(min->ISBN,high[j].ISBN);
+                   strcpy(min->publisher,high[j].publisher);
+                   strcpy(min->title,high[j].title);
+               }
+        }
+
+        if(high[k].no_borr < book_curr[i].no_borr)
+        {
+            high[k].no_borr=book_curr[i].no_borr;
+            strcpy(high[k].author,book_curr[i].author);
+            strcpy(high[k].catg,book_curr[i].catg);
+            strcpy(high[k].ISBN,book_curr[i].ISBN);
+            strcpy(high[k].publisher,book_curr[i].publisher);
+            strcpy(high[k].title,book_curr[i].title);
+        }
+
+     }
+     printf("\t \t \t Popluar books\n\n");
+     for(j=0;j<5;j++)
+     {
+         printf("%s %s %s %s %s %d %d,%d %d %d %d \n",high[j].ISBN,high[j].catg,high[j].title,high[j].author,high[j].publisher,
+               high[j].publish.day,high[j].publish.month,high[j].publish.year,high[j].no_cpy,high[j].curr_copy,high[j].no_borr);
+
+     }
+     free(high);
+     free(min);
 }
 void ret_book(int id)
 {
@@ -490,7 +554,7 @@ void new_save()
     for(i=0;i<newbook;i++)
    {
         if(book_no==0&&i==0)
-       fprintf(fc,"%s,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d",book_new[i].ISBN,book_new[i].catg,book_new[i].title,book_new[i].author,book_new[i].publisher,
+            fprintf(fc,"%s,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d",book_new[i].ISBN,book_new[i].catg,book_new[i].title,book_new[i].author,book_new[i].publisher,
                book_new[i].publish.day,book_new[i].publish.month,book_new[i].publish.year,book_new[i].no_cpy,book_new[i].curr_copy,book_new[i].no_borr);
               else
                 fprintf(fc,"\n%s,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d",book_new[i].ISBN,book_new[i].catg,book_new[i].title,book_new[i].author,book_new[i].publisher,
@@ -534,7 +598,7 @@ void show_list()
         printf("%d\n\n",book_no);
         printf("\t books list \n");
         for(i=0;i<book_no;i++)
-        printf("%s  ,%s ,%s ,%s ,%s ,%d ,%d,%d ,%d,%d \n",book_curr[i].ISBN,book_curr[i].catg,book_curr[i].title,book_curr[i].author,book_curr[i].publisher,
+        printf("%s  ,%s ,%s ,%s ,%s ,%d ,%d,%d ,%d,%d,%d \n",book_curr[i].ISBN,book_curr[i].catg,book_curr[i].title,book_curr[i].author,book_curr[i].publisher,
                book_curr[i].publish.day,book_curr[i].publish.month,book_curr[i].publish.year,book_curr[i].no_cpy,book_curr[i].curr_copy,book_curr[i].no_borr);
 
         break;
