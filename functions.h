@@ -39,14 +39,15 @@ void admin ()
 {
     system("cls");
     printf("1-add\n");
-    printf("2-delete\n");
+    printf("2-delete book\n");
     printf("3-search\n");
     printf("4-overdue\n");
-    printf("5-delete mem\n");
+    printf("5-delete book\n");
     printf("6-show list\n");
     printf("7-Save Changes \n");
     printf("8-menu\n");
-    printf("9-popular");
+    printf("9-popular\n");
+
     switch (getch())
     {
     case '1':
@@ -54,6 +55,7 @@ void admin ()
         break;
     case '2':
         delete_book();
+        del_save();
         break;
     case '3':
         search_book();
@@ -63,6 +65,7 @@ void admin ()
         break;
     case '5':
         del_mem();
+        del_save();
     case '6' :
         show_list();
     case '7':
@@ -299,6 +302,7 @@ void del_mem()
         if(curr_user[i].id==id)
             position=i;
     }
+
     for(i=position;i<mem_no-2;i++)
     {
      strcpy(curr_user[i+1].f_name,curr_user[i].f_name);
@@ -399,17 +403,201 @@ void add_book()
 
 void delete_book()
 {
+    int i,position;
+    char isbn[32];
+    printf("Enter the Books's ISBN you want to remove");
+    scanf("%s",isbn);
+    for(i=0;i<book_no;i++)
+    {
+        if(strcmp(book_curr[i].ISBN,isbn)==0)
+            position=i;
+    }
+
+    for(i=position;i<book_no-2;i++)
+    {
+     strcpy(book_curr[i+1].catg,book_curr[i].catg);
+     strcpy(book_curr[i+1].author,book_curr[i].author);
+     book_curr[i].curr_copy=book_curr[i+1].curr_copy;
+     book_curr[i].publish.day=book_curr[i+1].publish.day;
+     book_curr[i].publish.month=book_curr[i+1].publish.month;
+     book_curr[i].publish.year=book_curr[i+1].publish.year;
+     strcpy(book_curr[i+1].publisher,book_curr[i].publisher);
+     strcpy(book_curr[i+1].ISBN,book_curr[i].ISBN);
+     book_curr[i].no_borr=book_curr[i+1].no_borr;
+     book_curr[i].no_cpy=book_curr[i+1].no_cpy;
+     strcpy(book_curr[i+1].title,book_curr[i].title);
 
 }
+
+}
+
 void borrow_book(int a)
 {
 
+
 }
+
 void search_book()
 {
+    char searchtarget[50];
+    char *z;
+    int x;
+    int titlecounter=0;
+    int authorcounter=0;
+     int isbncounter=0;
+    int catgcounter=0;
+    int counter=0;
+    system("cls");
+    printf("1-Search by book title:\n");
+    printf("2-Search by book author:\n");
+    printf("3-Search by book ISBN:\n");
+    printf("4-Search by book category:\n");
+    switch(getch())
+    {
+    case '1':
+    printf("\nplease search by book's title or a part of it:");
+    gets(searchtarget);
+    for(x=0;x<book_no;x++)
+    {
+        z=strstr(book_curr[x].title,searchtarget);
+        if(z!=NULL)
+        titlecounter++;
+    }
+    if (titlecounter==0)
+        printf("there is no books matches the request!!");
+    else
+    {
+        books searchdata[titlecounter];
+        for(x=0;x<book_no;x++)
+        {
+            z=strstr(book_curr[x].title,searchtarget);
+            if(z!=NULL)
+            {
+                searchdata[counter]=book_curr[x];
+                strcpy(searchdata[counter].title,book_curr[x].title);
+                strcpy(searchdata[counter].author,book_curr[x].author);
+                strcpy(searchdata[counter].publisher,book_curr[x].publisher);
+                strcpy(searchdata[counter].ISBN,book_curr[x].ISBN);
+                strcpy(searchdata[counter].catg,book_curr[x].catg);
+                counter++;
+        }
+        }
+        printf("the list of books found %d books\n",counter);
+        printf("------------------------------------\n");
+        for(x=0;x<counter;x++)
+           printf("%s  ,%s ,%s ,%s ,%s ,%d ,%d,%d ,%d,%d,%d \n",searchdata[x].ISBN,searchdata[x].catg,searchdata[x].title,searchdata[x].author,searchdata[x].publisher,
+               searchdata[x].publish.day,searchdata[x].publish.month,searchdata[x].publish.year,searchdata[x].no_cpy,searchdata[x].curr_copy,searchdata[x].no_borr);
+    }
 
+        break;
+    case '2':
+    counter=0;
+    printf("\nplease search by book's author:");
+    gets(searchtarget);
+    for(x=0;x<book_no;x++)
+    {
+        if(strcmp(searchtarget,book_curr[x].author)==0)
+        authorcounter++;
+    }
+    if (authorcounter==0)
+        printf("\nthere is no books matches the request!!");
+    else
+    {
+        books searchdata[authorcounter];
+        for(x=0;x<book_no;x++)
+        {
+            if(strcmp(searchtarget,book_curr[x].author)==0)
+            {
+                searchdata[counter]=book_curr[x];
+                strcpy(searchdata[counter].title,book_curr[x].title);
+                strcpy(searchdata[counter].author,book_curr[x].author);
+                strcpy(searchdata[counter].publisher,book_curr[x].publisher);
+                strcpy(searchdata[counter].ISBN,book_curr[x].ISBN);
+                strcpy(searchdata[counter].catg,book_curr[x].catg);
+                counter++;
+            }
+        }
+        printf("the list of books found %d books\n",counter);
+        printf("------------------------------------\n");
+        for(x=0;x<counter;x++)
+            printf("%s  ,%s ,%s ,%s ,%s ,%d ,%d,%d ,%d,%d,%d \n",searchdata[x].ISBN,searchdata[x].catg,searchdata[x].title,searchdata[x].author,searchdata[x].publisher,
+               searchdata[x].publish.day,searchdata[x].publish.month,searchdata[x].publish.year,searchdata[x].no_cpy,searchdata[x].curr_copy,searchdata[x].no_borr);
+    }
+    break;
+    case '3':
+    counter=0;
+    printf("\nplease search by book's ISBN:");
+    gets(searchtarget);
+    for(x=0;x<book_no;x++)
+    {
+        if(strcmp(searchtarget,book_curr[x].ISBN)==0)
+        isbncounter++;
+    }
+    if (isbncounter==0)
+        printf("there is no books matches the request!!");
+    else
+    {
+        books searchdata[isbncounter];
+        for(x=0;x<book_no;x++)
+        {
+            if(strcmp(searchtarget,book_curr[x].ISBN)==0)
+            {
+                searchdata[counter]=book_curr[x];
+                strcpy(searchdata[counter].title,book_curr[x].title);
+                strcpy(searchdata[counter].author,book_curr[x].author);
+                strcpy(searchdata[counter].publisher,book_curr[x].publisher);
+                strcpy(searchdata[counter].ISBN,book_curr[x].ISBN);
+                strcpy(searchdata[counter].catg,book_curr[x].catg);
+                counter++;
+            }
+        }
+        printf("the list of books found %d books\n",counter);
+        printf("------------------------------------\n");
+        for(x=0;x<counter;x++)
+         printf("%s  ,%s ,%s ,%s ,%s ,%d ,%d,%d ,%d,%d,%d \n",searchdata[x].ISBN,searchdata[x].catg,searchdata[x].title,searchdata[x].author,searchdata[x].publisher,
+               searchdata[x].publish.day,searchdata[x].publish.month,searchdata[x].publish.year,searchdata[x].no_cpy,searchdata[x].curr_copy,searchdata[x].no_borr);
+    }
+
+   break;
+
+  case '4':
+    counter=0;
+    printf("\nplease search by book's category:");
+    gets(searchtarget);
+    for(x=0;x<book_no;x++)
+    {
+        if(strcmp(searchtarget,book_curr[x].catg)==0)
+        catgcounter++;
+    }
+    if (catgcounter==0)
+        printf("there is no books matches the request!!");
+    else
+    {
+        books searchdata[catgcounter];
+        for(x=0;x<book_no;x++)
+        {
+            if(strcmp(searchtarget,book_curr[x].catg)==0)
+            {
+                searchdata[counter]=book_curr[x];
+                strcpy(searchdata[counter].title,book_curr[x].title);
+                strcpy(searchdata[counter].author,book_curr[x].author);
+                strcpy(searchdata[counter].publisher,book_curr[x].publisher);
+                strcpy(searchdata[counter].ISBN,book_curr[x].ISBN);
+                strcpy(searchdata[counter].catg,book_curr[x].catg);
+                counter++;
+        }
+        }
+        printf("the list of books found %d books\n",counter);
+        printf("------------------------------------\n");
+        for(x=0;x<counter;x++)
+         printf("%s  ,%s ,%s ,%s ,%s ,%d ,%d,%d ,%d,%d,%d \n",searchdata[x].ISBN,searchdata[x].catg,searchdata[x].title,searchdata[x].author,searchdata[x].publisher,
+               searchdata[x].publish.day,searchdata[x].publish.month,searchdata[x].publish.year,searchdata[x].no_cpy,searchdata[x].curr_copy,searchdata[x].no_borr);
+
+    }
+        break;
 }
 
+}
 void user (int id)
 {
     system("cls");
@@ -573,6 +761,14 @@ void del_save()
     fprintf(temp,"%s,%s,%d,%d,%s,%s,%d,%d,%s",curr_user[i].f_name,curr_user[i].l_name,curr_user[i].id,curr_user[i].adrs.street_no,
             curr_user[i].adrs.zone,curr_user[i].adrs.city,curr_user[i].phone,curr_user[i].age,curr_user[i].email);
     fclose(temp);
+
+    temp = fopen("books.txt","w");
+    for(i=0; i<book_no-1; i++)
+        fprintf(temp,"%s,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d",book_curr[book_no].ISBN,book_curr[book_no].catg,book_curr[book_no].title,book_curr[book_no].author,book_curr[book_no].publisher,
+               book_curr[book_no].publish.day,book_curr[book_no].publish.month,book_curr[book_no].publish.year,book_curr[book_no].no_cpy,book_curr[book_no].curr_copy,book_curr[book_no].no_borr);
+
+    fclose(temp);
+
 
 }
 void show_list()
