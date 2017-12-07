@@ -401,6 +401,173 @@ void borrow_book(int a)
 }
 void search_book()
 {
+    system("cls");
+    printf("1-Search by book title:\n");
+    printf("2-Search by book author:\n");
+    printf("3-Search by book ISBN:\n");
+    printf("4-Search by book category:\n");
+    switch(getch())
+    {
+    case '1':
+        char searchtarget[50];
+    char *z;
+    int x;
+    int titlecounter=0;
+    int counter=0;
+    printf("\nplease search by book's title or a part of it:");
+    gets(searchtarget);
+    for(x=0;x<book_no;x++)
+    {
+        z=strstr(curr_book[x].title,searchtarget);
+        if(z!=NULL)
+        titlecounter++;
+    }
+    if (titlecounter==0)
+        printf("there is no books matches the request!!");
+    else
+    {
+        books searchdata[titlecounter];
+        for(x=0;x<book_no;x++)
+        {
+            z=strstr(curr_book[x].title,searchtarget);
+            if(z!=NULL)
+            {
+                strcpy(searchdata[counter].title,curr_book[x].title);
+                strcpy(searchdata[counter].author,curr_book[x].author);
+                strcpy(searchdata[counter].publisher,curr_book[x].publisher);
+                strcpy(searchdata[counter].isbn,curr_book[x].isbn);
+                strcpy(searchdata[counter].date.Date,curr_book[x].date.Date);
+                searchdata[counter].avail_books=curr_book[x].avail_books;
+                searchdata[counter].no_cpy=curr_book[x].no_cpy;
+                strcpy(searchdata[counter].catg,curr_book[x].catg);
+                counter++;
+        }
+        }
+        printf("the list of books found %d books\n",counter);
+        printf("------------------------------------\n");
+        for(x=0;x<counter;x++)
+            printf("%s, %s, %s, %s, %s, %d, %d, %s\n",searchdata[x].title,searchdata[x].author,searchdata[x].publisher,searchdata[x].isbn,
+                   searchdata[x].date.Date,searchdata[x].no_cpy,searchdata[x].avail_books,searchdata[x].catg);
+    }
+
+        break;
+    case '2':
+        char searchtarget[50];
+    int x;
+    int authorcounter=0;
+    int counter=0;
+    printf("\nplease search by book's author:");
+    gets(searchtarget);
+    for(x=0;x<book_no;x++)
+    {
+        if(strcmp(searchtarget,curr_book[x].author)==0)
+        authorcounter++;
+    }
+    if (authorcounter==0)
+        printf("\nthere is no books matches the request!!");
+    else
+    {
+        books searchdata[authorcounter];
+        for(x=0;x<book_no;x++)
+        {
+            if(strcmp(searchtarget,curr_book[x].author)==0)
+            {
+                strcpy(searchdata[counter].title,curr_book[x].title);
+                strcpy(searchdata[counter].author,curr_book[x].author);
+                strcpy(searchdata[counter].publisher,curr_book[x].publisher);
+                strcpy(searchdata[counter].isbn,curr_book[x].isbn);
+                strcpy(searchdata[counter].date.Date,curr_book[x].date.Date);
+                searchdata[counter].avail_books=curr_book[x].avail_books;
+                searchdata[counter].no_cpy=curr_book[x].no_cpy;
+                strcpy(searchdata[counter].catg,curr_book[x].catg);
+                counter++;
+        }
+        }
+        printf("the list of books found %d books\n",counter);
+        printf("------------------------------------\n");
+        for(x=0;x<counter;x++)
+            printf("%s, %s, %s, %s, %s, %d, %d, %s\n",searchdata[x].title,searchdata[x].author,searchdata[x].publisher,searchdata[x].isbn,
+                   searchdata[x].date.Date,searchdata[x].no_cpy,searchdata[x].avail_books,searchdata[x].catg);
+    }
+    break;
+    case '3':
+   char searchtarget[50];
+    int x;
+    int isbncounter=0;
+    int counter=0;
+    printf("\nplease search by book's ISBN:");
+    gets(searchtarget);
+    for(x=0;x<book_no;x++)
+    {
+        if(strcmp(searchtarget,curr_book[x].isbn)==0)
+        isbncounter++;
+    }
+    if (isbncounter==0)
+        printf("there is no books matches the request!!");
+    else
+    {
+        books searchdata[isbncounter];
+        for(x=0;x<book_no;x++)
+        {
+            if(strcmp(searchtarget,curr_book[x].isbn)==0)
+            {
+                strcpy(searchdata[counter].title,curr_book[x].title);
+                strcpy(searchdata[counter].author,curr_book[x].author);
+                strcpy(searchdata[counter].publisher,curr_book[x].publisher);
+                strcpy(searchdata[counter].isbn,curr_book[x].isbn);
+                strcpy(searchdata[counter].date.Date,curr_book[x].date.Date);
+                searchdata[counter].avail_books=curr_book[x].avail_books;
+                searchdata[counter].no_cpy=curr_book[x].no_cpy;
+                strcpy(searchdata[counter].catg,curr_book[x].catg);
+                counter++;
+        }
+        }
+        printf("the list of books found %d books\n",counter);
+        printf("------------------------------------\n");
+        for(x=0;x<counter;x++)
+            printf("%s, %s, %s, %s, %s, %d, %d, %s\n",searchdata[x].title,searchdata[x].author,searchdata[x].publisher,searchdata[x].isbn,
+                   searchdata[x].date.Date,searchdata[x].no_cpy,searchdata[x].avail_books,searchdata[x].catg);
+    }
+   break;
+  case '4':
+        char searchtarget[50];
+    int x;
+    int catgcounter=0;
+    int counter=0;
+    printf("\nplease search by book's category:");
+    gets(searchtarget);
+    for(x=0;x<book_no;x++)
+    {
+        if(strcmp(searchtarget,curr_book[x].catg)==0)
+        catgcounter++;
+    }
+    if (catgcounter==0)
+        printf("there is no books matches the request!!");
+    else
+    {
+        books searchdata[catgcounter];
+        for(x=0;x<book_no;x++)
+        {
+            if(strcmp(searchtarget,curr_book[x].catg)==0)
+            {
+                strcpy(searchdata[counter].title,curr_book[x].title);
+                strcpy(searchdata[counter].author,curr_book[x].author);
+                strcpy(searchdata[counter].publisher,curr_book[x].publisher);
+                strcpy(searchdata[counter].isbn,curr_book[x].isbn);
+                strcpy(searchdata[counter].date.Date,curr_book[x].date.Date);
+                searchdata[counter].avail_books=curr_book[x].avail_books;
+                searchdata[counter].no_cpy=curr_book[x].no_cpy;
+                strcpy(searchdata[counter].catg,curr_book[x].catg);
+                counter++;
+        }
+        }
+        printf("the list of books found %d books\n",counter);
+        printf("------------------------------------\n");
+        for(x=0;x<counter;x++)
+            printf("%s, %s, %s, %s, %s, %d, %d, %s\n",searchdata[x].title,searchdata[x].author,searchdata[x].publisher,searchdata[x].isbn,
+                   searchdata[x].date.Date,searchdata[x].no_cpy,searchdata[x].avail_books,searchdata[x].catg);
+    }
+        break;
 void search_bookcatg()
 {
     char searchtarget[50];
@@ -504,6 +671,50 @@ char searchtarget[50];
         for(x=0;x<book_no;x++)
         {
             if(strcmp(searchtarget,curr_book[x].isbn)==0)
+            {
+                strcpy(searchdata[counter].title,curr_book[x].title);
+                strcpy(searchdata[counter].author,curr_book[x].author);
+                strcpy(searchdata[counter].publisher,curr_book[x].publisher);
+                strcpy(searchdata[counter].isbn,curr_book[x].isbn);
+                strcpy(searchdata[counter].date.Date,curr_book[x].date.Date);
+                searchdata[counter].avail_books=curr_book[x].avail_books;
+                searchdata[counter].no_cpy=curr_book[x].no_cpy;
+                strcpy(searchdata[counter].catg,curr_book[x].catg);
+                counter++;
+        }
+        }
+        printf("the list of books found %d books\n",counter);
+        printf("------------------------------------\n");
+        for(x=0;x<counter;x++)
+            printf("%s, %s, %s, %s, %s, %d, %d, %s\n",searchdata[x].title,searchdata[x].author,searchdata[x].publisher,searchdata[x].isbn,
+                   searchdata[x].date.Date,searchdata[x].no_cpy,searchdata[x].avail_books,searchdata[x].catg);
+    }
+
+}
+void search_booktitle()
+{
+    char searchtarget[50];
+    char *z;
+    int x;
+    int titlecounter=0;
+    int counter=0;
+    printf("\nplease search by book's title or a part of it:");
+    gets(searchtarget);
+    for(x=0;x<book_no;x++)
+    {
+        z=strstr(curr_book[x].title,searchtarget);
+        if(z!=NULL)
+        titlecounter++;
+    }
+    if (titlecounter==0)
+        printf("there is no books matches the request!!");
+    else
+    {
+        books searchdata[titlecounter];
+        for(x=0;x<book_no;x++)
+        {
+            z=strstr(curr_book[x].title,searchtarget);
+            if(z!=NULL)
             {
                 strcpy(searchdata[counter].title,curr_book[x].title);
                 strcpy(searchdata[counter].author,curr_book[x].author);
