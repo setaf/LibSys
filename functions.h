@@ -55,7 +55,6 @@ void admin ()
         break;
     case '2':
         delete_book();
-        del_save();
         break;
     case '3':
         search_book();
@@ -65,11 +64,11 @@ void admin ()
         break;
     case '5':
         del_mem();
-        del_save();
     case '6' :
         show_list();
     case '7':
     new_save();
+    del_save();
         break;
     case '8':
         menu();
@@ -321,12 +320,79 @@ void del_mem()
 void add_book()
 {
    int i,addcop,flag=0;
-   if(fc=fopen("books.txt","r") == NULL)
-        {
-            fc=fopen("books.txt","w");
+
             system("cls");
-            printf("ente isbn");
-            scanf("%s",book_new[newbook].ISBN);
+            printf("1-add New copies:\n");
+            printf("2-Add New Book:\n");
+            switch(getch())
+            {
+                case '1':
+                    new_cpy();
+                    break;
+                case '2':
+                    if(fc=fopen("books.txt","r") == NULL)
+                    {
+                        fc=fopen("books.txt","w");
+                        system("cls");
+                        printf("ente isbn\n");
+                        scanf("%s",book_new[newbook].ISBN);
+                        printf("enter catg\n");
+                        scanf("%s",book_new[newbook].catg);
+                        getchar();
+                        printf("enter tittle\n");
+                        gets(book_new[newbook].title);
+                        printf("enter author");
+                        gets(book_new[newbook].author);
+                        printf("enter pulisher\n");
+                        gets(book_new[newbook].publisher);
+                        printf("enter date of publish DD/MM/YYYY\n");
+                        do
+                        {
+                        scanf("%d%d%d",&book_new[newbook].publish.day,&book_new[newbook].publish.month,&book_new[newbook].publish.year);
+                        if(book_new[newbook].publish.day > 28 +fmod(book_new[newbook].publish.month + floor(book_new[newbook].publish.month/8),2) + (2 % book_new[newbook].publish.month) + 2 * floor(1/book_new[newbook].publish.month))
+                        { // equation of day and month
+                            printf("Enter Valid Date\n");
+                            flag++;
+                        }
+                        else if (book_new[newbook].publish.day<0 || book_new[newbook].publish.month<0)
+                        {
+                            printf("Enter Valid Date\n");
+                            flag++;
+                        }
+                        else if (book_new[newbook].publish.month>12)
+                        {
+                            printf("Enter Valid Date\n");
+                            flag++;
+                        }
+                        }while(flag !=0);
+
+                        printf("enter the No.copies");
+                        do{
+                                scanf("%d",&book_new[newbook].no_cpy);
+                                if(book_new[newbook].no_cpy < 0)
+                                printf("Enter a Postive Number of Copy \a \n: ");
+                          }while(book_new[newbook].no_cpy < 0);
+                        book_new[newbook].curr_copy=book_new[newbook].no_cpy;
+                        newbook++;
+                        book_new[newbook].no_borr=0;
+                        fclose(fc);
+                        admin();
+                        }
+
+                        else
+                        {
+                            fc=fopen("books.txt","a");
+                            system("cls");
+                            printf("ente isbn");
+                            scanf("%s",book_new[newbook].ISBN);
+                            for(i=0;i<book_no;i++)
+                            {
+                                if(strcmp(book_new[newbook].ISBN,book_curr[i].ISBN)==0)
+                                {
+                                    printf("This ISBN IS already exist:");
+                                }
+
+                            }
             printf("enter catg");
             scanf("%s",book_new[newbook].catg);
             getchar();
@@ -337,13 +403,33 @@ void add_book()
             printf("enter pulisher");
             gets(book_new[newbook].publisher);
             printf("enter date of publish DD/MM/YYYY");
-            scanf("%d%d%d",&book_new[newbook].publish.day,&book_new[newbook].publish.month,&book_new[newbook].publish.year);
-            printf("enter the No.copies");
+                        do
+                        {
+                        scanf("%d%d%d",&book_new[newbook].publish.day,&book_new[newbook].publish.month,&book_new[newbook].publish.year);
+                        if(book_new[newbook].publish.day > 28 + fmod(book_new[newbook].publish.month + floor(book_new[newbook].publish.month/8),2) + (2 % book_new[newbook].publish.month) + 2 * floor(1/book_new[newbook].publish.month))
+                        { // equation of day and month
+                            printf("Enter Valid Date\n");
+                            flag++;
+                        }
+                        else if (book_new[newbook].publish.day<0 || book_new[newbook].publish.month<0)
+                        {
+                            printf("Enter Valid Date\n");
+                            flag++;
+                        }
+                        else if (book_new[newbook].publish.month>12)
+                        {
+                            printf("Enter Valid Date\n");
+                            flag++;
+                        }
+                        }while(flag !=0);
+            printf("enter The no. Of Copies \n");
+
             do{
-            scanf("%d",&book_new[newbook].no_cpy);
-            if(book_new[newbook].no_cpy<0)
-                printf("Enter a Postive Number of Copy \a \n: ");
-            }while(book_new[newbook].no_cpy<0);
+                    scanf("%d",&book_new[newbook].no_cpy);
+                  if(book_new[newbook].no_cpy < 0)
+                printf("Enter a Postive Number of Copy :\a \n ");
+              }while(book_new[newbook].no_cpy < 0);
+
             book_new[newbook].curr_copy=book_new[newbook].no_cpy;
             newbook++;
             book_new[newbook].no_borr=0;
@@ -351,89 +437,33 @@ void add_book()
             admin();
 
         }
-        else
-        {
-            fc=fopen("books.txt","a");
-            system("cls");
-            printf("ente isbn");
-            scanf("%s",book_new[newbook].ISBN);
-            for(i=0;i<book_no;i++)
-            {
-                if(book_new[newbook].ISBN==book_curr[i].ISBN)
-                {
-                    printf("This book is Already Exist Enter the No of Copies:");
-                    scanf("%d",&addcop);
-                    book_curr[i].no_cpy+=addcop;
-                    book_curr[i].curr_copy+=addcop;
-                    flag++;
 
-                }
-            }
-            if(flag==1)
-            {
-                newbook--;
-                fclose(fc);
-                admin();
-            }
-            else
-            {
-            printf("enter catg");
-            scanf("%s",book_new[newbook].catg);
-            getchar();
-            printf("enter tittle");
-            gets(book_new[newbook].title);
-            printf("enter author");
-            gets(book_new[newbook].author);
-            printf("enter pulisher");
-            gets(book_new[newbook].publisher);
-            printf("enter date of publish DD/MM/YYYY");
-            scanf("%d%d%d",&book_new[newbook].publish.day,&book_new[newbook].publish.month,&book_new[newbook].publish.year);
-            printf("enter the No.copies");
-            scanf("%d",&book_new[newbook].no_cpy);
-            book_new[newbook].curr_copy=book_new[newbook].no_cpy;
-            newbook++;
-            book_new[newbook].no_borr=0;
-            fclose(fc);
-            admin();
-        }
-        }
-
+}
 }
 
 
 void delete_book()
 {
-    int i,position;
-    char isbn[32];
-    printf("Enter the Books's ISBN you want to remove");
-    scanf("%s",isbn);
+    system("cls");
+    printf("Books List:\n");
+    char del_isbn [32];
+    int i;
     for(i=0;i<book_no;i++)
+        printf("%s  ,%s ,%s ,%s ,%s ,%d ,%d,%d ,%d,%d,%d \n",book_curr[i].ISBN,book_curr[i].catg,book_curr[i].title,book_curr[i].author,book_curr[i].publisher,
+               book_curr[i].publish.day,book_curr[i].publish.month,book_curr[i].publish.year,book_curr[i].no_cpy,book_curr[i].curr_copy,book_curr[i].no_borr);
+    printf("Enter The isbn you want to delete:");
+    scanf("%s",del_isbn);
+    for (i=0;i<book_no;i++)
     {
-        if(strcmp(book_curr[i].ISBN,isbn)==0)
-            position=i;
+        if(strcmp(book_curr[i].ISBN,del_isbn)==0)
+        break;
     }
-
-    for(i=position;i<book_no-2;i++)
-    {
-     strcpy(book_curr[i+1].catg,book_curr[i].catg);
-     strcpy(book_curr[i+1].author,book_curr[i].author);
-     book_curr[i].curr_copy=book_curr[i+1].curr_copy;
-     book_curr[i].publish.day=book_curr[i+1].publish.day;
-     book_curr[i].publish.month=book_curr[i+1].publish.month;
-     book_curr[i].publish.year=book_curr[i+1].publish.year;
-     strcpy(book_curr[i+1].publisher,book_curr[i].publisher);
-     strcpy(book_curr[i+1].ISBN,book_curr[i].ISBN);
-     book_curr[i].no_borr=book_curr[i+1].no_borr;
-     book_curr[i].no_cpy=book_curr[i+1].no_cpy;
-     strcpy(book_curr[i+1].title,book_curr[i].title);
-
-}
+    strcpy(book_curr[i].ISBN,"re");
 
 }
 
 void borrow_book(int a)
 {
-
 
 }
 
@@ -762,10 +792,16 @@ void del_save()
             curr_user[i].adrs.zone,curr_user[i].adrs.city,curr_user[i].phone,curr_user[i].age,curr_user[i].email);
     fclose(temp);
 
-    temp = fopen("books.txt","w");
-    for(i=0; i<book_no-1; i++)
-        fprintf(temp,"%s,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d",book_curr[book_no].ISBN,book_curr[book_no].catg,book_curr[book_no].title,book_curr[book_no].author,book_curr[book_no].publisher,
-               book_curr[book_no].publish.day,book_curr[book_no].publish.month,book_curr[book_no].publish.year,book_curr[book_no].no_cpy,book_curr[book_no].curr_copy,book_curr[book_no].no_borr);
+    temp=fopen("books.txt","w");
+    for(i=0;i<book_no;i++)
+    {
+       if(strcmp(book_curr[i].ISBN,"re")==0)
+        continue;
+
+       else
+        fprintf(temp,"%s,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d\n",book_curr[i].ISBN,book_curr[i].catg,book_curr[i].title,book_curr[i].author,book_curr[i].publisher,
+                book_curr[i].publish.day,book_curr[i].publish.month,book_curr[i].publish.year,book_curr[i].no_cpy,book_curr[i].curr_copy,book_curr[i].no_borr);
+    }
 
     fclose(temp);
 
