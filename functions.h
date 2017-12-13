@@ -388,11 +388,12 @@ void add_book()
                             for(i=0;i<book_no;i++)
                             {
                                 if(strcmp(book_new[newbook].ISBN,book_curr[i].ISBN)==0)
-                                {
-                                    printf("This ISBN IS already exist:");
-                                }
-
+                                break;
                             }
+            if(i!=book_no)
+                new_cpy();
+            else
+            {
             printf("enter catg");
             scanf("%s",book_new[newbook].catg);
             getchar();
@@ -435,9 +436,8 @@ void add_book()
             book_new[newbook].no_borr=0;
             fclose(fc);
             admin();
-
-        }
-
+            }
+            }
 }
 }
 
@@ -728,7 +728,34 @@ void ret_book(int id)
 }
 void new_cpy()
 {
+    int no,i;
+    system("cls");
+    printf("Enter The ISBN Of Book:\n");
+    scanf("%s",book_new[newbook].ISBN);
+    for(i=0;i<book_no;i++)
+        {
+            if(strcmp(book_new[newbook].ISBN,book_curr[i].ISBN)==0)
+                break;
+        }
+    if(i!=book_no)
+    {
+    printf("%d\n",i);
+    printf("Enter The Number of Copies:\n");
+    scanf("%d",&no);
+    book_new[newbook]=book_curr[i];
+    book_new[newbook].no_cpy+=no;
+    book_new[newbook].curr_copy+=no;
+    strcpy(book_new[newbook].catg,book_curr[i].catg);
+    strcpy(book_new[newbook].author,book_curr[i].author);
+    strcpy(book_new[newbook].publisher,book_curr[i].publisher);
+    strcpy(book_new[newbook].title,book_curr[i].title);
+    strcpy(book_curr[i].ISBN,"re");
+    newbook++;
+    }
+    else
+        printf("Not Found");
 
+        admin();
 }
 void check_id()
 {
@@ -771,12 +798,12 @@ void new_save()
     fc=fopen("books.txt","a");
     for(i=0;i<newbook;i++)
    {
-        if(book_no==0&&i==0)
-            fprintf(fc,"%s,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d",book_new[i].ISBN,book_new[i].catg,book_new[i].title,book_new[i].author,book_new[i].publisher,
+       if(book_no==0&&i==0)
+        fprintf(fc,"%s,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d",book_new[i].ISBN,book_new[i].catg,book_new[i].title,book_new[i].author,book_new[i].publisher,
                book_new[i].publish.day,book_new[i].publish.month,book_new[i].publish.year,book_new[i].no_cpy,book_new[i].curr_copy,book_new[i].no_borr);
               else
-                fprintf(fc,"\n%s,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d",book_new[i].ISBN,book_new[i].catg,book_new[i].title,book_new[i].author,book_new[i].publisher,
-               book_new[i].publish.day,book_new[i].publish.month,book_new[i].publish.year,book_new[i].no_cpy,book_new[i].curr_copy,book_new[i].no_borr); // 3lshn mynzlsh str
+        fprintf(fc,"\n%s,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d",book_new[i].ISBN,book_new[i].catg,book_new[i].title,book_new[i].author,book_new[i].publisher,
+               book_new[i].publish.day,book_new[i].publish.month,book_new[i].publish.year,book_new[i].no_cpy,book_new[i].curr_copy,book_new[i].no_borr);
    }
     fclose(fc);
 
@@ -785,27 +812,35 @@ void new_save()
 
 void del_save()
 {
-    int i;
+    int i,flag=0;
     temp = fopen("members.txt","w");
     for(i=0; i<mem_no-1; i++)
     fprintf(temp,"%s,%s,%d,%d,%s,%s,%d,%d,%s",curr_user[i].f_name,curr_user[i].l_name,curr_user[i].id,curr_user[i].adrs.street_no,
             curr_user[i].adrs.zone,curr_user[i].adrs.city,curr_user[i].phone,curr_user[i].age,curr_user[i].email);
     fclose(temp);
-
     temp=fopen("books.txt","w");
     for(i=0;i<book_no;i++)
     {
        if(strcmp(book_curr[i].ISBN,"re")==0)
-        continue;
+        {
+            continue;
+        }
 
        else
-        fprintf(temp,"%s,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d\n",book_curr[i].ISBN,book_curr[i].catg,book_curr[i].title,book_curr[i].author,book_curr[i].publisher,
-                book_curr[i].publish.day,book_curr[i].publish.month,book_curr[i].publish.year,book_curr[i].no_cpy,book_curr[i].curr_copy,book_curr[i].no_borr);
-    }
+       {
+       if(i==0||flag==0)
+        {
+            fprintf(temp,"%s,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d",book_curr[i].ISBN,book_curr[i].catg,book_curr[i].title,book_curr[i].author,book_curr[i].publisher,
+            book_curr[i].publish.day,book_curr[i].publish.month,book_curr[i].publish.year,book_curr[i].no_cpy,book_curr[i].curr_copy,book_curr[i].no_borr);
+            flag++;
+        }
+        else
+            fprintf(temp,"\n%s,%s,%s,%s,%s,%d,%d,%d,%d,%d,%d",book_curr[i].ISBN,book_curr[i].catg,book_curr[i].title,book_curr[i].author,book_curr[i].publisher,
+            book_curr[i].publish.day,book_curr[i].publish.month,book_curr[i].publish.year,book_curr[i].no_cpy,book_curr[i].curr_copy,book_curr[i].no_borr);
+        }
 
-    fclose(temp);
-
-
+}
+        fclose(temp);
 }
 void show_list()
 {
