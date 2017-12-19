@@ -18,6 +18,7 @@ typedef struct
     char email[64];
     address adrs;
     int phone;
+    int no_borru;
 } users;
 
 typedef struct
@@ -46,6 +47,7 @@ typedef struct
     date ret_date;        //m4 3arf azay bst5dm el time.h lw 7t3rf tta3ml ams7 dool w el function ele ana zwdtha
     date borrow_date;
     date duedate;
+    char returndate[32];
 } borrow;
 
 #endif // STRUCT_H_INCLUDED
