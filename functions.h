@@ -620,16 +620,17 @@ void ret_book(int id)
  if ((fd = fopen("borrow.txt","r")) == NULL)
   {
       fd = fopen("borrow.txt","w");
-      borrows[newreturn].user_id=id;
-       printf("please enter the book ISBN you want to return:\n");
+       borrows[newborrow].user_id=id;
+      printf("please enter the book ISBN you want to borrow:\n");
       fflush(stdin);
       gets(isbn);
+
      for(x=0;x<book_no;x++)
     {
         if(strcmp(isbn,book_curr[x].ISBN)==0)
         {
         indexbook=x;
-        borrows[newreturn].book_isbn=isbn;
+        borrows[newbook].book_isbn=isbn;
         }
         else
         {
@@ -654,6 +655,7 @@ void ret_book(int id)
               borrows[newborrow].borr_no++;
               curr_user[indexmem].no_borru++;
               book_curr[indexbook].curr_copy--;
+              book_curr[indexbook].no_borr++;
               borrows[newborrow].borrow_date.month=mytime->tm_mon+1;
               borrows[newborrow].borrow_date.day=mytime->tm_mday;
               borrows[newborrow].borrow_date.year=mytime->tm_year+1900;
@@ -685,6 +687,13 @@ void ret_book(int id)
           return addmem();
           }
   }
+  else{
+  printf("you reached the maximum number of borrows:\n");
+  printf("enter any key to return to the menu:");
+  getch();
+  fclose(fd);
+  return addmem();
+  }
   }
   else{
       fd = fopen("borrow.txt","a");
@@ -698,7 +707,6 @@ void ret_book(int id)
         if(strcmp(isbn,book_curr[x].ISBN)==0)
         {
         indexbook=x;
-        printf("%d",x);
         borrows[newbook].book_isbn=isbn;
         }
         else
@@ -724,7 +732,6 @@ void ret_book(int id)
           {
               borrows[newborrow].borr_no++;
               curr_user[indexmem].no_borru++;
-              printf("%d",curr_user[indexmem].no_borru);
               book_curr[indexbook].curr_copy--;
               book_curr[indexbook].no_borr++;
               borrows[newborrow].borrow_date.month=mytime->tm_mon+1;
@@ -744,9 +751,6 @@ void ret_book(int id)
                    borrows[newborrow].duedate.month-=12;
               }
               printf("you borrowed a book\n");
-              for(i=0;i<mem_no;i++)
-              printf("%s,%s,%d,%d,%s,%s,0%d,%d,%d,%s\n",curr_user[i].f_name,curr_user[i].l_name,curr_user[i].id,curr_user[i].adrs.street_no,
-                curr_user[i].adrs.zone,curr_user[i].adrs.city,curr_user[i].phone,curr_user[i].no_borru,curr_user[i].age,curr_user[i].email);
               printf("enter any key to return to the menu!");
               getch();
           newborrow++;
@@ -761,7 +765,14 @@ void ret_book(int id)
           return addmem();
           }
   }
+  else{
+  printf("you reached the maximum number of borrows:\n");
+  printf("enter any key to return to the menu:");
+  getch();
+  fclose(fd);
+  return addmem();
   }
+}
 }
 void new_cpy()
 {
@@ -847,8 +858,9 @@ void new_save()
     fd= fopen("borrow.txt","a");
     for(i=0;i<newborrow;i++)
     {
-        fprintf(fd,"\n%s,%d,%d/%d/%d,%d/%d/%d,null",borrows[i].book_isbn,borrows[i].user_id,borrows[i].borrow_date.day,borrows[i].borrow_date.month,
-                borrows[i].borrow_date.year,borrows[i].duedate.day,borrows[i].duedate.month,borrows[i].duedate.year);
+        fprintf(fd,"\n%s,%d,%d/%d/%d,%d/%d/%d,%d/%d/%d",borrows[i].book_isbn,borrows[i].user_id,borrows[i].borrow_date.day,borrows[i].borrow_date.month,
+                borrows[i].borrow_date.year,borrows[i].duedate.day,borrows[i].duedate.month,borrows[i].duedate.year,borrows[i].ret_date.day,borrows[i].ret_date.month,
+                borrows[i].ret_date.year);
     }
     fclose(fd);
 }
