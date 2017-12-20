@@ -2,8 +2,11 @@
 #include <stdlib.h>
 #include <time.h>
 #include <conio.h>
+#include<conio.h>
 #include "functions.h"
+#include <windows.h>
 
+void pass_word(void);
 void del_mem(void);
 void menu(void);
 void add_book(void);

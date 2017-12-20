@@ -11,18 +11,31 @@ users new_user[100]; //lazem 34an tst5dmha fel save
 users curr_user[100];
 books book_new[100];
 books book_curr[100];
+char password[10]={"test"};
+
+void delay(unsigned int mseconds)
+{
+    clock_t goal = mseconds + clock();
+    while (goal > clock());
+}
 
 void menu (void)
 {
     system("cls");
-    printf("1-admin\n");
-    printf("2-user\n");
-    printf("3-exit\n");
-    printf("%d",mem_no);
+    system("color 71");
+    printf("\n\n\n\n\n\n\t\t\t\xDB\xDB\xDB\xDb\xB2 Welcome To Main Menu \xB2\xDB\xDB\xDB\xDb\n\n\n");
+     delay(500);
+    printf("\t\t\t\xDB 1-Administrator Menu\n\t\t\t\xDB\n\t\t\t\xDB\n");
+    delay(150);
+    printf("\t\t\t\xDB 2-Members Menu\n\t\t\t\xDB\n\t\t\t\xDB\n");
+     delay(150);
+    printf("\t\t\t\xDB 3-Exit\n\t\t\t\xDB\n");
+     delay(150);
+    printf("\t\t\t\xDB Enter You Choice:");
     switch(getch())
     {
     case '1':
-        admin();
+         pass_word();
         break;
     case '2':
         addmem();
@@ -31,23 +44,25 @@ void menu (void)
         exit(0);
         break;
     default:
-        printf("Enter A valid Number:");
+        printf("\n\n\t\t\t  Enter A valid Number\a");
+        delay(1000);
         menu();
     }
 }
 void admin ()
 {
     system("cls");
-    printf("1-add\n");
-    printf("2-delete book\n");
-    printf("3-search\n");
-    printf("4-overdue\n");
-    printf("5-delete book\n");
-    printf("6-show list\n");
-    printf("7-Save Changes \n");
-    printf("8-menu\n");
-    printf("9-popular\n");
-
+    system("color 9f");
+    printf("\t\t\t\xDB\xDB\xDB Welcome To Administrator Menu  \xDB\xDB\xDB\n\n");
+    printf("\t\t\t\xDB 1-Add Book\n\t\t\t\xDB\n");
+    printf("\t\t\t\xDB 2-Delete Book\n\t\t\t\xDB\n");
+    printf("\t\t\t\xDB 3-Search Menu\n\t\t\t\xDB\n");
+    printf("\t\t\t\xDB 4-Overdue Books\n\t\t\t\xDB\n");
+    printf("\t\t\t\xDB 5-Show List\n\t\t\t\xDB\n");
+    printf("\t\t\t\xDB 6-Popular Books\n\t\t\t\xDB\n");
+    printf("\t\t\t\xDB 7-Save Changes \n\t\t\t\xDB\n");
+    printf("\t\t\t\xDB 8-Main Menu\n\t\t\t\xDB\n");
+    printf("\t\t\t\xDB Enter Your Choice:");
     switch (getch())
     {
     case '1':
@@ -77,7 +92,8 @@ void admin ()
         popular_book();
         break;
     default:
-        printf("Enter A valid Number");
+        printf("\n\t\t\t\tEnter A valid Number\a");
+        delay(500);
         admin();
 
 }
@@ -874,6 +890,39 @@ void show_list()
         show_list();
     }
 
+}
+void pass_word()
+{
+        int j;
+    char pass[10];
+    system("cls");
+    printf("\n\n\n\n\n\t\t");
+    for(j=0;j<10;j++)
+    {
+    delay(50);
+    printf("\xB2");
+    }
+    printf("Password");
+    for(j=0;j<10;j++)
+    {
+    delay(50);
+    printf("\xB2");
+    }
+    printf("\n\n\n\n\n\t\t");
+    printf("Enter Password:");
+    gets(pass);
+    if(strcmp(pass,password)!=0)
+    {
+        printf("\n\n\t\t Wrong Password \a");
+        delay(700);
+       pass_word();
+    }
+    else
+    {
+        printf("\n\n\t\t Correct Password ");
+        delay(500);
+        admin();
+    }
 }
 
 #endif // FUNCTIONS_H_INCLUDED
