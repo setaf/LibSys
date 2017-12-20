@@ -591,7 +591,7 @@ void borrow_book(int id)
 }
 void search_book()
 {
-
+  search_double();
 }
 void user (int id)
 {
@@ -904,7 +904,56 @@ void show_list()
         printf("enter Valid input:");
         show_list();
     }
-
 }
+void search_double() //aldouble search albonus bs lsa ma7tathash fe al menu m3 alsearch 7azwedha k case 5 w asmha k function
+{
+    system("cls");
+    char searchtarget[50];
+    char *z;
+    int x;
+    int titlecounter=0;
+    int authorcounter=0;
+    int counter=0;
+    printf("please search by book title or book author or both:\n");
+    gets(searchtarget);
+    for(x=0;x<book_no;x++)
+    {
+        z=strstr(book_curr[x].title,searchtarget);
+        if(z!=NULL)
+        titlecounter++;
+          if(strcmp(searchtarget,book_curr[x].author)==0)
+        authorcounter++;
+    }
+    if (titlecounter==0 && authorcounter==0)
+        printf("there is no books matches the request!!");
+    else
+    {
+        books searchdata[30];
+        for(x=0;x<book_no;x++)
+        {
+            z=strstr(book_curr[x].title,searchtarget);
+            if(z!=NULL ||strcmp(searchtarget,book_curr[x].author)==0)
+            {
+                strcpy(searchdata[counter].title,book_curr[x].title);
+                strcpy(searchdata[counter].author,book_curr[x].author);
+                strcpy(searchdata[counter].publisher,book_curr[x].publisher);
+                strcpy(searchdata[counter].ISBN,book_curr[x].ISBN);
+                searchdata[counter].publish.day=book_curr[x].publish.day;
+                searchdata[counter].publish.month=book_curr[x].publish.month;
+                searchdata[counter].publish.year=book_curr[x].publish.year;
+                searchdata[counter].curr_copy=book_curr[x].curr_copy;
+                searchdata[counter].no_cpy=book_curr[x].no_cpy;
+                strcpy(searchdata[counter].catg,book_curr[x].catg);
+                counter++;
+        }
+        }
+        printf("the list of books found %d books\n",counter);
+        printf("------------------------------------\n");
+        for(x=0;x<counter;x++)
+            printf("%s, %s, %s, %s, %d, %d, %d, %d, %d, %s\n",searchdata[x].title,searchdata[x].author,searchdata[x].publisher,searchdata[x].ISBN,
+                   searchdata[x].publish.day,searchdata[x].publish.month,searchdata[x].publish.year,searchdata[x].no_cpy,searchdata[x].curr_copy,searchdata[x].catg);
+    }
+}
+
 
 #endif // FUNCTIONS_H_INCLUDED

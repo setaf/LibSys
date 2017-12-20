@@ -22,10 +22,11 @@ void new_save(void);
 void del_save(void);
 void curr_mem(void);
 void show_list(void);
+void search_double(void);
 
 int main()
 {
     curr_mem();
-    menu();
+    search_double();
     return 0;
 }
