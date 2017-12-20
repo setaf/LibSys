@@ -419,7 +419,21 @@ void add_book()
 
 void delete_book()
 {
-
+system("cls");
+    printf("Books List:\n");
+    char del_isbn [32];
+    int i;
+    for(i=0;i<book_no;i++)
+        printf("%s  ,%s ,%s ,%s ,%s ,%d ,%d,%d ,%d,%d,%d \n",book_curr[i].ISBN,book_curr[i].catg,book_curr[i].title,book_curr[i].author,book_curr[i].publisher,
+               book_curr[i].publish.day,book_curr[i].publish.month,book_curr[i].publish.year,book_curr[i].no_cpy,book_curr[i].curr_copy,book_curr[i].no_borr);
+    printf("Enter The isbn you want to delete:");
+    scanf("%s",del_isbn);
+    for (i=0;i<book_no;i++)
+    {
+        if(strcmp(book_curr[i].ISBN,del_isbn)==0)
+        break;
+    }
+    strcpy(book_curr[i].ISBN,"re");
 }
 void borrow_book(int id)
 {
@@ -674,7 +688,66 @@ void overdue()
 }
 void popular_book()
 {
+int i,j,k;
+    books *min,*high;
+    high = malloc(sizeof(books)*5);
+    min = malloc(sizeof(books));
+    system("cls");
 
+        for(j=0;j<5;j++)
+            {
+                high[j]=book_curr[j];
+                strcpy(high[j].author,book_curr[j].author);
+                strcpy(high[j].catg,book_curr[j].catg);
+                strcpy(high[j].ISBN,book_curr[j].ISBN);
+                strcpy(high[j].publisher,book_curr[j].publisher);
+                strcpy(high[j].title,book_curr[j].title);
+            }
+
+     for(i=5;i<book_no;i++)
+     {
+         k=0;
+         *min=high[0];
+         strcpy(min->author,high[0].author);
+         strcpy(min->catg,high[0].catg);
+         strcpy(min->ISBN,high[0].ISBN);
+         strcpy(min->publisher,high[0].publisher);
+         strcpy(min->title,high[0].title);
+
+         for(j=0;j<5;j++)
+        {
+            if(high[j].no_borr< min->no_borr)
+               {
+                   k=j;
+                   *min=high[j];
+                   strcpy(min->author,high[j].author);
+                   strcpy(min->catg,high[j].catg);
+                   strcpy(min->ISBN,high[j].ISBN);
+                   strcpy(min->publisher,high[j].publisher);
+                   strcpy(min->title,high[j].title);
+               }
+        }
+
+        if(high[k].no_borr < book_curr[i].no_borr)
+        {
+            high[k].no_borr=book_curr[i].no_borr;
+            strcpy(high[k].author,book_curr[i].author);
+            strcpy(high[k].catg,book_curr[i].catg);
+            strcpy(high[k].ISBN,book_curr[i].ISBN);
+            strcpy(high[k].publisher,book_curr[i].publisher);
+            strcpy(high[k].title,book_curr[i].title);
+        }
+
+     }
+     printf("\t \t \t Popluar books\n\n");
+     for(j=0;j<5;j++)
+     {
+         printf("%s %s %s %s %s %d %d,%d %d %d %d \n",high[j].ISBN,high[j].catg,high[j].title,high[j].author,high[j].publisher,
+               high[j].publish.day,high[j].publish.month,high[j].publish.year,high[j].no_cpy,high[j].curr_copy,high[j].no_borr);
+
+     }
+     free(high);
+     free(min);
 
 }
 void ret_book(int id)
@@ -760,7 +833,34 @@ for(x=0;x<book_no;x++)
 }
 void new_cpy()
 {
+ int no,i;
+    system("cls");
+    printf("Enter The ISBN Of Book:\n");
+    scanf("%s",book_new[newbook].ISBN);
+    for(i=0;i<book_no;i++)
+        {
+            if(strcmp(book_new[newbook].ISBN,book_curr[i].ISBN)==0)
+                break;
+        }
+    if(i!=book_no)
+    {
+    printf("%d\n",i);
+    printf("Enter The Number of Copies:\n");
+    scanf("%d",&no);
+    book_new[newbook]=book_curr[i];
+    book_new[newbook].no_cpy+=no;
+    book_new[newbook].curr_copy+=no;
+    strcpy(book_new[newbook].catg,book_curr[i].catg);
+    strcpy(book_new[newbook].author,book_curr[i].author);
+    strcpy(book_new[newbook].publisher,book_curr[i].publisher);
+    strcpy(book_new[newbook].title,book_curr[i].title);
+    strcpy(book_curr[i].ISBN,"re");
+    newbook++;
+    }
+    else
+        printf("Not Found");
 
+        admin();
 }
 int check_id()
 {
@@ -954,6 +1054,7 @@ void search_double() //aldouble search albonus bs lsa ma7tathash fe al menu m3 a
                    searchdata[x].publish.day,searchdata[x].publish.month,searchdata[x].publish.year,searchdata[x].no_cpy,searchdata[x].curr_copy,searchdata[x].catg);
     }
 }
+
 
 
 #endif // FUNCTIONS_H_INCLUDED

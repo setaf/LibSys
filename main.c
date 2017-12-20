@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <conio.h>
+#include <windows.h>
 #include "functions.h"
 
 void del_mem(void);
@@ -27,6 +28,6 @@ void search_double(void);
 int main()
 {
     curr_mem();
-    search_double();
+    menu();
     return 0;
 }
