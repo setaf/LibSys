@@ -41,13 +41,12 @@ typedef struct
 } books;
 typedef struct
 {
-    int book_isbn;
+    char book_isbn[32];
     int user_id;
     int borr_no;
     date ret_date;        //m4 3arf azay bst5dm el time.h lw 7t3rf tta3ml ams7 dool w el function ele ana zwdtha
     date borrow_date;
     date duedate;
-    char returndate[32];
 } borrow;
 
 #endif // STRUCT_H_INCLUDED
