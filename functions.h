@@ -4,7 +4,7 @@
 int check_id();
 FILE *fb, *fc, *temp,*fd; //34an el delete function
 time_t borr_date,ret_date;
-int mem_no,book_no,borrow_no; //# of  members
+int mem_no=0,book_no=0,borrow_no=0; //# of  members
 int newnumber=0;
 int newbook=0;
 int newborrow=0;
@@ -264,10 +264,8 @@ void addmem(void)
 void curr_mem()          //btgyb 3dd el current user w t7thom fe array
 {
     int i;
-    if (temp = fopen("members.txt","r")== NULL)
+    if (temp = fopen("members.txt","r")!= NULL)
     {
-        return;
-    }
      temp = fopen("members.txt","r");
      while (!feof(temp))
     {
@@ -276,11 +274,9 @@ void curr_mem()          //btgyb 3dd el current user w t7thom fe array
           mem_no++;
     }
     fclose(temp);
-
-    if (temp = fopen("books.txt","r")== NULL)
-    {
-        return;
     }
+    if (temp = fopen("books.txt","r")!= NULL)
+    {
      temp = fopen("books.txt","r");
      while (!feof(temp))
     {
@@ -291,10 +287,9 @@ void curr_mem()          //btgyb 3dd el current user w t7thom fe array
             book_no++;
     }
     fclose(temp);
-    if (temp = fopen("borrow.txt","r")== NULL)
-    {
-        return;
     }
+    if (temp = fopen("borrow.txt","r")!= NULL)
+    {
      temp = fopen("borrow.txt","r");
      while (!feof(temp))
     {
@@ -308,6 +303,7 @@ void curr_mem()          //btgyb 3dd el current user w t7thom fe array
 }
 printf("%d",newborrow);
 fclose(temp);
+    }
 }
 void del_mem()
 {
