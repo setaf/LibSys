@@ -1,21 +1,14 @@
 # depslib dependency file v1.0
-1512055055 source:c:\users\overlord\desktop\assignment 1\el projecto\libsys\main.c
+1513879574 source:g:\new folder (2)\libsys-earth\main.c
 	<stdio.h>
 	<stdlib.h>
 	<time.h>
 	<conio.h>
-
-1513729084 source:c:\users\mohame\desktop\real_project\libsys\main.c
-	<stdio.h>
-	<stdlib.h>
-	<time.h>
-	<conio.h>
-	<conio.h>
-	"functions.h"
 	<windows.h>
+	"functions.h"
 
-1513729880 c:\users\mohame\desktop\real_project\libsys\functions.h
+1513948653 g:\new folder (2)\libsys-earth\functions.h
 	"struct.h"
 
-1512590141 c:\users\mohame\desktop\real_project\libsys\struct.h
+1513879574 g:\new folder (2)\libsys-earth\struct.h
 
