@@ -80,7 +80,11 @@ void admin ()
     case '7':
         del_save();
         new_save();
-        curr_mem(); //mas7at delete save kant hena 3ashan kant 3amla error
+        curr_mem();
+        printf("Saved successfully\n");
+        printf("Enter any key to return to the menu!!");
+        getch();
+        admin(); //mas7at delete save kant hena 3ashan kant 3amla error
         //notess
         break;
     case '8':
@@ -202,6 +206,11 @@ void addmem(void)
     case '3':
         del_save();
         new_save();
+        curr_mem();
+          printf("Saved successfully\n");
+        printf("Enter any key to return to the menu!!");
+        getch();
+        addmem();
         break;
     case '4':
         menu();
@@ -214,32 +223,54 @@ void addmem(void)
 void curr_mem()          //btgyb 3dd el current user w t7thom fe array
 {
     int i;
-     if (temp = fopen("members.txt","r") == NULL)
+    if (temp = fopen("members.txt","r") == NULL)
     {
         temp = fopen("members.txt","w");//notes
     }
-    else{
-     temp = fopen("members.txt","r");
-     while (!feof(temp))
+    else
     {
-        fscanf(temp,"%[^,],%[^,],%d,%d,%[^,],%[^,],0%d,%d,%d,%s",curr_user[mem_no].f_name,curr_user[mem_no].l_name,&curr_user[mem_no].id,&curr_user[mem_no].adrs.street_no,
-                curr_user[mem_no].adrs.zone,curr_user[mem_no].adrs.city,&curr_user[mem_no].phone,&curr_user[mem_no].age,&curr_user[mem_no].no_borru,curr_user[mem_no].email);
-          mem_no++;
-    }
+        temp = fopen("members.txt","r");
+        while (!feof(temp))
+        {
+            fscanf(temp,"%[^,],%[^,],%d,%d,%[^,],%[^,],0%d,%d,%d,%s\n",curr_user[mem_no].f_name,curr_user[mem_no].l_name,&curr_user[mem_no].id,&curr_user[mem_no].adrs.street_no,
+                   curr_user[mem_no].adrs.zone,curr_user[mem_no].adrs.city,&curr_user[mem_no].phone,&curr_user[mem_no].age,&curr_user[mem_no].no_borru,curr_user[mem_no].email);
+            for(i=0; i<mem_no; i++)
+                if(curr_user[i].id == curr_user[mem_no].id)//notess
+                {
+                    break;
+                }
+            if(i == mem_no)
+            {
+
+                if(strcmp(curr_user[mem_no].f_name,curr_user[mem_no+1].f_name)!=0)//notes
+                    mem_no++;
+            }
+        }
     }
     fclose(temp);
     if (temp = fopen("books.txt","r")== NULL)
     {
         temp = fopen("books.txt","w");//notes
     }
-    else{
-     temp = fopen("books.txt","r");
-     while (!feof(temp))
+    else
     {
-        fscanf(temp,"%[^,],%[^,],%[^,],%[^,],%[^,],%d,%d,%d,%d,%d,%d\n",book_curr[book_no].ISBN,book_curr[book_no].catg,book_curr[book_no].title,book_curr[book_no].author,book_curr[book_no].publisher,
-               &book_curr[book_no].publish.day,&book_curr[book_no].publish.month,&book_curr[book_no].publish.year,&book_curr[book_no].no_cpy,&book_curr[book_no].curr_copy,&book_curr[book_no].no_borr);
-        book_no++;
-    }
+        temp = fopen("books.txt","r");
+        while (!feof(temp))
+        {
+            fscanf(temp,"%[^,],%[^,],%[^,],%[^,],%[^,],%d,%d,%d,%d,%d,%d\n",book_curr[book_no].ISBN,book_curr[book_no].catg,book_curr[book_no].title,book_curr[book_no].author,book_curr[book_no].publisher,
+                   &book_curr[book_no].publish.day,&book_curr[book_no].publish.month,&book_curr[book_no].publish.year,&book_curr[book_no].no_cpy,&book_curr[book_no].curr_copy,&book_curr[book_no].no_borr);
+
+            for(i=0; i<book_no; i++)
+            {
+                if(strcmp(book_curr[i].ISBN,book_curr[book_no].ISBN)==0)
+                    break;
+            }
+            if(i==book_no)
+            {
+                if(strcmp(book_curr[book_no].ISBN,book_curr[book_no+1].ISBN)!=0)//notes
+                    book_no++;
+            }
+        }
     }
     fclose(temp);
 
@@ -247,17 +278,19 @@ void curr_mem()          //btgyb 3dd el current user w t7thom fe array
     {
         temp = fopen("borrow.txt","w");//notes
     }
-    else{
-     temp = fopen("borrow.txt","r");
-     while (!feof(temp))
+    else
     {
-    fscanf(temp,"%[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",borrows[newborrow].book_isbn,&borrows[newborrow].user_id,&borrows[newborrow].borrow_date.day,
-           &borrows[newborrow].borrow_date.month,&borrows[newborrow].borrow_date.year,&borrows[newborrow].duedate.day,&borrows[newborrow].duedate.month,
-           &borrows[newborrow].duedate.year,&borrows[newborrow].ret_date.day,&borrows[newborrow].ret_date.month,&borrows[newborrow].ret_date.year);
-      newborrow++;
-}
+        temp = fopen("borrow.txt","r");
+        while (!feof(temp))
+        {
+            fscanf(temp,"%[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",borrows[newborrow].book_isbn,&borrows[newborrow].user_id,&borrows[newborrow].borrow_date.day,
+                   &borrows[newborrow].borrow_date.month,&borrows[newborrow].borrow_date.year,&borrows[newborrow].duedate.day,&borrows[newborrow].duedate.month,
+                   &borrows[newborrow].duedate.year,&borrows[newborrow].ret_date.day,&borrows[newborrow].ret_date.month,&borrows[newborrow].ret_date.year);
+            if(borrows[newborrow].user_id!=0)
+                newborrow++;
+        }
     }
-fclose(temp);
+    fclose(temp);
 }
 void del_mem()
 {
