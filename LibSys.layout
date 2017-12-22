@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
+	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
 	<File name="main.c" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
@@ -13,22 +14,7 @@
 	</File>
 	<File name="functions.h" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="48127" topLine="732" />
+			<Cursor1 position="6344" topLine="201" />
 		</Cursor>
-		<Folding>
-			<Collapse line="734" />
-			<Collapse line="786" />
-			<Collapse line="850" />
-			<Collapse line="930" />
-			<Collapse line="961" />
-			<Collapse line="988" />
-			<Collapse line="1059" />
-			<Collapse line="1106" />
-			<Collapse line="1138" />
-			<Collapse line="1282" />
-			<Collapse line="1333" />
-			<Collapse line="1380" />
-			<Collapse line="1428" />
-		</Folding>
 	</File>
 </CodeBlocks_layout_file>

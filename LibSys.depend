@@ -37,7 +37,7 @@
 	<windows.h>
 	"functions.h"
 
-1513976232 c:\users\lenovo\desktop\new folder\libsys\functions.h
+1513974781 c:\users\lenovo\desktop\new folder\libsys\functions.h
 	"struct.h"
 
 1513719245 c:\users\lenovo\desktop\new folder\libsys\struct.h
@@ -53,4 +53,30 @@
 	"struct.h"
 
 1513662743 c:\users\user\desktop\new folder\libsys\struct.h
+
+1513974992 source:c:\users\mohame\desktop\new folder (6)\libsys-earth\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<conio.h>
+	<windows.h>
+	"functions.h"
+
+1513977312 c:\users\mohame\desktop\new folder (6)\libsys-earth\functions.h
+	"struct.h"
+
+1513974992 c:\users\mohame\desktop\new folder (6)\libsys-earth\struct.h
+
+1513941606 source:c:\users\lenovo\desktop\new folder (6)\libsys-mars\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<conio.h>
+	<windows.h>
+	"functions.h"
+
+1513977761 c:\users\lenovo\desktop\new folder (6)\libsys-mars\functions.h
+	"struct.h"
+
+1513941606 c:\users\lenovo\desktop\new folder (6)\libsys-mars\struct.h
 
