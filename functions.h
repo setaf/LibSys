@@ -278,7 +278,6 @@ void curr_mem()          //btgyb 3dd el current user w t7thom fe array
                 {
                     if(borrows_curr[borrow_no].ret_date.month == 0)
                         break;
-
                 }
 
             }
@@ -291,8 +290,6 @@ void curr_mem()          //btgyb 3dd el current user w t7thom fe array
         }
     }
     fclose(temp);
-    printf("borrow no =%d\n",borrow_no);
-    getch();
 }
 void del_mem()
 {
@@ -556,7 +553,6 @@ void user (int id)
         break;
     case '4':
         del_save();
-        curr_mem();
         new_save();
         user(id);
     case '5':
@@ -733,15 +729,21 @@ void ret_book(int id)
         }
         else
         {
+            printf("\n%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",borrows_curr[0].book_isbn,borrows_curr[0].user_id,borrows_curr[0].borrow_date.day,borrows_curr[0].borrow_date.month,
+            borrows_curr[0].borrow_date.year,borrows_curr[0].duedate.day,borrows_curr[0].duedate.month,borrows_curr[0].duedate.year,borrows_curr[0].ret_date.day,borrows_curr[0].ret_date.month,
+            borrows_curr[0].ret_date.year);
+
             printf("%d\t %d %d",indexbook,indexmem,indexreturn);
             curr_user[indexmem].no_borru--;
             book_curr[indexbook].curr_copy++;
             borrows_curr[indexreturn].ret_date.month=mytime->tm_mon+1;
             borrows_curr[indexreturn].ret_date.day=mytime->tm_mday;
             borrows_curr[indexreturn].ret_date.year=mytime->tm_year+1900;
-
             printf("you returned a book\n");
             printf("enter any key to return to the menu!");
+            printf("\n%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",borrows_curr[0].book_isbn,borrows_curr[0].user_id,borrows_curr[0].borrow_date.day,borrows_curr[0].borrow_date.month,
+            borrows_curr[0].borrow_date.year,borrows_curr[0].duedate.day,borrows_curr[0].duedate.month,borrows_curr[0].duedate.year,borrows_curr[0].ret_date.day,borrows_curr[0].ret_date.month,
+            borrows_curr[0].ret_date.year);
             getch();
             return user(id);
         }
@@ -842,7 +844,7 @@ void new_save()
                     borrows[i].ret_date.year);
         else
         {
-            fprintf(fd,"%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",borrows[i].book_isbn,borrows[i].user_id,borrows[i].borrow_date.day,borrows[i].borrow_date.month,
+            fprintf(fd,"\n%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",borrows[i].book_isbn,borrows[i].user_id,borrows[i].borrow_date.day,borrows[i].borrow_date.month,
                     borrows[i].borrow_date.year,borrows[i].duedate.day,borrows[i].duedate.month,borrows[i].duedate.year,borrows[i].ret_date.day,borrows[i].ret_date.month,
                     borrows[i].ret_date.year);
         }
@@ -897,23 +899,26 @@ void del_save()
 
         }
     }
+    fclose(temp);
 
     temp=fopen("borrow.txt","w");
     for(i=0;i<borrow_no;i++)
     {
         if(i==0)
         {
-            fprintf(fd,"%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",borrows_curr[i].book_isbn,borrows_curr[i].user_id,borrows_curr[i].borrow_date.day,borrows_curr[i].borrow_date.month,
+            fprintf(temp,"%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",borrows_curr[i].book_isbn,borrows_curr[i].user_id,borrows_curr[i].borrow_date.day,borrows_curr[i].borrow_date.month,
             borrows_curr[i].borrow_date.year,borrows_curr[i].duedate.day,borrows_curr[i].duedate.month,borrows_curr[i].duedate.year,borrows_curr[i].ret_date.day,borrows_curr[i].ret_date.month,
             borrows_curr[i].ret_date.year);
             flag++;
         }
         else
-            fprintf(fd,"\n%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",borrows_curr[i].book_isbn,borrows_curr[i].user_id,borrows_curr[i].borrow_date.day,borrows_curr[i].borrow_date.month,
+            fprintf(temp,"\n%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",borrows_curr[i].book_isbn,borrows_curr[i].user_id,borrows_curr[i].borrow_date.day,borrows_curr[i].borrow_date.month,
             borrows_curr[i].borrow_date.year,borrows_curr[i].duedate.day,borrows_curr[i].duedate.month,borrows_curr[i].duedate.year,borrows_curr[i].ret_date.day,borrows_curr[i].ret_date.month,
             borrows_curr[i].ret_date.year);
     }
-
+fclose(temp);
+printf("Done");
+getch;
 }
 
 void show_list()
