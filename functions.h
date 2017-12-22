@@ -75,8 +75,16 @@ void admin ()
         break;
     case '5':
         del_mem();
+        printf("press any key to return to the admin!!");
+        getch();
+        admin();
+        break;
     case '6' :
         show_list();
+        printf("press any key to return to the admin!!");
+        getch();
+        admin();
+        break;
     case '7':
         del_save();
         new_save();
@@ -397,7 +405,7 @@ void delete_book()
         if(strcmp(book_curr[i].ISBN,del_isbn)==0)
             break;
     }
-    strcpy(book_curr[i].ISBN,"re");
+    strcpy(book_curr[i].ISBN,"Removable");
     admin();   // notess mlhash lazma return ll menu bdlha
 }
 
@@ -552,7 +560,7 @@ void user (int id)
         search_book(id);
         break;
     case '4':
-        menu();
+        addmem();
         break;
     default:
         printf("Enter A valid Number");
