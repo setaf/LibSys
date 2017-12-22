@@ -74,8 +74,8 @@ void admin ()
         show_list();
     case '7':
         del_save();
-        curr_mem();
         new_save();
+        curr_mem();
         admin();
         break;
     case '8':
@@ -838,7 +838,7 @@ void new_save()
     fd= fopen("borrow.txt","a");
     for(i=0; i<newborrow; i++)
     {
-        if(i==0)//notess
+        if(borrow_no==1)//notess
             fprintf(fd,"%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d",borrows[i].book_isbn,borrows[i].user_id,borrows[i].borrow_date.day,borrows[i].borrow_date.month,
                     borrows[i].borrow_date.year,borrows[i].duedate.day,borrows[i].duedate.month,borrows[i].duedate.year,borrows[i].ret_date.day,borrows[i].ret_date.month,
                     borrows[i].ret_date.year);
@@ -890,12 +890,12 @@ void del_save()
             if(i==0 || flag==0)
             {
                 fprintf(temp,"%s,%s,%d,%d,%s,%s,0%d,%d,%d,%s",curr_user[i].f_name,curr_user[i].l_name,curr_user[i].id,curr_user[i].adrs.street_no,
-                   curr_user[i].adrs.zone,curr_user[i].adrs.city,curr_user[i].phone,&curr_user[i].age,curr_user[i].no_borru,curr_user[i].email);
+                   curr_user[i].adrs.zone,curr_user[i].adrs.city,curr_user[i].phone,curr_user[i].age,curr_user[i].no_borru,curr_user[i].email);
                 flag++;
             }
             else
                 fprintf(temp,"\n%s,%s,%d,%d,%s,%s,0%d,%d,%d,%s",curr_user[i].f_name,curr_user[i].l_name,curr_user[i].id,curr_user[i].adrs.street_no,
-                   curr_user[i].adrs.zone,curr_user[i].adrs.city,curr_user[i].phone,&curr_user[i].age,curr_user[i].no_borru,curr_user[i].email);
+                   curr_user[i].adrs.zone,curr_user[i].adrs.city,curr_user[i].phone,curr_user[i].age,curr_user[i].no_borru,curr_user[i].email);
 
         }
     }
