@@ -270,7 +270,8 @@ void addmem(void)
         addmem();
         break;
         case '3':del_save();
-            new_save();break;
+            new_save();
+               curr_mem();break;
     case '4':
         menu();
         break;
@@ -282,8 +283,11 @@ void addmem(void)
 void curr_mem()          //btgyb 3dd el current user w t7thom fe array
 {
     int i;
-    if (temp = fopen("members.txt","r")!= NULL)
+     if (temp = fopen("members.txt","r") == NULL)
     {
+        temp = fopen("members.txt","w");//notes
+    }
+    else{
      temp = fopen("members.txt","r");
      while (!feof(temp))
     {
@@ -291,10 +295,13 @@ void curr_mem()          //btgyb 3dd el current user w t7thom fe array
                 curr_user[mem_no].adrs.zone,curr_user[mem_no].adrs.city,&curr_user[mem_no].phone,&curr_user[mem_no].age,&curr_user[mem_no].no_borru,curr_user[mem_no].email);
           mem_no++;
     }
-    fclose(temp);
     }
-    if (temp = fopen("books.txt","r")!= NULL)
+    fclose(temp);
+    if (temp = fopen("books.txt","r")== NULL)
     {
+        temp = fopen("books.txt","w");//notes
+    }
+    else{
      temp = fopen("books.txt","r");
      while (!feof(temp))
     {
@@ -302,11 +309,14 @@ void curr_mem()          //btgyb 3dd el current user w t7thom fe array
                &book_curr[book_no].publish.day,&book_curr[book_no].publish.month,&book_curr[book_no].publish.year,&book_curr[book_no].no_cpy,&book_curr[book_no].curr_copy,&book_curr[book_no].no_borr);
         book_no++;
     }
-    fclose(temp);
     }
+    fclose(temp);
 
-    if (temp = fopen("borrow.txt","r")!= NULL)
+    if (temp = fopen("borrow.txt","r")== NULL)
     {
+        temp = fopen("borrow.txt","w");//notes
+    }
+    else{
      temp = fopen("borrow.txt","r");
      while (!feof(temp))
     {
@@ -316,9 +326,8 @@ void curr_mem()          //btgyb 3dd el current user w t7thom fe array
            if(borrows[newborrow].user_id!=0);//notess
     newborrow++;
 }
-
-fclose(temp);
     }
+fclose(temp);
 }
 void del_mem()
 {

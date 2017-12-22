@@ -1,6 +1,6 @@
-38098,7867,6575fyt,tryt,rrty,3,5,6,4,4,0
+38098,7867,6575fyt,tryt,rrty,3,5,6,4,4,1
 ryry3-2,ryrt,tr,ytr,tryrt,4,5,6,2,2,0
-13-321,qwewq,ewqe,qewq,qwewq,4,50,20,4,4,5
+13-321,qwewq,ewqe,qewq,qwewq,4,50,20,4,4,6
 3-154,qwewq,xzczx,bgc,werew,3,2,29,4,3,3
 3-215qw,wqewq,xzcx,z,reter,3,5,6,4,4,0
 3-15,rtytruty,rcxvcx,vcx,xcvs,4,5,6,4,0,4
