@@ -19,7 +19,7 @@ date overd[100];
 void menu (void)
 {
     int i;
-    //system("cls");
+    system("cls");
     printf("1-admin\n");
     printf("2-user\n");
     printf("3-exit\n");
@@ -78,7 +78,9 @@ void admin ()
     case '6' :
         show_list();
     case '7':
-        new_save();//mas7at delete save kant hena 3ashan kant 3amla error
+        del_save();
+        new_save();
+        curr_mem(); //mas7at delete save kant hena 3ashan kant 3amla error
         //notess
         break;
     case '8':
@@ -252,8 +254,7 @@ void curr_mem()          //btgyb 3dd el current user w t7thom fe array
     fscanf(temp,"%[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",borrows[newborrow].book_isbn,&borrows[newborrow].user_id,&borrows[newborrow].borrow_date.day,
            &borrows[newborrow].borrow_date.month,&borrows[newborrow].borrow_date.year,&borrows[newborrow].duedate.day,&borrows[newborrow].duedate.month,
            &borrows[newborrow].duedate.year,&borrows[newborrow].ret_date.day,&borrows[newborrow].ret_date.month,&borrows[newborrow].ret_date.year);
-           if(borrows[newborrow].user_id!=0);//notess
-    newborrow++;
+      newborrow++;
 }
     }
 fclose(temp);
@@ -286,7 +287,7 @@ void add_book()
         break;
     case '2':
         system("cls");
-        printf("ente isbn: ");
+        printf("enter isbn: ");
         scanf("%s",book_new[newbook].ISBN);
         for(i=0; i<book_no; i++)
         {
@@ -309,6 +310,7 @@ void add_book()
             printf("enter date of publish DD/MM/YYYY: ");
             do
             {
+                flag=0;
                 scanf("%d%d%d",&book_new[newbook].publish.day,&book_new[newbook].publish.month,&book_new[newbook].publish.year);
                 if(book_new[newbook].publish.day > 28 + fmod(book_new[newbook].publish.month + floor(book_new[newbook].publish.month/8),2) + (2 % book_new[newbook].publish.month) + 2 * floor(1/book_new[newbook].publish.month))
                 {
@@ -325,6 +327,7 @@ void add_book()
                 {
                     printf("Enter Valid Date\n");
                     flag++;
+                    // valdiation bt3 lwo date kan akbr mn try5 anhrda lsa n2sa
                 }
             }
             while(flag !=0);
@@ -341,12 +344,10 @@ void add_book()
             book_new[newbook].curr_copy=book_new[newbook].no_cpy;
             newbook++;
             book_new[newbook].no_borr=0;
-            fclose(fc);
             admin();
         }
     }
 }
-
 void delete_book()
 {
     system("cls");
