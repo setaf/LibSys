@@ -207,17 +207,18 @@ void admin ()
 void addmem(void)
 {
     int i;
+    time_t currenttime;
+    time(&currenttime);
     system("cls");
-    for(i=0; i<borrow_no; i++)
-    {
-        printf("%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",borrows[i].book_isbn,borrows[i].user_id,borrows[i].borrow_date.day,borrows[i].borrow_date.month,
-               borrows[i].borrow_date.year,borrows[i].duedate.day,borrows[i].duedate.month,borrows[i].duedate.year,borrows[i].ret_date.day,borrows[i].ret_date.month,
-               borrows[i].ret_date.year);
-    }
-    printf("1-Current Member\n");
-    printf("2-New Member\n");
-    printf("3-Save Changes \n");
-    printf("4-back to Main menu\n");
+    system("color 9F");
+    popular_book();
+    printf("\n================================================================================");
+    printf("\n\t\t\t\xDB\xDB\xDB\xDb\xB2 Welcome To Member's Menu \xB2\xDB\xDB\xDB\xDb\n\n\n");
+    printf("\t\t\t\xDB 1-Current Menu\n\t\t\t\xDB\n\t\t\t\xDB\n");
+    printf("\t\t\t\xDB 2-Registration\n\t\t\t\xDB\n\t\t\t\xDB\n");
+    printf("\t\t\t\xDB 3-Save Changes\n\t\t\t\xDB\n\t\t\t\xDB\n");
+    printf("\t\t\t\xDB 4-Main Menu\n\t\t\t\xDB\n");
+    printf("\t\t\t\xDB Enter You Choice:");
     switch (getch())
     {
     case '1':
@@ -225,55 +226,65 @@ void addmem(void)
         break;
     case '2':
         system("cls");
-        printf("Enter Your First Name:\n");
+        fflush(stdin);
+        printf("\n  \t\t\t\xdb\xdb\xdb\xb0 Registration \xb0\xdb\xdb\xdb");
+        printf("\n================================================================================");
+        printf("\tToday's Date:%s\n",ctime(&currenttime));
+        printf("\n\t\xdb Enter Your First name: ");
         gets(new_user[newnumber].f_name);
-        printf("Enter Your Last Name:\n");
+        printf("\n\t\xdb Enter Your Last name: ");
         gets(new_user[newnumber].l_name);
         do
         {
-            printf("Enter Your ID:\n");
+            printf("\n\t\xdb Enter Your ID: ");
             scanf("%d",&new_user[newnumber].id);
             for(i=0; i<mem_no; i++)
             {
                 if(new_user[newnumber].id==curr_user[i].id)
                 {
-                    printf("A User with the same ID already exist, Retry!!!\n\n");
+                    printf("\n\t\xb0 This ID Is Already Exist");
+
+                    break;
                 }
             }
             if(new_user[newnumber].id<0)
-                printf("Enter A positive number, Retry!!!\n\n");
+                printf("\n\t\xb0 Enter A positive number, Retry");
+            if(new_user[newnumber].id==0)
+                printf("\n\t\xb0 You Can't enter That Number");
+            //notes
         }
-        while(new_user[newnumber].id<0);
+        while(new_user[newnumber].id<0 ||i != mem_no || new_user[newnumber].id==0);
+
         do
         {
-            printf("Enter Your Street Number:\n");
+            printf("\n\t\xdb Enter Your Street #: ");
             scanf("%d",&new_user[newnumber].adrs.street_no);
             if (new_user[newnumber].adrs.street_no<0)
-                printf("Enter A positive number, Retry!!!\n\n");
+                printf("\n\t\xb0 Enter A Positive #: ");
         }
         while(new_user[newnumber].adrs.street_no<0);
-        printf("Enter Your Zone:\n");
+        printf("\n\t\xdb Your Zone: ");
         getchar();
         gets(new_user[newnumber].adrs.zone);
-        printf("Enter Your City:\n");
+        printf("\n\t\xdb Your City: ");
         gets(new_user[newnumber].adrs.city);
         do
         {
-            printf("Enter Your Phone:\n");
+            printf("\n\t\xdb Your Phone Number: ");
             scanf("%d",&new_user[newnumber].phone);
             if (new_user[newnumber].phone<1000000000 || new_user[newnumber].phone>100000000000)
-                printf("Wrong Phone Number Retry!!!\n\n");
+                printf("\n\t\xb0 Wrong Phone Number Retry: ");
         }
         while(new_user[newnumber].phone<1000000000 || new_user[newnumber].phone>100000000000);
         do
         {
-            printf("Enter Your Age '7 years or older':\n");
+            printf("\n\t\xdb Your Age (7 Year's Old Or More): ");
             scanf("%d",&new_user[newnumber].age);
             if (new_user[newnumber].age<7)
-                printf("Wrong Age Retry!!!\n\n");
+                printf("\n\t\xb0 Wrong Age Retry: ");
         }
         while(new_user[newnumber].age<7);
-        printf("Enter Your E-mail:\n");
+         printf("\n\t\xdb Your Email: ");
         getchar();
         int flag=0;
         do
@@ -295,15 +306,15 @@ void addmem(void)
             }
             else
             {
-                printf("the email is wrong Retry!!!\n\n");
+                printf("\n\t\xb0 Wrong Email Retry: ");
             }
         }
         while(flag != 1);
         new_user[newnumber].no_borru=0;
         newnumber++;
 
-        printf("Welcome %s\n Your ID:%d\n",new_user[newnumber-1].f_name,new_user[newnumber-1].id);
-        printf("Press Any Key To Continue....");
+        printf("\n\t\xdb Welcome (%s) \n\n\t\xdb Your ID: (%d)\n",new_user[newnumber-1].f_name,new_user[newnumber-1].id);
+        printf("\n\t\xb0 Press Any Key To Continue....");
         switch(getch())
         default:
         addmem();
@@ -312,17 +323,18 @@ void addmem(void)
         del_save();
         new_save();
         curr_mem();
-          printf("Saved successfully\n");
-        printf("Enter any key to return to the menu!!");
-        getch();
+        printf("\n\n\t\t\t *Save Successfully*");
+        delay(1500);
         addmem();
         break;
     case '4':
         menu();
         break;
     default:
-        printf("Enter A valid Number");
-        addmem();
+        system("color FC");
+        printf("\n\n\t\t\t Enter A valid Input");
+        delay(1000);
+       addmem();
     }
 }
 void curr_mem()          //btgyb 3dd el current user w t7thom fe array
@@ -622,6 +634,19 @@ void delete_book()
     printf("\n================================================================================");
     printf("\nEnter The ISBN You Want To Delete:");
     scanf("%s",del_isbn);
+    for(i=0; i<book_no; i++)
+    {
+        if(strcmp(del_isbn,book_curr[i].ISBN)==0)
+            break;
+    }
+    if(i==book_no)
+    {
+        system("color CF");
+        printf("\n Book Not Found \a");
+        printf("\nPress Any Key To Continue...");
+        getch();
+        admin();
+    }
     for (i=0; i<book_no; i++)
     {
         if(strcmp(book_curr[i].ISBN,del_isbn)==0)
@@ -657,11 +682,28 @@ void borrow_book(int id)
     char isbn[32];
     int i,x,indexmem,indexbook,indexborrow;
         borrows[newborrow].user_id=id;
-        printf("\t books list \n");
-        for(i=0; i<book_no; i++)
-            printf("%s  ,%s ,%s ,%s ,%s ,%d ,%d,%d ,%d,%d,%d \n",book_curr[i].ISBN,book_curr[i].catg,book_curr[i].title,book_curr[i].author,book_curr[i].publisher,
-                   book_curr[i].publish.day,book_curr[i].publish.month,book_curr[i].publish.year,book_curr[i].no_cpy,book_curr[i].curr_copy,book_curr[i].no_borr);
-        printf("please enter the book ISBN you want to borrow:\n");
+        printf("\t\t\t\t Borrow Book");
+    printf("\nISBN  Category  Title  Author  Publisher  Date of Publisher  #Copies  # Borrow\n");
+    for(i=0; i<book_no; i++)
+    {
+        if(strcmp(book_curr[i].ISBN,"Removable")==0)
+        continue;
+
+        else
+        printf("%s\t%s\t%s\t%s\t%s\t  %d/%d/%d\t     %d|%d\t%d \n",book_curr[i].ISBN,book_curr[i].catg,book_curr[i].title,book_curr[i].author,book_curr[i].publisher,
+               book_curr[i].publish.day,book_curr[i].publish.month,book_curr[i].publish.year,book_curr[i].no_cpy,book_curr[i].curr_copy,book_curr[i].no_borr);
+
+    }
+    printf("\n================================================================================");
+
+    for(i=0;i<mem_no;i++)
+    {
+        if(id==curr_user[i].id)
+            break;
+    }
+    printf("You Have Borrowed= %d\n",curr_user[i].no_borru);
+
+        printf("Enter The ISBN Of The Book You Want To Borrow: ");
         fflush(stdin);
         gets(isbn);
         for(x=0; x<book_no; x++)
@@ -676,10 +718,27 @@ void borrow_book(int id)
         }
         if(x==book_no)
         {
-            printf("please enter a valid ISBN!!!\n");
-            printf("enter any key to return to the menu!");
-            getch();
-            return addmem();
+            printf("\n InValid ISBN \n");
+            int flag=0;
+                printf("\n\tYou Want To Back To Menu (Y/N): ");
+                do
+                {
+                switch(getch())
+                {
+                case'y':case'Y':
+                    user(id);
+                    break;
+                case 'n': case'N':
+                    borrow_book(id);
+                    break;
+                default:
+                    flag=0;
+                    system("color FC");
+                    printf("\n\t\aInvalid Input");
+                    flag++;
+                }
+                }
+                while(flag!=0);
         }
 
         for(x=0; x<mem_no; x++)
@@ -714,26 +773,25 @@ void borrow_book(int id)
                     borrows[newborrow].duedate.year++;
                     borrows[newborrow].duedate.month-=12;
                 }
-                printf("you borrowed a book\n");
-                for(i=0; i<mem_no; i++)
-                    printf("%d",curr_user[i].no_borru);
-                printf("enter any key to return to the menu!");
+                printf("You Borrowed a book\n");
+                printf("Maximum Date to Return is %d/%d/%d\n",borrows[newborrow].duedate.day,borrows[newborrow].duedate.month,borrows[newborrow].duedate.year);
+                printf("Enter Any Key To Return To The Menu...");
                 getch();
                 newborrow++;
                 return addmem();
             }
             else
             {
-                printf("Sorry there is no copies available for that book!!");
-                printf("press any key to return to the menu!!");
+                printf("Sorry there is # Copies Available for That Book\n");
+                printf("Enter Any Key To Return To The Menu...");
                 getch();
                 return addmem();
             }
         }
         else
         {
-            printf("you reached the maximium number of your borrows!\n");
-            printf("enter any key to return to the menu!");
+            printf("You Reach The Maximium Number of borrows\n");
+            printf("Enter Any Key To Return To The Menu...");
             getch();
             return addmem();
         }
@@ -749,12 +807,14 @@ void search_book(int id)
     int catgcounter=0;
     int counter=0;
     system("cls");
-    printf("1-Search by book title:\n");
-    printf("2-Search by book author:\n");
-    printf("3-Search by book ISBN:\n");
-    printf("4-Search by book category:\n");
-    printf("5-search by book title or author or both\n");
-    printf("6-return to the menu:");
+    printf("\n\n\n\n\n\t\t   \xDB\xDB\xDB\xDb\xB2 Welcome To Search Menu \xB2\xDB\xDB\xDB\xDb\n\n\n");
+    printf("\t\t\t\xDB 1-Search By Title \n\t\t\t\xDB\n\t\t\t\xDB\n");
+    printf("\t\t\t\xDB 2-Search By Author \n\t\t\t\xDB\n\t\t\t\xDB\n");
+    printf("\t\t\t\xDB 3-Search By ISBN \n\t\t\t\xDB\n\t\t\t\xDB\n");
+    printf("\t\t\t\xDB 4-Search By Category \n\t\t\t\xDB\n\t\t\t\xDB\n");
+    printf("\t\t\t\xDB 5-Double Search By Author & Title \n\t\t\t\xDB\n\t\t\t\xDB\n");
+    printf("\t\t\t\xDB 6-Return To Menu\n\t\t\t\xDB\n");
+    printf("\t\t\t\xDB Enter You Choice:");
     switch(getch())
     {
     case '1':
@@ -782,31 +842,47 @@ void search_book(int id)
 }
 void user (int id)
 {
+    int i;
     system("cls");
-    printf("1-Borrow Book\n");
-    printf("2-Return Book\n");
-    printf("3-Search Book\n");
-    printf("4-menu\n");
     popular_book();
+    printf("\n================================================================================");
+    for(i=0;i<mem_no;i++)
+    {
+        if(curr_user[i].id == id)
+            break;
+    }
+    printf("\n\t\t\t\xDB\xDB\xDB\xDb\xB2 Welcome %s \xB2\xDB\xDB\xDB\xDb\n\n\n",curr_user[i].f_name);
+    printf("\t\t\t\xDB 1-Borrow Book \n\t\t\t\xDB\n\t\t\t\xDB\n");
+    printf("\t\t\t\xDB 2-Return Book\n\t\t\t\xDB\n\t\t\t\xDB\n");
+    printf("\t\t\t\xDB 3-Show List\n\t\t\t\xDB\n\t\t\t\xDB\n");
+    printf("\t\t\t\xDB 4-Search Menu \n\t\t\t\xDB\n\t\t\t\xDB\n");
+    printf("\t\t\t\xDB 5-Back To Menu\n\t\t\t\xDB\n");
+    printf("\t\t\t\xDB Enter You Choice:");
+
     switch(getch())
     {
     case '1':
+        search_book(id);
         borrow_book(id);
         break;
     case '2':
         ret_book(id);
         break;
-    case '3':
-        search_book(id);
+    case'3':
+        show_list(id);
         break;
     case '4':
+        search_book(id);
+        user(id);
+        break;
+    case '5':
         addmem();
         break;
     default:
-        printf("Enter A valid Number");
+        printf("\n\t\t\t Enter A valid Number");
+        delay(1500);
         user(id);
     }
-
 }
 void overdue()
 {
@@ -910,11 +986,13 @@ void popular_book()
         }
 
     }
-    printf("\t \t \t Popluar books\n\n");
+    printf("\t\t\t\tPopular Books\n");
+    printf("ISBN  Category  Title  Author  Publisher  Date of Publisher  #Copies  # Borrow\n");
     for(j=0; j<5; j++)
     {
-        printf("%s %s %s %s %s %d %d,%d %d %d %d \n",high[j].ISBN,high[j].catg,high[j].title,high[j].author,high[j].publisher,
-               high[j].publish.day,high[j].publish.month,high[j].publish.year,high[j].no_cpy,high[j].curr_copy,high[j].no_borr);
+        printf("%s\t%s\t%s\t%s\t%s\t  %d/%d/%d\t     %d|%d\t%d \n",book_curr[j].ISBN,book_curr[j].catg,book_curr[j].title,book_curr[j].author,book_curr[j].publisher,
+               book_curr[j].publish.day,book_curr[j].publish.month,book_curr[j].publish.year,book_curr[j].no_cpy,book_curr[j].curr_copy,book_curr[j].no_borr);
+
 
     }
     free(high);
@@ -930,7 +1008,8 @@ void ret_book(int id)
     char isbn[32];
     int i,x,indexmem,indexbook,indexreturn;
         borrows[newborrow].user_id=id;
-        printf("please enter the book ISBN you want to return:\n");
+    printf("\n\n\n\n\n\n\t\t\t\xDB\xDB\xDB\xDb\xB2 Return Book \xB2\xDB\xDB\xDB\xDb\n\n\n");
+        printf("\t\t\xDB Enter Book's ISBN You Want To Return:");
         fflush(stdin);
         gets(isbn);
         for(x=0; x<book_no; x++)
@@ -950,12 +1029,34 @@ void ret_book(int id)
         }
         for(x=0; x<newborrow; x++)
         {
+            if(strcmp(isbn,book_curr[x].ISBN)==0)
             break;
         }
-        if(x==newborrow)
+        if(x == newborrow)
         {
-            printf("Enter a valid ISBN!!\n");
-            printf("press any key to return to the menu!!");
+            int flag=0;
+            printf("\n\t\t\tInValid ISBN");
+            printf("\n\t\t\tYou Want To Back To Menu (Y/N): ");
+                do
+                {
+                switch(getch())
+                {
+                case'y':case'Y':
+                    user(id);
+                    break;
+                case 'n': case'N':
+                    ret_book(id);
+                    break;
+                default:
+                    flag=0;
+                    system("color FC");
+                    printf("\n\t\aInvalid Input");
+                    flag++;
+                }
+                }
+                while(flag!=0);
+
+
             getch();
             return addmem();
         }
@@ -965,7 +1066,6 @@ void ret_book(int id)
             {
                 if(borrows[x].ret_date.day==0 && borrows[x].ret_date.month==0 && borrows[x].ret_date.year==0)
                 {
-                    printf("%s,%d\n",borrows[x].book_isbn,borrows[x].user_id);
                     if(strcmp(isbn,borrows[x].book_isbn)==0 && borrows[x].user_id==id)
                     {
                         curr_user[indexmem].no_borru--;
@@ -973,18 +1073,16 @@ void ret_book(int id)
                         borrows[x].ret_date.month=mytime->tm_mon+1;
                         borrows[x].ret_date.day=mytime->tm_mday;
                         borrows[x].ret_date.year=mytime->tm_year+1900;
-                        printf("you returned a book\n");
-                        printf("%d,%d,%d,%d,%d",curr_user[indexmem].no_borru,book_curr[indexbook].curr_copy,borrows[x].ret_date.month,
-                               borrows[x].ret_date.day,borrows[x].ret_date.year);
-                        printf("enter any key to return to the menu!");
+                        printf("\n\t\t The Book returned Successfully\n");
+                        printf("\t\t Enter Any Key To Return To The Menu...");
                         getch();
                         return addmem();
                     }
                 }
             }
         }
-        printf("you already returned the book!!!\n");
-        printf("enter any key to return to the menu!");
+        printf("\n\n\t\t You Already Returned This book\n");
+        printf("\t\t Enter Any Key To Return To The Menu...");
         getch();
         return addmem();
     }
@@ -1031,25 +1129,61 @@ void new_cpy()
 }
 int check_id()
 {
-    int id,i,flag=0;
+    int id,i,j,flag=0;
     system("cls");
-    printf("Enter Your ID :");
+    printf("\n\n\n\n\n\t\t");
+    for(j=0;j<10;j++)
+    {
+    delay(50);
+    printf("\xB2");
+    }
+    printf(" Member ID ");
+    for(j=0;j<10;j++)
+    {
+    delay(50);
+    printf("\xB2");
+    }
+    printf("\n\n\n\n\n\t\t");
+    printf("Enter ID:");
     scanf("%d",&id);
+
     for(i=0; i<mem_no; i++)
     {
         if(id==curr_user[i].id)
             break;
         flag++;
     }
+
     if(flag!=mem_no)
     {
+        printf("Welcome %s\n",curr_user[i].f_name);
+        printf("Press Any Key To Continue...");
+        getch();
         user(id);
         return id;
     }
+
     else
     {
-        printf("Wrong ID Please Enter Valid One:");
-        check_id();
+        printf("Wrong ID You  Want Back To Menu (Y/N):");
+                do
+                {
+                switch(getch())
+                {
+                case'y':case'Y':
+                    addmem();
+                    break;
+                case 'n': case'N':
+                    check_id();
+                    break;
+                default:
+                    flag=0;
+                    system("color FC");
+                    printf("\n\t\aInvalid Input");
+                    flag++;
+                }
+                }
+                while(flag!=0);
     }
 
 }
@@ -1272,7 +1406,10 @@ void show_list(int x)
             printf("================================================================================\n");
             printf("Press Any Key To Back To Menu...");
             getch();
+            if(x == 0)
             admin();
+            else
+            user(x);
         }
         else
         {
@@ -1289,7 +1426,10 @@ void show_list(int x)
             printf("\n================================================================================");
             printf("\nPress Any Key To Back To Menu...");
             getch();
+            if(x == 0)
             admin();
+            else
+            user(x);
 
         }
         break;
@@ -1327,12 +1467,14 @@ void search_double(int id)//notes bonus b3d alta3del
     int authorcounter=0;
     int counter=0;
     fflush(stdin);
-    printf("Enter the title of the book:\n");
+    printf("\n\t\t\t\xDB\xDB Double Search By Title & Author \xDB\xDb\n\n");
+    printf("\t\t\xDB Enter Title Name:");
     gets(searchtarget);
-    printf("Enter the author of the book:\n");
+    printf("\t\t\xDB Enter Author Name:");
     gets(searchtargetauthor);
     z=strstr(searchtarget,"\n");
     y=strstr(searchtargetauthor,"\n");
+    printf("\t\nSearch Result\n");
     if (z==NULL && y==NULL)
     {
         for(x=0; x<book_no; x++)
@@ -1345,7 +1487,32 @@ void search_double(int id)//notes bonus b3d alta3del
                 authorcounter++;
         }
         if (titlecounter==0 || authorcounter==0)
-            printf("there is no books matches the request!!");
+        {
+            printf("\nBook Founds = 0\n");
+            printf("\n================================================================================");
+            printf("There Aren't Any  Book With This Title (%s) and This Author (%s)",searchtarget,searchtargetauthor);
+            printf("\n================================================================================");
+            printf("\tDo You Want To Back To Search Menu (Y/N)");
+            int flag=0;
+                do
+                {
+                switch(getch())
+                {
+                case'y':case'Y':
+                    search_book(id);
+                    break;
+                case 'n': case'N':
+                    search_double(id);
+                    break;
+                default:
+                    flag=0;
+                    system("color FC");
+                    printf("\n\t\aInvalid Input");
+                    flag++;
+                }
+                }
+                while(flag!=0);
+        }
         else
         {
             books searchdata[30];
@@ -1368,14 +1535,17 @@ void search_double(int id)//notes bonus b3d alta3del
                     counter++;
                 }
             }
-            printf("the list of books found %d books\n",counter);
-            printf("------------------------------------\n");
-            for(x=0; x<counter; x++)
-                printf("%s, %s, %s, %s, %d, %d, %d, %d, %d, %s\n",searchdata[x].title,searchdata[x].author,searchdata[x].publisher,searchdata[x].ISBN,
-                       searchdata[x].publish.day,searchdata[x].publish.month,searchdata[x].publish.year,searchdata[x].no_cpy,searchdata[x].curr_copy,searchdata[x].catg);
-            printf("\n press any key to return to the menu");
+        printf("\nBook Founds = %d\n",counter);
+        printf("\n================================================================================");
+        printf("ISBN  Category  Title  Author  Publisher  Date of Publisher  #Copies  # Borrow\n");
+
+        for(x=0; x<counter; x++)
+                    printf("%s\t%s\t%s\t%s\t%s\t  %d/%d/%d\t     %d|%d\t%d \n",book_curr[x].ISBN,book_curr[x].catg,book_curr[x].title,book_curr[x].author,book_curr[x].publisher,
+               book_curr[x].publish.day,book_curr[x].publish.month,book_curr[x].publish.year,book_curr[x].no_cpy,book_curr[x].curr_copy,book_curr[x].no_borr);
+            printf("\n================================================================================");
+            printf("\nPress Any Key To Back To Menu...");
             getch();
-            return user(id);
+            return ;
         }
     }
     else if(z==NULL && y!=NULL)
@@ -1387,7 +1557,32 @@ void search_double(int id)//notes bonus b3d alta3del
                 titlecounter++;
         }
         if (titlecounter==0)
-            printf("there is no books matches the request!!");
+            {
+                printf("\nBook Founds = 0\n");
+            printf("\n================================================================================");
+            printf("There Aren't Any  Book With This Title (%s) and This Author (%s)",searchtarget,searchtargetauthor);
+            printf("\n================================================================================");
+            printf("\tDo You Want To Back To Search Menu (Y/N)");
+            int flag=0;
+                do
+                {
+                switch(getch())
+                {
+                case'y':case'Y':
+                    search_book(id);
+                    break;
+                case 'n': case'N':
+                    search_double(id);
+                    break;
+                default:
+                    flag=0;
+                    system("color FC");
+                    printf("\n\t\aInvalid Input");
+                    flag++;
+                }
+                }
+                while(flag!=0);
+            }
         else
         {
             books searchdata[titlecounter];
@@ -1409,14 +1604,17 @@ void search_double(int id)//notes bonus b3d alta3del
                     counter++;
                 }
             }
-            printf("the list of books found %d books\n",counter);
-            printf("------------------------------------\n");
-            for(x=0; x<counter; x++)
-                printf("%s, %s, %s, %s, %d, %d, %d, %d, %d, %s\n",searchdata[x].title,searchdata[x].author,searchdata[x].publisher,searchdata[x].ISBN,
-                       searchdata[x].publish.day,searchdata[x].publish.month,searchdata[x].publish.year,searchdata[x].no_cpy,searchdata[x].curr_copy,searchdata[x].catg);
-            printf("\n press any key to return to the menu");
+            printf("\nBook Founds = %d\n",counter);
+        printf("\n================================================================================");
+        printf("ISBN  Category  Title  Author  Publisher  Date of Publisher  #Copies  # Borrow\n");
+
+        for(x=0; x<counter; x++)
+                    printf("%s\t%s\t%s\t%s\t%s\t  %d/%d/%d\t     %d|%d\t%d \n",book_curr[x].ISBN,book_curr[x].catg,book_curr[x].title,book_curr[x].author,book_curr[x].publisher,
+               book_curr[x].publish.day,book_curr[x].publish.month,book_curr[x].publish.year,book_curr[x].no_cpy,book_curr[x].curr_copy,book_curr[x].no_borr);
+            printf("\n================================================================================");
+            printf("\nPress Any Key To Back To Menu...");
             getch();
-            return user(id);
+            return ;
         }
 
     }
@@ -1428,7 +1626,32 @@ void search_double(int id)//notes bonus b3d alta3del
                 authorcounter++;
         }
         if (authorcounter==0)
-            printf("\nthere is no books matches the request!!");
+            {
+                printf("\nBook Founds = 0\n");
+            printf("\n================================================================================");
+            printf("There Aren't Any  Book With This Title (%s) and This Author (%s)",searchtarget,searchtargetauthor);
+            printf("\n================================================================================");
+            printf("\tDo You Want To Back To Search Menu (Y/N)");
+            int flag=0;
+                do
+                {
+                switch(getch())
+                {
+                case'y':case'Y':
+                    search_book(id);
+                    break;
+                case 'n': case'N':
+                    search_double(id);
+                    break;
+                default:
+                    flag=0;
+                    system("color FC");
+                    printf("\n\t\aInvalid Input");
+                    flag++;
+                }
+                }
+                while(flag!=0);
+            }
         else
         {
             books searchdata[authorcounter];
@@ -1449,14 +1672,17 @@ void search_double(int id)//notes bonus b3d alta3del
                     counter++;
                 }
             }
-            printf("the list of books found %d books\n",counter);
-            printf("------------------------------------\n");
-            for(x=0; x<counter; x++)
-                printf("%s, %s, %s, %s, %d, %d, %d, %d, %d, %s\n",searchdata[x].title,searchdata[x].author,searchdata[x].publisher,searchdata[x].ISBN,
-                       searchdata[x].publish.day,searchdata[x].publish.month,searchdata[x].publish.year,searchdata[x].no_cpy,searchdata[x].curr_copy,searchdata[x].catg);
-            printf("\n press any key to return to the menu");
+        printf("\nBook Founds = %d\n",counter);
+        printf("\n================================================================================");
+        printf("ISBN  Category  Title  Author  Publisher  Date of Publisher  #Copies  # Borrow\n");
+
+        for(x=0; x<counter; x++)
+                    printf("%s\t%s\t%s\t%s\t%s\t  %d/%d/%d\t     %d|%d\t%d \n",book_curr[x].ISBN,book_curr[x].catg,book_curr[x].title,book_curr[x].author,book_curr[x].publisher,
+               book_curr[x].publish.day,book_curr[x].publish.month,book_curr[x].publish.year,book_curr[x].no_cpy,book_curr[x].curr_copy,book_curr[x].no_borr);
+            printf("\n================================================================================");
+            printf("\nPress Any Key To Back To Menu...");
             getch();
-            return user(id);
+            return ;
         }
     }
 }
@@ -1469,8 +1695,10 @@ void search_booktitle(int id)
     int titlecounter=0;
     int counter=0;
     fflush(stdin);
-    printf("please search by book's title or a part of it:");
+    printf("\n\t\t\t\xDB\xDB Search By Title \xDB\xDb\n\n");
+    printf("\t\t\xDB Enter Title Name:");
     gets(searchtarget);
+    printf("\t\nSearch Result");
     for(x=0; x<book_no; x++)
     {
         z=strstr(book_curr[x].title,searchtarget);
@@ -1478,7 +1706,33 @@ void search_booktitle(int id)
             titlecounter++;
     }
     if (titlecounter==0)
-        printf("there is no books matches the request!!");
+       {
+           printf("\nBook Founds = 0\n");
+           printf("\n================================================================================");
+            printf("There Aren't Any  Book With This Title (%s)",searchtarget);
+            printf("\n================================================================================");
+            printf("\tDo You Want To Back To Search Menu (Y/N)");
+            int flag=0;
+                do
+                {
+                switch(getch())
+                {
+                case'y':case'Y':
+                    search_book(id);
+                    break;
+                case 'n': case'N':
+                    search_booktitle(id);
+                    break;
+                default:
+                    flag=0;
+                    system("color FC");
+                    printf("\n\t\aInvalid Input");
+                    flag++;
+                }
+                }
+                while(flag!=0);
+
+       }
     else
     {
         books searchdata[titlecounter];
@@ -1500,14 +1754,17 @@ void search_booktitle(int id)
                 counter++;
             }
         }
-        printf("the list of books found %d books\n",counter);
-        printf("------------------------------------\n");
+        printf("\nBook Founds = %d\n",counter);
+        printf("\n================================================================================");
+        printf("ISBN  Category  Title  Author  Publisher  Date of Publisher  #Copies  # Borrow\n");
+
         for(x=0; x<counter; x++)
-            printf("%s, %s, %s, %s, %d, %d, %d, %d, %d, %s\n",searchdata[x].title,searchdata[x].author,searchdata[x].publisher,searchdata[x].ISBN,
-                   searchdata[x].publish.day,searchdata[x].publish.month,searchdata[x].publish.year,searchdata[x].no_cpy,searchdata[x].curr_copy,searchdata[x].catg);
-        printf("\n press any key to return to the menu");
+            printf("%s\t%s\t%s\t%s\t%s\t  %d/%d/%d\t     %d|%d\t%d \n",book_curr[x].ISBN,book_curr[x].catg,book_curr[x].title,book_curr[x].author,book_curr[x].publisher,
+               book_curr[x].publish.day,book_curr[x].publish.month,book_curr[x].publish.year,book_curr[x].no_cpy,book_curr[x].curr_copy,book_curr[x].no_borr);
+            printf("\n================================================================================");
+            printf("\nPress Any Key To Back To Menu...");
         getch();
-        return user(id);
+        return ;
     }
 
 }
@@ -1519,15 +1776,42 @@ void search_bookisbn(int id)
     int isbncounter=0;
     int counter=0;
     fflush(stdin);
-    printf("please search by book's ISBN:");
+    printf("\n\t\t\t\xDB\xDB Search By ISBN \xDB\xDb\n\n");
+    printf("\t\t\xDB Enter ISBN :");
     gets(searchtarget);
+    printf("\t\nSearch Result");
     for(x=0; x<book_no; x++)
     {
         if(strcmp(searchtarget,book_curr[x].ISBN)==0)
             isbncounter++;
     }
     if (isbncounter==0)
-        printf("there is no books matches the request!!");
+        {
+            printf("\nBook Founds = 0\n");
+            printf("\n================================================================================");
+            printf("There Aren't Any  Book With This ISBN (%s)",searchtarget);
+            printf("\n================================================================================");
+            printf("\tDo You Want To Back To Search Menu (Y/N)");
+            int flag=0;
+                do
+                {
+                switch(getch())
+                {
+                case'y':case'Y':
+                    search_book(id);
+                    break;
+                case 'n': case'N':
+                    search_bookisbn(id);
+                    break;
+                default:
+                    flag=0;
+                    system("color FC");
+                    printf("\n\t\aInvalid Input");
+                    flag++;
+                }
+                }
+                while(flag!=0);
+        }
     else
     {
         books searchdata[isbncounter];
@@ -1548,14 +1832,16 @@ void search_bookisbn(int id)
                 counter++;
             }
         }
-        printf("the list of books found %d books\n",counter);
-        printf("------------------------------------\n");
+        printf("\nBook Founds = %d\n",counter);
+        printf("\n================================================================================");
+        printf("ISBN  Category  Title  Author  Publisher  Date of Publisher  #Copies  # Borrow\n");
         for(x=0; x<counter; x++)
-            printf("%s, %s, %s, %s, %d, %d, %d, %d, %d, %s\n",searchdata[x].title,searchdata[x].author,searchdata[x].publisher,searchdata[x].ISBN,
-                   searchdata[x].publish.day,searchdata[x].publish.month,searchdata[x].publish.year,searchdata[x].no_cpy,searchdata[x].curr_copy,searchdata[x].catg);
-        printf("\n press any key to return to the menu");
-        getch();
-        return user(id);
+                    printf("%s\t%s\t%s\t%s\t%s\t  %d/%d/%d\t     %d|%d\t%d \n",book_curr[x].ISBN,book_curr[x].catg,book_curr[x].title,book_curr[x].author,book_curr[x].publisher,
+               book_curr[x].publish.day,book_curr[x].publish.month,book_curr[x].publish.year,book_curr[x].no_cpy,book_curr[x].curr_copy,book_curr[x].no_borr);
+            printf("\n================================================================================");
+            printf("\nPress Any Key To Back To Menu...");
+            getch();
+        return ;
     }
 }
 void search_bookauthor(int id)
@@ -1566,15 +1852,43 @@ void search_bookauthor(int id)
     int authorcounter=0;
     int counter=0;
     fflush(stdin);
-    printf("please search by book's author:");
+    printf("\n\t\t\t\xDB\xDB Search By Author \xDB\xDb\n\n");
+    printf("\t\t\xDB Enter Author Name:");
     gets(searchtarget);
+    printf("\t\nSearch Result");
     for(x=0; x<book_no; x++)
     {
         if(strcmp(searchtarget,book_curr[x].author)==0)
             authorcounter++;
     }
     if (authorcounter==0)
-        printf("\nthere is no books matches the request!!");
+        {
+            printf("\nBook Founds = 0\n");
+            printf("\n================================================================================");
+            printf("There Aren't Any  Book With This Author (%s)",searchtarget);
+            printf("\n================================================================================");
+            printf("\tDo You Want To Back To Search Menu (Y/N)");
+            int flag=0;
+                do
+                {
+                switch(getch())
+                {
+                case'y':case'Y':
+                    search_book(id);
+                    break;
+                case 'n': case'N':
+                    search_bookauthor(id);
+                    break;
+                default:
+                    flag=0;
+                    system("color FC");
+                    printf("\n\t\aInvalid Input");
+                    flag++;
+                }
+                }
+                while(flag!=0);
+
+        }
     else
     {
         books searchdata[authorcounter];
@@ -1595,14 +1909,17 @@ void search_bookauthor(int id)
                 counter++;
             }
         }
-        printf("the list of books found %d books\n",counter);
-        printf("------------------------------------\n");
+        printf("\nBook Founds = %d\n",counter);
+        printf("\n================================================================================");
+        printf("ISBN  Category  Title  Author  Publisher  Date of Publisher  #Copies  # Borrow\n");
+
         for(x=0; x<counter; x++)
-            printf("%s, %s, %s, %s, %d, %d, %d, %d, %d, %s\n",searchdata[x].title,searchdata[x].author,searchdata[x].publisher,searchdata[x].ISBN,
-                   searchdata[x].publish.day,searchdata[x].publish.month,searchdata[x].publish.year,searchdata[x].no_cpy,searchdata[x].curr_copy,searchdata[x].catg);
-        printf("\n press any key to return to the menu");
+                    printf("%s\t%s\t%s\t%s\t%s\t  %d/%d/%d\t     %d|%d\t%d \n",book_curr[x].ISBN,book_curr[x].catg,book_curr[x].title,book_curr[x].author,book_curr[x].publisher,
+               book_curr[x].publish.day,book_curr[x].publish.month,book_curr[x].publish.year,book_curr[x].no_cpy,book_curr[x].curr_copy,book_curr[x].no_borr);
+            printf("\n================================================================================");
+            printf("\nPress Any Key To Back To Menu...");
         getch();
-        return user(id);
+        return ;
     }
 
 }
@@ -1614,15 +1931,42 @@ void search_bookcatg(int id)
     int catgcounter=0;
     int counter=0;
     fflush(stdin);
-    printf("please search by book's category:");
+    printf("\n\t\t\t\xDB\xDB Search By Category \xDB\xDb\n\n");
+    printf("\t\t\xDB Enter Category Name:");
     gets(searchtarget);
+    printf("\t\nSearch Result");
     for(x=0; x<book_no; x++)
     {
         if(strcmp(searchtarget,book_curr[x].catg)==0)
             catgcounter++;
     }
     if (catgcounter==0)
-        printf("there is no books matches the request!!");
+       {
+           printf("\nBook Founds = 0\n");
+           printf("\n================================================================================");
+            printf("There Aren't Any  Book With This Categoru (%s)",searchtarget);
+            printf("\n================================================================================");
+            printf("\tDo You Want To Back To Search Menu (Y/N)");
+            int flag=0;
+                do
+                {
+                switch(getch())
+                {
+                case'y':case'Y':
+                    search_book(id);
+                    break;
+                case 'n': case'N':
+                    search_bookcatg(id);
+                    break;
+                default:
+                    flag=0;
+                    system("color FC");
+                    printf("\n\t\aInvalid Input");
+                    flag++;
+                }
+                }
+                while(flag!=0);
+        }
     else
     {
         books searchdata[catgcounter];
@@ -1643,17 +1987,21 @@ void search_bookcatg(int id)
                 counter++;
             }
         }
-        printf("the list of books found %d books\n",counter);
-        printf("------------------------------------\n");
+        printf("\nBook Founds = %d\n",counter);
+        printf("\n================================================================================");
+        printf("ISBN  Category  Title  Author  Publisher  Date of Publisher  #Copies  # Borrow\n");
+
         for(x=0; x<counter; x++)
-            printf("%s, %s, %s, %s, %d, %d, %d, %d, %d, %s\n",searchdata[x].title,searchdata[x].author,searchdata[x].publisher,searchdata[x].ISBN,
-                   searchdata[x].publish.day,searchdata[x].publish.month,searchdata[x].publish.year,searchdata[x].no_cpy,searchdata[x].curr_copy,searchdata[x].catg);
-        printf("\n press any key to return to the menu");
+                    printf("%s\t%s\t%s\t%s\t%s\t  %d/%d/%d\t     %d|%d\t%d \n",book_curr[x].ISBN,book_curr[x].catg,book_curr[x].title,book_curr[x].author,book_curr[x].publisher,
+               book_curr[x].publish.day,book_curr[x].publish.month,book_curr[x].publish.year,book_curr[x].no_cpy,book_curr[x].curr_copy,book_curr[x].no_borr);
+            printf("\n================================================================================");
+            printf("\nPress Any Key To Back To Menu...");
         getch();
-        return user(id);
+        return ;
     }
 
 }
+
 
 
 #endif // FUNCTIONS_H_INCLUDED
