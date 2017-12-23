@@ -1,10 +1,5 @@
-ryry3-2,ryrt,tr,ytr,tryrt,4,5,6,2,2,0
-13-321,qwewq,ewqe,qewq,qwewq,4,50,20,4,4,6
-3-15,qwewq,xzczx,bgc,werew,3,2,29,4,3,3
-3-215qw,wqewq,xzcx,z,reter,3,5,6,4,4,0
-3-154,rtytruty,rcxvcx,vcx,xcvs,4,5,6,4,0,4
-3-1547,qewq,xzcxz,erew,erte,3,6,2015,6,6,2
-577,programming,education,dr ahmed,ahmed.inv,5,5,2015,9,8,5
-9999,math3,education,dr hisham,hisham.inc,6,8,1999,9,10,3
-8888,math3,education,dr hisham,hisham.inc,6,8,1997,10,10,2
-7777,physics,modernphysics,dr hany,hany.inc,7,7,1996,11,11,0
+9-999,programming,education,dr ahmed,ahmed.inc,5,5,1999,11,11,1
+6-789,physics,modern physics,dr mandor,hany.inc,7,8,1800,12,12,1
+7-896-12,Programming,c-prog,dr hamdy,16,16,7,2000,10,9,1
+894-4,English,entertainment,dr heba,harry.inc,9,10,1807,10,8,2
+8-888,history,education,dr abdelazim,khaled.inc,6,5,1980,10,9,2
