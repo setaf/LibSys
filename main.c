@@ -22,7 +22,7 @@ int check_id(void);
 void new_save(void);
 void del_save(void);
 void curr_mem(void);
-void show_list(void);
+void show_list(int x);
 void search_double(int id);//notess
 void search_bookauthor(int id);//notess
 void search_bookcatg(int id);//notess
