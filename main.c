@@ -2,8 +2,13 @@
 #include <stdlib.h>
 #include <time.h>
 
-/*the algorithm is simple and repeated, you check all 8 positions around a spot every time with 8 if()
-it is used throughout the whole code*/
+/*
+the algorithm is simple and repeated, you check all 8 positions around a spot every time with 8 if()
+it is used throughout the whole code
+in general:  '9'  means a mine      and the same as '*'
+             '91' means a flag      and the same as 'F'
+             '10' means a safe spot and the same as '-'
+*/
 
 void generate(int scr[100][100],int size,int mines);//generate random positions with mines and neutral spots
 void hide_screen(char hide[100][100], int size); //hide screen behind '+' signs
