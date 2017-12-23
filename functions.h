@@ -71,7 +71,6 @@ void menu (void)
 {
     system("cls");
     system("color 71");
-    //popular Books
     printf("\n\n\n\n\n\n\t\t\t\xDB\xDB\xDB\xDb\xB2 Welcome To Main Menu \xB2\xDB\xDB\xDB\xDb\n\n\n");
     delay(500);
     printf("\t\t\t\xDB 1-Administrator Menu\n\t\t\t\xDB\n\t\t\t\xDB\n");
@@ -94,6 +93,7 @@ void menu (void)
         printf(" \n\n\t\t\tYou Want To Save Before Leaving (Y/N):");
         char in;
         scanf("%c",&in);
+        fflush(stdin);
         switch(in)
         {
         case 'y': case'Y':
@@ -152,7 +152,7 @@ void admin ()
         overdue();
         break;
     case '5':
-        show_list(4);
+        show_list(0);
         break;
     case '6' :
         del_save();
@@ -168,6 +168,7 @@ void admin ()
         menu();
         break;
     case '8':
+        fflush(stdin);
         system("color F0");
          printf(" \n\n\t\t\tYou Want To Save Before Leaving (Y/N):");
         char in;
@@ -207,14 +208,14 @@ void admin ()
 void addmem(void)
 {
     int i;
+    system("color F2");
     time_t currenttime;
     time(&currenttime);
     system("cls");
-    system("color 9F");
     popular_book();
     printf("\n================================================================================");
     printf("\n\t\t\t\xDB\xDB\xDB\xDb\xB2 Welcome To Member's Menu \xB2\xDB\xDB\xDB\xDb\n\n\n");
-    printf("\t\t\t\xDB 1-Current Menu\n\t\t\t\xDB\n\t\t\t\xDB\n");
+    printf("\t\t\t\xDB 1-Current Member\n\t\t\t\xDB\n\t\t\t\xDB\n");
     printf("\t\t\t\xDB 2-Registration\n\t\t\t\xDB\n\t\t\t\xDB\n");
     printf("\t\t\t\xDB 3-Save Changes\n\t\t\t\xDB\n\t\t\t\xDB\n");
     printf("\t\t\t\xDB 4-Main Menu\n\t\t\t\xDB\n");
@@ -227,6 +228,7 @@ void addmem(void)
     case '2':
         system("cls");
         fflush(stdin);
+        system("color F3");
         printf("\n  \t\t\t\xdb\xdb\xdb\xb0 Registration \xb0\xdb\xdb\xdb");
         printf("\n================================================================================");
         printf("\tToday's Date:%s\n",ctime(&currenttime));
@@ -242,27 +244,40 @@ void addmem(void)
             {
                 if(new_user[newnumber].id==curr_user[i].id)
                 {
+                    {
+                        system("color FC");
                     printf("\n\t\xb0 This ID Is Already Exist");
+                    }
 
                     break;
                 }
             }
             if(new_user[newnumber].id<0)
-                printf("\n\t\xb0 Enter A positive number, Retry");
+               {
+                   system("color FC");
+                   printf("\n\t\xb0 Enter A positive number, Retry");
+               }
             if(new_user[newnumber].id==0)
-                printf("\n\t\xb0 You Can't enter That Number");
-            //notes
+                {
+                    system("color FC");
+                    printf("\n\t\xb0 You Can't enter That Number");
+                }
+
         }
         while(new_user[newnumber].id<0 ||i != mem_no || new_user[newnumber].id==0);
-
+        system("color F3");
         do
         {
             printf("\n\t\xdb Enter Your Street #: ");
             scanf("%d",&new_user[newnumber].adrs.street_no);
             if (new_user[newnumber].adrs.street_no<0)
+               {
+                   system("color FC");
                 printf("\n\t\xb0 Enter A Positive #: ");
+               }
         }
         while(new_user[newnumber].adrs.street_no<0);
+        system("color F3");
         printf("\n\t\xdb Your Zone: ");
         getchar();
         gets(new_user[newnumber].adrs.zone);
@@ -273,17 +288,25 @@ void addmem(void)
             printf("\n\t\xdb Your Phone Number: ");
             scanf("%d",&new_user[newnumber].phone);
             if (new_user[newnumber].phone<1000000000 || new_user[newnumber].phone>100000000000)
-                printf("\n\t\xb0 Wrong Phone Number Retry: ");
+                {
+                    system("color F3");
+                    printf("\n\t\xb0 Wrong Phone Number Retry: ");
+                }
         }
         while(new_user[newnumber].phone<1000000000 || new_user[newnumber].phone>100000000000);
+        system("color F3");
         do
         {
             printf("\n\t\xdb Your Age (7 Year's Old Or More): ");
             scanf("%d",&new_user[newnumber].age);
             if (new_user[newnumber].age<7)
-                printf("\n\t\xb0 Wrong Age Retry: ");
+                {
+                    system("color FC");
+                    printf("\n\t\xb0 Wrong Age Retry: ");
+                }
         }
         while(new_user[newnumber].age<7);
+        system("color F3");
          printf("\n\t\xdb Your Email: ");
         getchar();
         int flag=0;
@@ -306,13 +329,14 @@ void addmem(void)
             }
             else
             {
+                system("color FC");
                 printf("\n\t\xb0 Wrong Email Retry: ");
             }
         }
         while(flag != 1);
         new_user[newnumber].no_borru=0;
         newnumber++;
-
+        system("color F3");
         printf("\n\t\xdb Welcome (%s) \n\n\t\xdb Your ID: (%d)\n",new_user[newnumber-1].f_name,new_user[newnumber-1].id);
         printf("\n\t\xb0 Press Any Key To Continue....");
         switch(getch())
@@ -580,7 +604,7 @@ void add_book()
                 }
             }
             while(flag !=0);
-            system("color 30");
+            system("color F3");
             printf("\n\t\xdb Enter Number Of Copies: ");
 
             do
@@ -597,7 +621,7 @@ void add_book()
             book_new[newbook].curr_copy=book_new[newbook].no_cpy;
             newbook++;
             book_new[newbook].no_borr=0;
-            system("color 30");
+            system("color F3");
             printf("\n\t\xb0 Book Added Successfully");
             printf("\n\tPress any Key To Back To Menu:");
             getch();
@@ -676,6 +700,7 @@ void delete_book()
 void borrow_book(int id)
 {
     system("cls");
+    system("color F3");
     time_t currenttime;
     time(&currenttime);
     struct tm *mytime = localtime(&currenttime);
@@ -718,6 +743,7 @@ void borrow_book(int id)
         }
         if(x==book_no)
         {
+            system("color FC");
             printf("\n InValid ISBN \n");
             int flag=0;
                 printf("\n\tYou Want To Back To Menu (Y/N): ");
@@ -782,6 +808,7 @@ void borrow_book(int id)
             }
             else
             {
+                system("color FC");
                 printf("Sorry there is # Copies Available for That Book\n");
                 printf("Enter Any Key To Return To The Menu...");
                 getch();
@@ -790,6 +817,7 @@ void borrow_book(int id)
         }
         else
         {
+            system("color FC");
             printf("You Reach The Maximium Number of borrows\n");
             printf("Enter Any Key To Return To The Menu...");
             getch();
@@ -807,6 +835,7 @@ void search_book(int id)
     int catgcounter=0;
     int counter=0;
     system("cls");
+    system("color F3");
     printf("\n\n\n\n\n\t\t   \xDB\xDB\xDB\xDb\xB2 Welcome To Search Menu \xB2\xDB\xDB\xDB\xDb\n\n\n");
     printf("\t\t\t\xDB 1-Search By Title \n\t\t\t\xDB\n\t\t\t\xDB\n");
     printf("\t\t\t\xDB 2-Search By Author \n\t\t\t\xDB\n\t\t\t\xDB\n");
@@ -836,7 +865,9 @@ void search_book(int id)
         user(id);
         break;
     default:
-        printf("\nenter a valid number!!");
+        system("color FC");
+        printf("\n\t\t\t \aEnter A Valid Input");
+        delay(1500);
         search_book(id);
     }
 }
@@ -844,6 +875,7 @@ void user (int id)
 {
     int i;
     system("cls");
+    system("color F2");
     popular_book();
     printf("\n================================================================================");
     for(i=0;i<mem_no;i++)
@@ -929,7 +961,7 @@ void overdue()
                 }
             }
             printf("\n================================================================================");
-            printf("press any key to return to the menu!!");
+            printf("\nPress Any Key To Back To Menu...");
             getch();
             return admin();
         }
@@ -1002,6 +1034,7 @@ void popular_book()
 void ret_book(int id)
 {
     system("cls");
+    system("color F3");
     time_t currenttime;
     time(&currenttime);
     struct tm *mytime = localtime(&currenttime);
@@ -1035,7 +1068,8 @@ void ret_book(int id)
         if(x == newborrow)
         {
             int flag=0;
-            printf("\n\t\t\tInValid ISBN");
+            system("color FC");
+            printf("\n\t\t\t\aInValid ISBN");
             printf("\n\t\t\tYou Want To Back To Menu (Y/N): ");
                 do
                 {
@@ -1091,7 +1125,7 @@ void new_cpy()
 {
     int no,i;
     system("cls");
-    system("color 30");
+    system("color F3");
     printf("\n\n\n\n\n\n\t\t\t\xDB\xDB\xDB\xDb\xB2 Add Copies \xB2\xDB\xDB\xDB\xDb\n\n\n");
     printf("\t\t\t\xDB Enter Book's ISBN: ");
     scanf("%s",book_new[newbook].ISBN);
@@ -1129,6 +1163,7 @@ void new_cpy()
 }
 int check_id()
 {
+    system("color F2");
     int id,i,j,flag=0;
     system("cls");
     printf("\n\n\n\n\n\t\t");
@@ -1156,8 +1191,8 @@ int check_id()
 
     if(flag!=mem_no)
     {
-        printf("Welcome %s\n",curr_user[i].f_name);
-        printf("Press Any Key To Continue...");
+        printf("\n\t\t\tWelcome ( %s )\n",curr_user[i].f_name);
+        printf("\t\t\tPress Any Key To Continue...");
         getch();
         user(id);
         return id;
@@ -1165,7 +1200,9 @@ int check_id()
 
     else
     {
-        printf("Wrong ID You  Want Back To Menu (Y/N):");
+        fflush(stdin);
+        system("color FC");
+        printf("\n\t\tWrong ID You  Want Back To Menu (Y/N):");
                 do
                 {
                 switch(getch())
@@ -1179,7 +1216,7 @@ int check_id()
                 default:
                     flag=0;
                     system("color FC");
-                    printf("\n\t\aInvalid Input");
+                    printf("\n\t\t\aInvalid Input");
                     flag++;
                 }
                 }
@@ -1378,8 +1415,8 @@ void show_list(int x)
                    flag++;
                    }
             }
+                printf("\n================================================================================\n");
                 printf("Press Any Key To Back To Menu...");
-                printf("================================================================================\n");
                 getch();
                 user(x);
 
@@ -1459,6 +1496,7 @@ void show_list(int x)
 void search_double(int id)//notes bonus b3d alta3del
 {
     system("cls");
+    system("color F3");
     char searchtarget[30];
     char searchtargetauthor[30];
     char *z,*y;
@@ -1689,6 +1727,7 @@ void search_double(int id)//notes bonus b3d alta3del
 void search_booktitle(int id)
 {
     system("cls");
+    system("color F3");
     char searchtarget[50];
     char *z;
     int x;
@@ -1771,6 +1810,7 @@ void search_booktitle(int id)
 void search_bookisbn(int id)
 {
     system("cls");
+    system("color F3");
     char searchtarget[50];
     int x;
     int isbncounter=0;
@@ -1847,6 +1887,7 @@ void search_bookisbn(int id)
 void search_bookauthor(int id)
 {
     system("cls");
+    system("color F3");
     char searchtarget[50];
     int x;
     int authorcounter=0;
@@ -1926,6 +1967,7 @@ void search_bookauthor(int id)
 void search_bookcatg(int id)
 {
     system("cls");
+    system("color F3");
     char searchtarget[50];
     int x;
     int catgcounter=0;
@@ -2001,7 +2043,6 @@ void search_bookcatg(int id)
     }
 
 }
-
 
 
 #endif // FUNCTIONS_H_INCLUDED

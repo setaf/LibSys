@@ -5,12 +5,13 @@
 #include <windows.h>
 #include "functions.h"
 
+void delay(unsigned int mseconds);
 void del_mem(void);
 void menu(void);
 void add_book(void);
 void addmem(void);
 void delete_book(void);
-void borrow_book();
+void borrow_book(int id);
 void search_book(int id); //notess 3ashan lma ya5las a5leh yarg3 lluser menu fa lazm ab3at al id lakan ana msh 7ast5dmo feha
 void admin (void);
 void user(int id);
@@ -28,6 +29,8 @@ void search_bookauthor(int id);//notess
 void search_bookcatg(int id);//notess
 void search_bookisbn(int id);//notess
 void search_booktitle(int id);//notess
+void pass_word(void);
+
 
 int main()
 {

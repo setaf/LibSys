@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1514041739 source:c:\users\mohame\desktop\final 2\main.c
+1514057329 source:c:\users\mohame\desktop\final 2\main.c
 	<stdio.h>
 	<stdlib.h>
 	<time.h>
@@ -7,7 +7,7 @@
 	<windows.h>
 	"functions.h"
 
-1514056932 c:\users\mohame\desktop\final 2\functions.h
+1514059358 c:\users\mohame\desktop\final 2\functions.h
 	"struct.h"
 
 1513990605 c:\users\mohame\desktop\final 2\struct.h
