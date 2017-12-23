@@ -19,7 +19,7 @@ date overd[100];
 void menu (void)
 {
     int i;
-    //system("cls");
+    system("cls");
     printf("1-admin\n");
     printf("2-user\n");
     printf("3-exit\n");
@@ -78,7 +78,13 @@ void admin ()
     case '6' :
         show_list();
     case '7':
-        new_save();//mas7at delete save kant hena 3ashan kant 3amla error
+        del_save();
+        new_save();
+        curr_mem();
+        printf("Saved successfully\n");
+        printf("Enter any key to return to the menu!!");
+        getch();
+        admin(); //mas7at delete save kant hena 3ashan kant 3amla error
         //notess
         break;
     case '8':
@@ -114,6 +120,7 @@ void addmem(void)
         break;
     case '2':
         system("cls");
+        fflush(stdin);
         printf("Enter Your First Name:\n");
         gets(new_user[newnumber].f_name);
         printf("Enter Your Last Name:\n");
@@ -200,6 +207,11 @@ void addmem(void)
     case '3':
         del_save();
         new_save();
+        curr_mem();
+        printf("Saved successfully\n");
+        printf("Enter any key to return to the menu!!");
+        getch();
+        addmem();
         break;
     case '4':
         menu();
@@ -209,7 +221,78 @@ void addmem(void)
         addmem();
     }
 }
+void curr_mem()          //btgyb 3dd el current user w t7thom fe array
+{
+    int i;
+    if (temp = fopen("members.txt","r") == NULL)
+    {
+        temp = fopen("members.txt","w");//notes
+    }
+    else
+    {
+        temp = fopen("members.txt","r");
+        while (!feof(temp))
+        {
+            fscanf(temp,"%[^,],%[^,],%d,%d,%[^,],%[^,],0%d,%d,%d,%s\n",curr_user[mem_no].f_name,curr_user[mem_no].l_name,&curr_user[mem_no].id,&curr_user[mem_no].adrs.street_no,
+                   curr_user[mem_no].adrs.zone,curr_user[mem_no].adrs.city,&curr_user[mem_no].phone,&curr_user[mem_no].age,&curr_user[mem_no].no_borru,curr_user[mem_no].email);
+            for(i=0; i<mem_no; i++)
+                if(curr_user[i].id == curr_user[mem_no].id)//notess
+                {
+                    break;
+                }
+            if(i == mem_no)
+            {
 
+                if(strcmp(curr_user[mem_no].f_name,curr_user[mem_no+1].f_name)!=0)//notes
+                    mem_no++;
+            }
+        }
+    }
+    fclose(temp);
+    if (temp = fopen("books.txt","r")== NULL)
+    {
+        temp = fopen("books.txt","w");//notes
+    }
+    else
+    {
+        temp = fopen("books.txt","r");
+        while (!feof(temp))
+        {
+            fscanf(temp,"%[^,],%[^,],%[^,],%[^,],%[^,],%d,%d,%d,%d,%d,%d\n",book_curr[book_no].ISBN,book_curr[book_no].catg,book_curr[book_no].title,book_curr[book_no].author,book_curr[book_no].publisher,
+                   &book_curr[book_no].publish.day,&book_curr[book_no].publish.month,&book_curr[book_no].publish.year,&book_curr[book_no].no_cpy,&book_curr[book_no].curr_copy,&book_curr[book_no].no_borr);
+
+            for(i=0; i<book_no; i++)
+            {
+                if(strcmp(book_curr[i].ISBN,book_curr[book_no].ISBN)==0)
+                    break;
+            }
+            if(i==book_no)
+            {
+                if(strcmp(book_curr[book_no].ISBN,book_curr[book_no+1].ISBN)!=0)//notes
+                    book_no++;
+            }
+        }
+    }
+    fclose(temp);
+
+    if (temp = fopen("borrow.txt","r")== NULL)
+    {
+        temp = fopen("borrow.txt","w");//notes
+    }
+    else
+    {
+        temp = fopen("borrow.txt","r");
+        while (!feof(temp))
+        {
+            fscanf(temp,"%[^,],%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",borrows[newborrow].book_isbn,&borrows[newborrow].user_id,&borrows[newborrow].borrow_date.day,
+                   &borrows[newborrow].borrow_date.month,&borrows[newborrow].borrow_date.year,&borrows[newborrow].duedate.day,&borrows[newborrow].duedate.month,
+                   &borrows[newborrow].duedate.year,&borrows[newborrow].ret_date.day,&borrows[newborrow].ret_date.month,&borrows[newborrow].ret_date.year);
+            if(borrows[newborrow].user_id!=0)
+                newborrow++;
+        }
+    }
+    fclose(temp);
+}
 void del_mem()
 {
     int i,id;
@@ -238,7 +321,7 @@ void add_book()
         break;
     case '2':
         system("cls");
-        printf("ente isbn: ");
+        printf("enter isbn: ");
         scanf("%s",book_new[newbook].ISBN);
         for(i=0; i<book_no; i++)
         {
@@ -261,6 +344,7 @@ void add_book()
             printf("enter date of publish DD/MM/YYYY: ");
             do
             {
+                flag=0;
                 scanf("%d%d%d",&book_new[newbook].publish.day,&book_new[newbook].publish.month,&book_new[newbook].publish.year);
                 if(book_new[newbook].publish.day > 28 + fmod(book_new[newbook].publish.month + floor(book_new[newbook].publish.month/8),2) + (2 % book_new[newbook].publish.month) + 2 * floor(1/book_new[newbook].publish.month))
                 {
@@ -277,6 +361,7 @@ void add_book()
                 {
                     printf("Enter Valid Date\n");
                     flag++;
+                    // valdiation bt3 lwo date kan akbr mn try5 anhrda lsa n2sa
                 }
             }
             while(flag !=0);
@@ -293,12 +378,10 @@ void add_book()
             book_new[newbook].curr_copy=book_new[newbook].no_cpy;
             newbook++;
             book_new[newbook].no_borr=0;
-            fclose(fc);
             admin();
         }
     }
 }
-
 void delete_book()
 {
     system("cls");
@@ -315,7 +398,7 @@ void delete_book()
         if(strcmp(book_curr[i].ISBN,del_isbn)==0)
             break;
     }
-    strcpy(book_curr[i].ISBN,"re");
+    strcpy(book_curr[i].ISBN,"Removable");
     admin();   // notess mlhash lazma return ll menu bdlha
 }
 
@@ -327,88 +410,89 @@ void borrow_book(int id)
     struct tm *mytime = localtime(&currenttime);
     char isbn[32];
     int i,x,indexmem,indexbook,indexborrow;
-        borrows[newborrow].user_id=id;
-        printf("\t books list \n");
-        for(i=0; i<book_no; i++)
-            printf("%s  ,%s ,%s ,%s ,%s ,%d ,%d,%d ,%d,%d,%d \n",book_curr[i].ISBN,book_curr[i].catg,book_curr[i].title,book_curr[i].author,book_curr[i].publisher,
-                   book_curr[i].publish.day,book_curr[i].publish.month,book_curr[i].publish.year,book_curr[i].no_cpy,book_curr[i].curr_copy,book_curr[i].no_borr);
-        printf("please enter the book ISBN you want to borrow:\n");
-        fflush(stdin);
-        gets(isbn);
-        for(x=0; x<book_no; x++)
-        {
+    borrows[newborrow].user_id=id;
+    printf("\t books list \n");
+    for(i=0; i<book_no; i++)
+        printf("%s  ,%s ,%s ,%s ,%s ,%d ,%d,%d ,%d,%d,%d \n",book_curr[i].ISBN,book_curr[i].catg,book_curr[i].title,book_curr[i].author,book_curr[i].publisher,
+               book_curr[i].publish.day,book_curr[i].publish.month,book_curr[i].publish.year,book_curr[i].no_cpy,book_curr[i].curr_copy,book_curr[i].no_borr);
+    printf("please enter the book ISBN you want to borrow:\n");
+    fflush(stdin);
+    gets(isbn);
+    for(x=0; x<book_no; x++)
+    {
 
-            if(strcmp(isbn,book_curr[x].ISBN)==0)
-            {
-                indexbook=x;
-                strcpy(borrows[newborrow].book_isbn,isbn);
-                break;
-            }
-        }
-        if(x==book_no)
+        if(strcmp(isbn,book_curr[x].ISBN)==0)
         {
-            printf("please enter a valid ISBN!!!\n");
+            indexbook=x;
+            strcpy(borrows[newborrow].book_isbn,isbn);
+            break;
+        }
+    }
+    if(x==book_no)
+    {
+        printf("please enter a valid ISBN!!!\n");
+        printf("enter any key to return to the menu!");
+        getch();
+        return addmem();
+    }
+
+    for(x=0; x<mem_no; x++)
+    {
+        if(id==curr_user[x].id)
+        {
+            indexmem=x;
+            borrows[newborrow].user_id=id;
+        }
+    }
+    if(curr_user[indexmem].no_borru<3)
+    {
+        if(book_curr[indexbook].curr_copy>0)
+        {
+            borrows[newborrow].borr_no++;
+            curr_user[indexmem].no_borru++;
+            curr_user[indexmem].age++;
+            book_curr[indexbook].curr_copy--;
+            book_curr[indexbook].no_borr++;
+            borrows[newborrow].borrow_date.month=mytime->tm_mon+1;
+            borrows[newborrow].borrow_date.day=mytime->tm_mday;
+            borrows[newborrow].borrow_date.year=mytime->tm_year+1900;
+            borrows[newborrow].duedate.month=mytime->tm_mon+1;
+            borrows[newborrow].duedate.day=mytime->tm_mday+5;
+            borrows[newborrow].duedate.year=mytime->tm_year+1900;
+            if(borrows[newborrow].duedate.day>31)
+            {
+                borrows[newborrow].duedate.month++;
+                borrows[newborrow].duedate.day-=31;
+            }
+            if(borrows[newborrow].duedate.month>12)
+            {
+                borrows[newborrow].duedate.year++;
+                borrows[newborrow].duedate.month-=12;
+            }
+            printf("you borrowed a book\n");
+            for(i=0; i<mem_no; i++)
+                printf("%d",curr_user[i].no_borru);
             printf("enter any key to return to the menu!");
             getch();
+            newborrow++;
             return addmem();
-        }
-
-        for(x=0; x<mem_no; x++)
-        {
-            if(id==curr_user[x].id)
-            {
-                indexmem=x;
-                borrows[newborrow].user_id=id;
-            }
-        }
-        if(curr_user[indexmem].no_borru<3)
-        {
-            if(book_curr[indexbook].curr_copy>0)
-            {
-                borrows[newborrow].borr_no++;
-                curr_user[indexmem].no_borru++;
-                book_curr[indexbook].curr_copy--;
-                book_curr[indexbook].no_borr++;
-                borrows[newborrow].borrow_date.month=mytime->tm_mon+1;
-                borrows[newborrow].borrow_date.day=mytime->tm_mday;
-                borrows[newborrow].borrow_date.year=mytime->tm_year+1900;
-                borrows[newborrow].duedate.month=mytime->tm_mon+1;
-                borrows[newborrow].duedate.day=mytime->tm_mday+5;
-                borrows[newborrow].duedate.year=mytime->tm_year+1900;
-                if(borrows[newborrow].duedate.day>31)
-                {
-                    borrows[newborrow].duedate.month++;
-                    borrows[newborrow].duedate.day-=31;
-                }
-                if(borrows[newborrow].duedate.month>12)
-                {
-                    borrows[newborrow].duedate.year++;
-                    borrows[newborrow].duedate.month-=12;
-                }
-                printf("you borrowed a book\n");
-                for(i=0; i<mem_no; i++)
-                    printf("%d",curr_user[i].no_borru);
-                printf("enter any key to return to the menu!");
-                getch();
-                newborrow++;
-                return addmem();
-            }
-            else
-            {
-                printf("Sorry there is no copies available for that book!!");
-                printf("press any key to return to the menu!!");
-                getch();
-                return addmem();
-            }
         }
         else
         {
-            printf("you reached the maximium number of your borrows!\n");
-            printf("enter any key to return to the menu!");
+            printf("Sorry there is no copies available for that book!!");
+            printf("press any key to return to the menu!!");
             getch();
             return addmem();
         }
     }
+    else
+    {
+        printf("you reached the maximium number of your borrows!\n");
+        printf("enter any key to return to the menu!");
+        getch();
+        return addmem();
+    }
+}
 void search_book(int id)
 {
     char searchtarget[50];
@@ -485,44 +569,44 @@ void overdue()
     time_t currenttime;
     time(&currenttime);
     struct tm *mytime = localtime(&currenttime);
+    for(i=0; i<newborrow; i++)
+    {
+        overd[i].day=mytime->tm_mday;
+        overd[i].month=mytime->tm_mon+1;
+        overd[i].year=mytime->tm_year+1900;
+        if(borrows[i].duedate.day<overd[i].day || borrows[i].duedate.month<overd[i].month ||borrows[i].duedate.year<overd[i].year)
+            break;
+    }
+    if(i==newborrow)
+    {
+        printf("there is no overdue books!!\n");
+        printf("press any key to return to the menu!!");
+        getch();
+        return admin();
+    }
+    else
+    {
         for(i=0; i<newborrow; i++)
         {
             overd[i].day=mytime->tm_mday;
             overd[i].month=mytime->tm_mon+1;
             overd[i].year=mytime->tm_year+1900;
-            if(borrows[i].duedate.day<overd[i].day || borrows[i].duedate.month<overd[i].month ||borrows[i].duedate.year<overd[i].year)
-                break;
-        }
-        if(i==newborrow)
-        {
-            printf("there is no overdue books!!\n");
-            printf("press any key to return to the menu!!");
-            getch();
-            return admin();
-        }
-        else
-        {
-            for(i=0; i<newborrow; i++)
+            if(borrows[i].ret_date.day==0 && borrows[i].ret_date.month==0 && borrows[i].ret_date.year==0)
             {
-                overd[i].day=mytime->tm_mday;
-                overd[i].month=mytime->tm_mon+1;
-                overd[i].year=mytime->tm_year+1900;
-                if(borrows[i].ret_date.day==0 && borrows[i].ret_date.month==0 && borrows[i].ret_date.year==0)
+                if(borrows[i].duedate.day<overd[i].day || borrows[i].duedate.month<overd[i].month ||borrows[i].duedate.year<overd[i].year)
                 {
-                    if(borrows[i].duedate.day<overd[i].day || borrows[i].duedate.month<overd[i].month ||borrows[i].duedate.year<overd[i].year)
-                    {
-                        printf("The over due book is:\n");
-                        printf("%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",borrows[i].book_isbn,borrows[i].user_id,borrows[i].borrow_date.day,borrows[i].borrow_date.month,
-                               borrows[i].borrow_date.year,borrows[i].duedate.day,borrows[i].duedate.month,borrows[i].duedate.year,borrows[i].ret_date.day,borrows[i].ret_date.month,
-                               borrows[i].ret_date.year);
-                    }
+                    printf("The over due book is:\n");
+                    printf("%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\n",borrows[i].book_isbn,borrows[i].user_id,borrows[i].borrow_date.day,borrows[i].borrow_date.month,
+                           borrows[i].borrow_date.year,borrows[i].duedate.day,borrows[i].duedate.month,borrows[i].duedate.year,borrows[i].ret_date.day,borrows[i].ret_date.month,
+                           borrows[i].ret_date.year);
                 }
             }
-            printf("press any key to return to the menu!!");
-            getch();
-            return admin();
         }
+        printf("press any key to return to the menu!!");
+        getch();
+        return admin();
     }
+}
 void popular_book()
 {
     int i,j,k;
@@ -595,65 +679,67 @@ void ret_book(int id)
     struct tm *mytime = localtime(&currenttime);
     char isbn[32];
     int i,x,indexmem,indexbook,indexreturn;
-        borrows[newborrow].user_id=id;
-        printf("please enter the book ISBN you want to return:\n");
-        fflush(stdin);
-        gets(isbn);
-        for(x=0; x<book_no; x++)
+    borrows[newborrow].user_id=id;
+    printf("please enter the book ISBN you want to return:\n");
+    fflush(stdin);
+    gets(isbn);
+    for(x=0; x<book_no; x++)
+    {
+        if(strcmp(isbn,book_curr[x].ISBN)==0)
         {
-            if(strcmp(isbn,book_curr[x].ISBN)==0)
-            {
-                indexbook=x;
-            }
+            indexbook=x;
         }
+    }
 
-        for(x=0; x<newborrow; x++)
+    for(x=0; x<newborrow; x++)
+    {
+        if(id==curr_user[x].id)
         {
-            if(id==curr_user[x].id)
-            {
-                indexmem=x;
-            }
+            indexmem=x;
         }
-        for(x=0; x<newborrow; x++)
-        {
-            break;
-        }
-        if(x==newborrow)
-        {
-            printf("Enter a valid ISBN!!\n");
-            printf("press any key to return to the menu!!");
-            getch();
-            return addmem();
-        }
-        if(curr_user[indexmem].no_borru>0)
-        {
-            for(x=0; x<newborrow; x++)
-            {
-                if(borrows[x].ret_date.day==0 && borrows[x].ret_date.month==0 && borrows[x].ret_date.year==0)
-                {
-                    printf("%s,%d\n",borrows[x].book_isbn,borrows[x].user_id);
-                    if(strcmp(isbn,borrows[x].book_isbn)==0 && borrows[x].user_id==id)
-                    {
-                        curr_user[indexmem].no_borru--;
-                        book_curr[indexbook].curr_copy++;
-                        borrows[x].ret_date.month=mytime->tm_mon+1;
-                        borrows[x].ret_date.day=mytime->tm_mday;
-                        borrows[x].ret_date.year=mytime->tm_year+1900;
-                        printf("you returned a book\n");
-                        printf("%d,%d,%d,%d,%d",curr_user[indexmem].no_borru,book_curr[indexbook].curr_copy,borrows[x].ret_date.month,
-                               borrows[x].ret_date.day,borrows[x].ret_date.year);
-                        printf("enter any key to return to the menu!");
-                        getch();
-                        return addmem();
-                    }
-                }
-            }
-        }
-        printf("you already returned the book!!!\n");
-        printf("enter any key to return to the menu!");
+    }
+    for(x=0; x<newborrow; x++)
+    {
+        break;
+    }
+
+    if(x == newborrow)
+    {
+        printf("Enter a valid ISBN!!\n");
+        printf("press any key to return to the menu!!");
         getch();
         return addmem();
     }
+    if(curr_user[indexmem].no_borru>0)
+    {
+        for(x=0; x<newborrow; x++)
+        {
+            if(borrows[x].ret_date.day==0 && borrows[x].ret_date.month==0 && borrows[x].ret_date.year==0)
+            {
+                printf("%s,%d\n",borrows[x].book_isbn,borrows[x].user_id);
+                if(strcmp(isbn,borrows[x].book_isbn)==0 && borrows[x].user_id==id)
+                {
+                    book_curr[indexbook].curr_copy++;
+                    curr_user[indexmem].no_borru--;
+                    curr_user[indexmem].age--;
+                    borrows[x].ret_date.month=mytime->tm_mon+1;
+                    borrows[x].ret_date.day=mytime->tm_mday;
+                    borrows[x].ret_date.year=mytime->tm_year+1900;
+                    printf("you returned a book\n");
+                    printf("%d,%d,%d,%d,%d",curr_user[indexmem].no_borru,book_curr[indexbook].curr_copy,borrows[x].ret_date.month,
+                           borrows[x].ret_date.day,borrows[x].ret_date.year);
+                    printf("enter any key to return to the menu!");
+                    getch();
+                    return addmem();
+                }
+            }
+        }
+    }
+    printf("you already returned the book!!!\n");
+    printf("enter any key to return to the menu!");
+    getch();
+    return addmem();
+}
 
 void new_cpy()
 {
@@ -678,7 +764,7 @@ void new_cpy()
         strcpy(book_new[newbook].author,book_curr[i].author);
         strcpy(book_new[newbook].publisher,book_curr[i].publisher);
         strcpy(book_new[newbook].title,book_curr[i].title);
-        strcpy(book_curr[i].ISBN,"re");
+        strcpy(book_curr[i].ISBN,"Removable");
         newbook++;
     }
     else
