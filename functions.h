@@ -16,6 +16,7 @@ books book_curr[100];
 borrow borrows[100];
 borrow borrows_curr[100];
 date overd[100];
+date comparedate[1];
 void menu (void)
 {
     int i;
@@ -97,9 +98,6 @@ void admin ()
         break;
     case '8':
         menu();
-        break;
-    case '9':
-        popular_book();
         break;
     default:
         printf("Enter A valid Number");
@@ -316,8 +314,10 @@ void del_mem()
 
 void add_book()
 {
+     time_t currenttime;
+    time(&currenttime);
+    struct tm *mytime = localtime(&currenttime);
     int i,addcop,flag=0;
-
     system("cls");
     printf("1-add New copies:\n");
     printf("2-Add New Book:\n");
@@ -349,9 +349,13 @@ void add_book()
             printf("enter pulisher: ");
             gets(book_new[newbook].publisher);
             printf("enter date of publish DD/MM/YYYY: ");
+            comparedate[0].day=mytime->tm_mday;
+            comparedate[0].month=mytime->tm_mon+1;
+            comparedate[0].year=mytime->tm_year+1900;
             do
             {
                 flag=0;
+
                 scanf("%d%d%d",&book_new[newbook].publish.day,&book_new[newbook].publish.month,&book_new[newbook].publish.year);
                 if(book_new[newbook].publish.day > 28 + fmod(book_new[newbook].publish.month + floor(book_new[newbook].publish.month/8),2) + (2 % book_new[newbook].publish.month) + 2 * floor(1/book_new[newbook].publish.month))
                 {
@@ -370,6 +374,12 @@ void add_book()
                     flag++;
                     // valdiation bt3 lwo date kan akbr mn try5 anhrda lsa n2sa
                 }
+                else if(book_new[newbook].publish.day>comparedate[0].day || book_new[newbook].publish.month>comparedate[0].month || book_new[newbook].publish.year>comparedate[0].year)
+                {
+                    // equation of day and month
+                    printf("Enter Valid Date\n");
+                    flag++;
+                }
             }
             while(flag !=0);
             printf("enter The no. Of Copies \n");
@@ -386,7 +396,10 @@ void add_book()
             newbook++;
             book_new[newbook].no_borr=0;
             admin();
-        }
+        } break;
+        default:printf("Enter a valid number!!");
+        getch();
+        add_book();
     }
 }
 void delete_book()
@@ -548,6 +561,7 @@ void user (int id)
     printf("2-Return Book\n");
     printf("3-Search Book\n");
     printf("4-menu\n");
+    popular_book();
     switch(getch())
     {
     case '1':
@@ -619,7 +633,6 @@ void popular_book()
     books *min,*high;
     high = malloc(sizeof(books)*5);
     min = malloc(sizeof(books));
-    system("cls");
 
     for(j=0; j<5; j++)
     {
@@ -657,7 +670,7 @@ void popular_book()
 
         if(high[k].no_borr < book_curr[i].no_borr)
         {
-            high[k].no_borr=book_curr[i].no_borr;
+            high[k]=book_curr[i];
             strcpy(high[k].author,book_curr[i].author);
             strcpy(high[k].catg,book_curr[i].catg);
             strcpy(high[k].ISBN,book_curr[i].ISBN);
@@ -780,7 +793,7 @@ int check_id()
 {
     int id,i,flag=0;
     system("cls");
-    printf("Enter You ID :");
+    printf("Enter Your ID :");
     scanf("%d",&id);
     for(i=0; i<mem_no; i++)
     {
